@@ -23,7 +23,7 @@ namespace JIRA.Server.Domain.Entity
 
         public Job()
         {
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
     }
 }

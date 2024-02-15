@@ -28,21 +28,21 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         public List<Comment> GetCommentsByJobID(Guid jobId)
         {
             return context.Comments
-                          .Where(comment => comment.TaskId == jobId)
+                          .Where(comment => comment.JobId == jobId)
                           .ToList();
         }
 
         public List<Attachment> GetAttachmentsByJobID(Guid jobId)
         {
             return context.Attachments
-                          .Where(attachment => attachment.TaskId == jobId)
+                          .Where(attachment => attachment.JobId == jobId)
                           .ToList();
         }
 
         public List<Job> GetAssignedTasksByDeveloperId(Guid developerId)
         {
             return context.TaskAssignees
-                          .Where(taskAssignee => taskAssignee.DeveloperId == developerId)
+                          .Where(taskAssignee => taskAssignee.UserId == developerId)
                           .Select(taskAssignee => taskAssignee.Job)
                           .ToList();
         }

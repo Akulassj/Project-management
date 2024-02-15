@@ -1,4 +1,6 @@
-﻿namespace JIRA.Server.Domain.Entity
+﻿using System;
+
+namespace JIRA.Server.Domain.Entity
 {
     //public class Project
     //{
@@ -18,7 +20,7 @@
         
         public Project()
         {
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
     }

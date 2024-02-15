@@ -7,7 +7,7 @@
         public string FileExtension { get; set; }
         public string FilePath { get; set; }
         public DateTime UploadedAt { get; set; }
-        public Guid TaskId { get; set; }
-        public Task Task { get; set; } // Навигационное свойство для связи с таблицей Task
+        public Guid JobId { get; set; }
+        public Job Job { get; set; } // Навигационное свойство для связи с таблицей Job
     }
 }

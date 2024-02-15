@@ -29,7 +29,7 @@ namespace JIRA.Shared.Domain
                 NormalizedName = "USER"
             });
 
-            builder.Entity<IdentityUser<Guid>>().HasData(new User
+            builder.Entity<User>().HasData(new User
             {
                 Id = new Guid("3b62472e-4f66-49fa-a20f-e7685b9565d8"),
                 UserName = "moderator",
@@ -40,6 +40,8 @@ namespace JIRA.Shared.Domain
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<User>().HashPassword(null, "moderator"),
                 SecurityStamp = string.Empty,
+                Position = "Moderator"
+
             });
 
             builder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -51,7 +53,7 @@ namespace JIRA.Shared.Domain
         }
 
         public DbSet<Project> Projects { get; set; }
-      
+         
         public DbSet<Job> Jobs { get; set; }
         public DbSet<TaskAssignee> TaskAssignees { get; set; }
         public DbSet<Comment> Comments { get; set; }
