@@ -1,7 +1,10 @@
+using JIRA.Server.Domain.Entity;
 using JIRA.Shared.Domain;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,21 @@ builder.Services.AddDbContext<ProjectManagementContext>(options =>
 {
     options.UseNpgsql(configuration.GetConnectionString(nameof(ProjectManagementContext)));
 });
+builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false; // Установите параметры, если это необходимо
+    options.User.RequireUniqueEmail = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireDigit = false;
+})
+    .AddEntityFrameworkStores<ProjectManagementContext>()
+    .AddDefaultTokenProviders(); // Добавьте токен-провайдеры, если они необходимы
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

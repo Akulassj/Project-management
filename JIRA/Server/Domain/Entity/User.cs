@@ -1,4 +1,6 @@
-﻿namespace JIRA.Server.Domain.Entity
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace JIRA.Server.Domain.Entity
 {
     //public class Developer
     //{
@@ -7,13 +9,11 @@
     //    public string LastName { get; set; }
     //    public string Position { get; set; }
     //}
-    public class Developer
+    public class User : IdentityUser<Guid>
     {
-        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }
-        public Guid ProjectId { get; set; }
-
+        public ICollection<Comment> Comments { get; set; } // Навигационное свойство для связи с таблицей Comment
     }
 }

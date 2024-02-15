@@ -19,19 +19,40 @@ namespace JIRA.Server.Controllers
             var projects = dataManager.ProjectRepository.GetAllProjects();
             return Ok(projects);
         }
-
-        [HttpGet("{projectId}/developers")]
-        public IActionResult GetAssignedDevelopers(Guid projectId)
+        [HttpGet("{projectId}/jobs")]
+        public IActionResult GetJobsByProjectId(Guid projectId)
         {
-            var developers = dataManager.ProjectRepository.GetAssignedDevelopers(projectId);
-            return Ok(developers);
+            var jobs = dataManager.ProjectRepository.GetJobsByProjectId(projectId);
+            return Ok(jobs);
         }
 
-        [HttpGet("{developerId}/tasks")]
-        public IActionResult GetAssignedTasks(Guid developerId)
+        [HttpGet("{jobId}/comments")]
+        public IActionResult GetCommentsByJobID(Guid jobId)
         {
-            var tasks = dataManager.ProjectRepository.GetAssignedTasks(developerId);
+            var comments = dataManager.ProjectRepository.GetCommentsByJobID(jobId);
+            return Ok(comments);
+        }
+
+        [HttpGet("{jobId}/attachments")]
+        public IActionResult GetAttachmentsByJobID(Guid jobId)
+        {
+            var attachments = dataManager.ProjectRepository.GetAttachmentsByJobID(jobId);
+            return Ok(attachments);
+        }
+
+        [HttpGet("{developerId}/assigned-tasks")]
+        public IActionResult GetAssignedTasksByDeveloperId(Guid developerId)
+        {
+            var tasks = dataManager.ProjectRepository.GetAssignedTasksByDeveloperId(developerId);
             return Ok(tasks);
         }
+
+        [HttpGet("{projectId}/assigned-tasks")]
+        public IActionResult GetAssignedTasksByProjectId(Guid projectId)
+        {
+            var tasks = dataManager.ProjectRepository.GetAssignedTasksByProjectId(projectId);
+            return Ok(tasks);
+        }
+
     }
 }

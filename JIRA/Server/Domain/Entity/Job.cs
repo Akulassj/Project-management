@@ -19,6 +19,11 @@ namespace JIRA.Server.Domain.Entity
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid ProjectId { get; set; }
-        //public Project Project { get; set; } // Навигационное свойство для связи с таблицей Project
+        public Project Project { get; set; }
+
+        public Job()
+        {
+            CreatedAt = DateTime.Now;
+        }
     }
 }

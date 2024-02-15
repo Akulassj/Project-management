@@ -10,11 +10,8 @@
     {
         public Guid Id { get; set; }
         public Guid TaskId { get; set; }
-        
         public Guid DeveloperId { get; set; }
-
-        //public Job Task { get; set; } // Навигационное свойство для связи с таблицей Task
-
-        //public Developer Developer { get; set; } // Навигационное свойство для связи с таблицей Developer
+        public Job Job { get; set; } // Навигационное свойство для связи с таблицей Task
+        public User Developer { get; set; } // Навигационное свойство для связи с таблицей User
     }
 }

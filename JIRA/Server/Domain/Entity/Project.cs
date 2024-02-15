@@ -13,9 +13,13 @@
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
-        public Guid AdministratorId { get; set; }
+        public ICollection<Job> Jobs { get; set; } // Навигационное свойство для связи с таблицей Job
 
-        //public Administrator Administrator { get; set; }
+        
+        public Project()
+        {
+            CreatedAt = DateTime.Now;
+        }
 
     }
 }

@@ -18,21 +18,40 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             return context.Projects.ToList();
         }
 
-        public List<Developer> GetAssignedDevelopers(Guid projectId)
+        public List<Job> GetJobsByProjectId(Guid projectId)
         {
-            return context.Developers
-                .Where(developer => developer.ProjectId == projectId)
-                .ToList();
+            return context.Jobs
+                          .Where(job => job.ProjectId == projectId)
+                          .ToList();
         }
 
-        public List<Job> GetAssignedTasks(Guid developerId)
+        public List<Comment> GetCommentsByJobID(Guid jobId)
+        {
+            return context.Comments
+                          .Where(comment => comment.TaskId == jobId)
+                          .ToList();
+        }
+
+        public List<Attachment> GetAttachmentsByJobID(Guid jobId)
+        {
+            return context.Attachments
+                          .Where(attachment => attachment.TaskId == jobId)
+                          .ToList();
+        }
+
+        public List<Job> GetAssignedTasksByDeveloperId(Guid developerId)
         {
             return context.TaskAssignees
-                .Where(ta => ta.DeveloperId == developerId)
-                .Select(ta => ta.TaskId) // Выбираем только идентификаторы задач
-                .SelectMany(taskId => context.Tasks.Where(j => j.Id == taskId)) // Получаем соответствующие задачи
-                .ToList();
+                          .Where(taskAssignee => taskAssignee.DeveloperId == developerId)
+                          .Select(taskAssignee => taskAssignee.Job)
+                          .ToList();
         }
 
+        public List<Job> GetAssignedTasksByProjectId(Guid projectId)
+        {
+            return context.Jobs
+                          .Where(job => job.ProjectId == projectId)
+                          .ToList();
+        }
     }
 }
