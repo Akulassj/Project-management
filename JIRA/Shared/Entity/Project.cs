@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JIRA.Server.Domain.Entity
+namespace JIRA.Shared.Entity
 {
     //public class Project
     //{

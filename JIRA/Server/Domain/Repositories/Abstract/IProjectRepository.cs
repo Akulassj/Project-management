@@ -1,4 +1,4 @@
-﻿using JIRA.Server.Domain.Entity;
+﻿using JIRA.Shared.Entity;
 
 namespace JIRA.Server.Domain.Repositories.Abstract
 {

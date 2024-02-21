@@ -1,4 +1,4 @@
-﻿using JIRA.Server.Domain.Entity;
+﻿using JIRA.Shared.Entity;
 using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Shared.Domain;
 using Microsoft.EntityFrameworkCore;

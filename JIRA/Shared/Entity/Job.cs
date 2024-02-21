@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace JIRA.Server.Domain.Entity
+namespace JIRA.Shared.Entity
 {
     //public class Job
     //{

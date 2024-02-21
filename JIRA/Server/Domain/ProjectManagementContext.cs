@@ -1,4 +1,4 @@
-﻿using JIRA.Server.Domain.Entity;
+﻿using JIRA.Shared.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

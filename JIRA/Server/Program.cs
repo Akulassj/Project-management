@@ -1,10 +1,11 @@
-using JIRA.Server.Domain.Entity;
+using JIRA.Server.Domain;
 using JIRA.Shared.Domain;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
-
+using JIRA.Shared.Entity;
+using TabBlazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
