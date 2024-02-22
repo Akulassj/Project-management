@@ -21,6 +21,7 @@ namespace JIRA.Shared.Entity
         public Project()
         {
             CreatedAt = DateTime.UtcNow;
+            Id = Guid.NewGuid();
         }
 
     }

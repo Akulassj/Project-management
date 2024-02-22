@@ -10,5 +10,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public List<Attachment> GetAttachmentsByJobID(Guid jobId);
         public List<Job> GetAssignedTasksByDeveloperId(Guid developerId);
         public List<Job> GetAssignedTasksByProjectId(Guid projectId);
+        List<User> GetUsersByProjectId(Guid projectId);
     }
 }

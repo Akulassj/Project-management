@@ -21,9 +21,12 @@ namespace JIRA.Shared.Entity
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
 
+        public ICollection<TaskAssignee> TaskAssignees { get; set; }
+
         public Job()
         {
             CreatedAt = DateTime.UtcNow;
+            Id  = Guid.NewGuid();
         }
     }
 }

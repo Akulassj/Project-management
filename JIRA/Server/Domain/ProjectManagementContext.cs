@@ -5,6 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JIRA.Shared.Domain
 {
+    public enum JobStatus
+    {
+        Completed,
+        Uncompleted,
+    }
+
     public class ProjectManagementContext: IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public ProjectManagementContext(DbContextOptions<ProjectManagementContext> options) : base(options) 
@@ -12,9 +18,25 @@ namespace JIRA.Shared.Domain
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseInMemoryDatabase("db");
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            
+
+            //builder.Entity<User>().HasData(users);
+            //builder.Entity<Project>().HasData(projects) ;
+            //builder.Entity<Job>().HasData(jobs);
+            //builder.Entity<TaskAssignee>().HasData(taskAssignees);
+            //builder.Entity<Comment>().HasData(comments);
+
+
             builder.Entity<IdentityRole<Guid>>().HasData(new IdentityRole<Guid>
             {
                 Id = new Guid("44546e06-8719-4ad8-b88a-f271ae9d6eab"),

@@ -13,6 +13,7 @@
         public Comment()
         {
             CreatedAt = DateTime.UtcNow;
+            Id = Guid.NewGuid();
         }
     }
 

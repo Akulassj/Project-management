@@ -53,6 +53,11 @@ namespace JIRA.Server.Controllers
             var tasks = dataManager.ProjectRepository.GetAssignedTasksByProjectId(projectId);
             return Ok(tasks);
         }
-
+        [HttpGet("{projectId}/users")]
+        public IActionResult GetUsersByProjectId(Guid projectId)
+        {
+            var users = dataManager.ProjectRepository.GetUsersByProjectId(projectId);
+            return Ok(users);
+        }
     }
 }

@@ -4,9 +4,9 @@
 @using MatBlazor
 @using System
 @using System.Collections.Generic
-@inject HttpClient HttpClient
-@using ApexCharts
 
+@using ApexCharts
+@inject HttpClient client
 <Tabs>
     <Tab Title="Главная" Icon="home">
         <div class="container">
@@ -20,9 +20,11 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
+
                     <!-- Информация о заданиях -->
                     <h3>Информация о заданиях</h3>
                     <p>Количество заданий: @Tasks.Count()</p>
+                    <button @onclick="GetAllProjects">Получить список проектов</button>
                     <!-- Здесь может быть другая информация о заданиях -->
                 </div>
                 <div class="col-md-6">
@@ -55,27 +57,41 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- Диаграмма выполненных/невыполненных/в разработке задач -->
-                          
-                            {
-                                <h4>Задания в проекте</h4>
+                            <DemoContainer>
+                                <ApexChart TItem="Order"
+                                           Title="Order Gross Value" Options=options Debug>
 
-                               @*  <ApexChart Options="@BarChartOptions" Type="ChartType.Bar" Height="400">
-                                    <ApexTitle Text="Статусы заданий в проекте"></ApexTitle>
-                                    <ApexXAxis Categories="@JobStatusCategories"></ApexXAxis>
-                                    <ApexSeries Data="@JobCountData"></ApexSeries>
-                                </ApexChart> *@
-                            }
+                                    <ApexPointSeries TItem="Order"
+                                                     Items="Orders"
+                                                     Name="Gross Value"
+                                                     SeriesType="SeriesType.Pie"
+                                                     XValue="@(e => e.Country)"
+                                                     YAggregate="@(e => e.Sum(e => e.GrossValue))"
+                                                     OrderByDescending="e=>e.Y"
+                                                     PointColor="e=> GetPointColor(e)" ShowDataLabels />
+                                 </ApexChart>
+                             </DemoContainer>
+
+                             
+                            
+
+                             @*  <ApexChart Options="@BarChartOptions" Type="ChartType.Bar" Height="400">
+                            <ApexTitle Text="Статусы заданий в проекте"></ApexTitle>
+                            <ApexXAxis Categories="@JobStatusCategories"></ApexXAxis>
+                            <ApexSeries Data="@JobCountData"></ApexSeries>
+                            </ApexChart> *@
+                             
 
 
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <!-- Список участников заданий -->
-                    <h3>Участники заданий</h3>
-                    <ul>
-                        @foreach (var assignee in TaskAssignees)
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-6">
+                     <!-- Список участников заданий -->
+                     <h3>Участники заданий</h3>
+                     <ul>
+                         @foreach (var assignee in TaskAssignees)
                         {
                             <li>@assignee.User.FirstName @assignee.User.LastName</li>
                         }
@@ -93,69 +109,108 @@
 @code {
     private DateTimeOffset SelectedDate = DateTimeOffset.Now.Date;
     private List<Job> Tasks = new List<Job>(); // Предположим, что у вас есть список заданий
+
     private List<Job> SelectedDateTasks => Tasks.Where(t => t.CreatedAt.Date == SelectedDate.Date).ToList();
+
     private Project CurrentProject = new Project { Name = "Проект", Description = "Описание проекта" };
-    // private ApexCharts.ApexChartOptions <BarChartOptions;
-    // Предположим, что у вас есть классы TaskAssignee, Project и User:
+
+    private List<User> Users { get; set; }
     private List<TaskAssignee> TaskAssignees = new List<TaskAssignee>(); // Предположим, что у вас есть список участников заданий
+
     private List<string> TaskStatusLabels = new List<string> { "Выполнено", "В разработке", "Не выполнено" };
-    // private List<int> TaskStatusData
-    // {
-    //     get
-    //     {
-    //         int completedTasks = Tasks.Count(t => t.Status == "Выполнено");
-    //         int inProgressTasks = Tasks.Count(t => t.Status == "В разработке");
-    //         int notCompletedTasks = Tasks.Count(t => t.Status == "Не выполнено");
-    //         return new List<int> { completedTasks, inProgressTasks, notCompletedTasks };
-    //     }
-    // }
+
+    private List<Project> Projects { get; set; } = new List<Project>();
+
     [Parameter]
     public Project Project { get; set; }
 
     private List<Job> Jobs { get; set; }
     private List<string> JobStatusCategories { get; set; }
     private List<int> JobCountData { get; set; }
+    private string projectName = "";
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     if (Project != null)
+    //     {
+    //         Jobs = await GetJobsByProjectId(Project.Id);
 
-    protected override async Task OnInitializedAsync()
+    //         if (Jobs != null && Jobs.Any())
+    //         {
+    //             JobStatusCategories = Jobs.Select(j => j.Status).Distinct().ToList();
+    //             JobCountData = JobStatusCategories.Select(status => Jobs.Count(j => j.Status == status)).ToList();
+    //         }
+    //     }
+    // }
+
+    private async Task GetAllProjects()
     {
-        Jobs = await GetJobsByProjectId(Project.Id);
-
-        if (Jobs != null && Jobs.Any())
+        try
         {
-            JobStatusCategories = Jobs.Select(j => j.Status).Distinct().ToList();
-            JobCountData = JobStatusCategories.Select(status => Jobs.Count(j => j.Status == status)).ToList();
+            Projects = await client.GetFromJsonAsync<List<Project>>("api/project/all");
+        }
+        catch (Exception ex)
+        {
+            // Обработка ошибок, например, вывод сообщения об ошибке
+            Console.WriteLine($"Ошибка при получении списка проектов: {ex.Message}");
         }
     }
+    
+
 
     private async Task<List<Job>> GetJobsByProjectId(Guid projectId)
     {
-        var response = await HttpClient.GetAsync($"api/Project/{projectId}/jobs");
+        var response = await client.GetAsync($"api/Project/{projectId}/jobs");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<Job>>();
     }
-    // Для примера:
-    // public class Job
-    // {
-    //     public string Name { get; set; }
-    //     public string Description { get; set; }
-    //     public DateTime CreatedAt { get; set; }
-    // }
-    //
-    // public class Project
-    // {
-    //     public string Name { get; set; }
-    //     public string Description { get; set; }
-    // }
-    //
-    // public class TaskAssignee
-    // {
-    //     public User User { get; set; }
-    // }
-    //
-    // public class User
-    // {
-    //     public string FirstName { get; set; }
-    //     public string LastName { get; set; }
-    // }
+    
+    private List<Order> Orders { get; set; } = SampleData.GetOrders();
+    private ApexChartOptions<Order> options { get; set; } = new();
+    public class Order
+    {
+        public string Country { get; set; }
+        public decimal GrossValue { get; set; }
+    }
+    public static class SampleData
+    {
+        public static List<Order> GetOrders()
+        {
+            // Создаем список заказов и заполняем его данными
+            var orders = new List<Order>
+        {
+            new Order { Country = "France", GrossValue = 1000 },
+            new Order { Country = "Brazil", GrossValue = 1500 },
+            new Order { Country = "Sweden", GrossValue = 1200 },
+            new Order { Country = "Spain", GrossValue = 800 }
+        };
+
+            return orders;
+        }
+    }
+    protected override void OnInitialized()
+    {
+        options.DataLabels = new DataLabels { DropShadow = new DropShadow { Enabled = false } };
+    }
+
+
+    private string GetPointColor(Order order)
+    {
+        switch (order.Country)
+        {
+            case "France":
+                return "#e3001b";
+            case "Brazil":
+                return "#005ba3";
+            case "Sweden":
+                return "#ffd500";
+            case "Spain":
+                return "#00783c";
+            default:
+                return "#87775d";
+        }
+
+
+
+    }
 
 }
