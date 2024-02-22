@@ -97,7 +97,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                           .Where(job => job.ProjectId == projectId)
                           .ToList();
         }
-
+        //
         public List<Comment> GetCommentsByJobID(Guid jobId)
         {
             return context.Comments
