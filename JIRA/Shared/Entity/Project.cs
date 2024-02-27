@@ -15,7 +15,7 @@ namespace JIRA.Shared.Entity
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
-        public ICollection<Job> Jobs { get; set; } // Навигационное свойство для связи с таблицей Job
+       
 
         
         public Project()

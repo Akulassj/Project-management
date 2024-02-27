@@ -19,14 +19,13 @@ namespace JIRA.Shared.Entity
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid ProjectId { get; set; }
-        public Project Project { get; set; }
 
-        public ICollection<TaskAssignee> TaskAssignees { get; set; }
 
         public Job()
         {
-            CreatedAt = DateTime.UtcNow;
-            Id  = Guid.NewGuid();
+            CreatedAt = DateTime.UtcNow.ToLocalTime();
+            Id = Guid.NewGuid();
         }
+
     }
 }

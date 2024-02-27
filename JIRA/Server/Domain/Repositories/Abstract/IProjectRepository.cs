@@ -1,15 +1,16 @@
 ﻿using JIRA.Shared.Entity;
+using System.Xml.Linq;
 
 namespace JIRA.Server.Domain.Repositories.Abstract
 {
     public interface IProjectRepository
     {
         public List<Project> GetAllProjects();
-        public List<Job> GetJobsByProjectId(Guid projectId);
-        public List<Comment> GetCommentsByJobID(Guid jobId);
-        public List<Attachment> GetAttachmentsByJobID(Guid jobId);
-        public List<Job> GetAssignedTasksByDeveloperId(Guid developerId);
-        public List<Job> GetAssignedTasksByProjectId(Guid projectId);
-        List<User> GetUsersByProjectId(Guid projectId);
+        public Project GetProjectById(Guid id);
+
+        public void Add(Project project);
+        public void Delete(Guid id);
+
+        public void Update(Project project);
     }
 }

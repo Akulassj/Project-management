@@ -14,7 +14,7 @@ namespace JIRA.Shared.Entity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? Position { get; set; }
-        public ICollection<Comment> Comments { get; set; } // Навигационное свойство для связи с таблицей Comment
+       
         public User() => Id = Guid.NewGuid();
     }
 }

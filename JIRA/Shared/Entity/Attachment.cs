@@ -8,6 +8,6 @@
         public string FilePath { get; set; }
         public DateTime UploadedAt { get; set; }
         public Guid JobId { get; set; }
-        public Job Job { get; set; } // Навигационное свойство для связи с таблицей Job
+       
     }
 }

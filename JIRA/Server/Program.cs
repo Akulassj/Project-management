@@ -8,6 +8,7 @@ using JIRA.Shared.Entity;
 using TabBlazor;
 using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Server.Domain.Repositories.EntityFramework;
+using System;
 
 internal class Program
 {
@@ -21,11 +22,19 @@ internal class Program
         builder.Services.AddRazorPages();
         var configuration = builder.Configuration;
         builder.Services.AddTransient<IProjectRepository, EFProjectRepository>();
+        builder.Services.AddTransient<IAttachmentRepository, EFAttachmentRepository>();
+        builder.Services.AddTransient<ICommentRepository, EFCommentRepository>();
+        builder.Services.AddTransient<IJobRepository, EFJobRepository>();
+        builder.Services.AddTransient<ITaskAssigneeRepository, EFTaskAssigneeRepository>();
+        builder.Services.AddTransient<IUserRepository, EFUserRepository>();
+        
         builder.Services.AddTransient<DataManager>();
-        builder.Services.AddDbContext<ProjectManagementContext>(options =>
-        {
-            options.UseNpgsql(configuration.GetConnectionString(nameof(ProjectManagementContext)));
-        });
+
+        builder.Services.AddDbContext<ProjectManagementContext>();
+        //builder.Services.AddDbContext<ProjectManagementContext>(options =>
+        //{
+        //    options.UseNpgsql(configuration.GetConnectionString(nameof(ProjectManagementContext)));
+        //});
         builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false; // Установите параметры, если это необходимо

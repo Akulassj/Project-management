@@ -2,6 +2,7 @@
 using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -80,63 +81,41 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
             context.Users.AddRange(users);
             context.Jobs.AddRange(jobs);
-
+            context.Projects.AddRange(projects);
             context.TaskAssignees.AddRange(taskAssignees);
 
             context.Comments.AddRange(comments);
+            context.SaveChanges();
 
+        }
+        public Project GetProjectById(Guid id)
+        {
+            return context.Projects.FirstOrDefault(p => p.Id == id);
         }
         public List<Project> GetAllProjects()
         {
             return context.Projects.ToList();
         }
-
-        public List<Job> GetJobsByProjectId(Guid projectId)
+        public void Add(Project project)
         {
-            return context.Jobs
-                          .Where(job => job.ProjectId == projectId)
-                          .ToList();
-        }
-        //
-        public List<Comment> GetCommentsByJobID(Guid jobId)
-        {
-            return context.Comments
-                          .Where(comment => comment.JobId == jobId)
-                          .ToList();
+            context.Projects.Add(project);
+            context.SaveChanges();
         }
 
-        public List<Attachment> GetAttachmentsByJobID(Guid jobId)
+        public void Delete(Guid id)
         {
-            return context.Attachments
-                          .Where(attachment => attachment.JobId == jobId)
-                          .ToList();
+            context.Projects.Remove(context.Projects.FirstOrDefault(x => x.Id == id));
+            context.SaveChanges();
         }
 
-        public List<Job> GetAssignedTasksByDeveloperId(Guid developerId)
+
+
+        public void Update(Project project)
         {
-            return context.TaskAssignees
-                          .Where(taskAssignee => taskAssignee.UserId == developerId)
-                          .Select(taskAssignee => taskAssignee.Job)
-                          .ToList();
+            context.Projects.Entry(project).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
-        public List<Job> GetAssignedTasksByProjectId(Guid projectId)
-        {
-            return context.Jobs
-                          .Where(job => job.ProjectId == projectId)
-                          .ToList();
-        }
-        public List<User> GetUsersByProjectId(Guid projectId)
-        {
-            return context.Projects
-                          .Include(p => p.Jobs)
-                              .ThenInclude(j => j.TaskAssignees)
-                                  .ThenInclude(t => t.User)
-                          .FirstOrDefault(p => p.Id == projectId)
-                          ?.Jobs
-                          .SelectMany(j => j.TaskAssignees.Select(t => t.User))
-                          .Distinct()
-                          .ToList();
-        }
+
     }
 }

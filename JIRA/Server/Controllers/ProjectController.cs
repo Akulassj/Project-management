@@ -13,51 +13,41 @@ namespace JIRA.Server.Controllers
         {
             this.dataManager = dataManager;
         }
-        [HttpGet("all")]
+        [HttpGet]
         public IActionResult GetAllProjects()
         {
             var projects = dataManager.ProjectRepository.GetAllProjects();
             return Ok(projects);
         }
-        [HttpGet("{projectId}/jobs")]
-        public IActionResult GetJobsByProjectId(Guid projectId)
+
+        [HttpGet]
+        public IActionResult GetAllJobs()
         {
-            var jobs = dataManager.ProjectRepository.GetJobsByProjectId(projectId);
+            var jobs = dataManager.JobRepository.GetAllJobs();
             return Ok(jobs);
         }
+        [HttpGet]
+        public IActionResult GetJobsByDate(DateTime date)
+        {
+            try
+            {
+                // Приведение даты к началу дня
+                date = date.Date;
 
-        [HttpGet("{jobId}/comments")]
-        public IActionResult GetCommentsByJobID(Guid jobId)
-        {
-            var comments = dataManager.ProjectRepository.GetCommentsByJobID(jobId);
-            return Ok(comments);
+                var jobs = dataManager.JobRepository.GetJobsByDate(date);
+                return Ok(jobs);
+            }
+            catch (Exception ex)
+            {
+                // Обработка ошибок, например, возврат статуса ошибки
+                return StatusCode(500, $"Ошибка при получении заданий для даты: {ex.Message}");
+            }
         }
-
-        [HttpGet("{jobId}/attachments")]
-        public IActionResult GetAttachmentsByJobID(Guid jobId)
+        [HttpGet]
+        public IActionResult GetJobStatuses()
         {
-            var attachments = dataManager.ProjectRepository.GetAttachmentsByJobID(jobId);
-            return Ok(attachments);
-        }
-
-        [HttpGet("{developerId}/assigned-tasks")]
-        public IActionResult GetAssignedTasksByDeveloperId(Guid developerId)
-        {
-            var tasks = dataManager.ProjectRepository.GetAssignedTasksByDeveloperId(developerId);
-            return Ok(tasks);
-        }
-
-        [HttpGet("{projectId}/assigned-tasks")]
-        public IActionResult GetAssignedTasksByProjectId(Guid projectId)
-        {
-            var tasks = dataManager.ProjectRepository.GetAssignedTasksByProjectId(projectId);
-            return Ok(tasks);
-        }
-        [HttpGet("{projectId}/users")]
-        public IActionResult GetUsersByProjectId(Guid projectId)
-        {
-            var users = dataManager.ProjectRepository.GetUsersByProjectId(projectId);
-            return Ok(users);
+            var statuses = dataManager.JobRepository.GetJobStatuses();
+            return Ok(statuses);
         }
     }
 }
