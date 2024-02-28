@@ -70,20 +70,18 @@
                         <div class="col-md-12">
                             <!-- Диаграмма выполненных/невыполненных/в разработке задач -->
 
-                            <DemoContainer>
-                                <ApexChart TItem="Job"
-                                           Title="Job Status Distribution" Options=options Debug>
+                            <ApexChart @ref=chart TItem="Job"
+                                       Title="Job Status Distribution" Debug>
 
-                                    <ApexPointSeries TItem="Job"
-                                                     Items="Jobs"
-                                                     Name="Job Status"
-                                                     SeriesType="SeriesType.Pie"
-                                                     XValue="@(e => e.Status)"
-                                                     YAggregate="@(e => e.Count())"
-                                                     OrderByDescending="e=>e.Y"
-                                                     PointColor="e=> GetPointColor(e)" ShowDataLabels />
-                                 </ApexChart>
-                             </DemoContainer>
+                                <ApexPointSeries TItem="Job"
+                                                 Items="Jobs"
+                                                 Name="Job Status"
+                                                 SeriesType="SeriesType.Pie"
+                                                 XValue="@(e => e.Status)"
+                                                 YAggregate="@(e => e.Count())"
+                                                 OrderByDescending="@(e=>e.Y)"
+                                                 PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
+                             </ApexChart>
 
                          </div>
                      </div>
@@ -109,10 +107,9 @@
 
 @code {
 
-    
-    private List<Job> SelectedDateTasks { get; set; }
-    private DateTime SelectedDate { get; set; }
 
+    private List<Job> SelectedDateTasks { get; set; }
+    private DateTime SelectedDate { get; set; } = DateTime.UtcNow.ToLocalTime();
 
 
     private Project CurrentProject = new Project { Name = "Проект", Description = "Описание проекта" };
@@ -126,7 +123,7 @@
     [Parameter]
     public Project Project { get; set; }
 
-  
+
 
 
     private string projectName = "";
@@ -137,6 +134,8 @@
         try
         {
             Jobs = await client.GetFromJsonAsync<List<Job>>("api/project/GetAllJobs");
+            await chart.RenderAsync();
+            await chart.UpdateSeriesAsync();
         }
         catch (Exception ex)
         {
@@ -224,26 +223,26 @@
     // {
     //     options.DataLabels = new DataLabels { DropShadow = new DropShadow { Enabled = false } };
     // }
- //    <DemoContainer>
- //  <ApexChart TItem="Order"
- //        Title="Order Gross Value" Options=options Debug>
+    //    <DemoContainer>
+    //  <ApexChart TItem="Order"
+    //        Title="Order Gross Value" Options=options Debug>
 
- //    <ApexPointSeries TItem="Order"
- //             Items="Orders"
- //             Name="Gross Value"
- //             SeriesType="SeriesType.Pie"
- //             XValue="@(e => e.Country)"
- //             YAggregate="@(e => e.Sum(e => e.GrossValue))"
- //             OrderByDescending="e=>e.Y"
- //             PointColor="e=> GetPointColor(e)" ShowDataLabels />
- //   </ApexChart>
- // </DemoContainer>
+    //    <ApexPointSeries TItem="Order"
+    //             Items="Orders"
+    //             Name="Gross Value"
+    //             SeriesType="SeriesType.Pie"
+    //             XValue="@(e => e.Country)"
+    //             YAggregate="@(e => e.Sum(e => e.GrossValue))"
+    //             OrderByDescending="e=>e.Y"
+    //             PointColor="e=> GetPointColor(e)" ShowDataLabels />
+    //   </ApexChart>
+    // </DemoContainer>
     [Parameter]
     public Job Job { get; set; }
 
     private List<Job> Jobs = new List<Job>(); // Предположим, что у вас есть список заданий
 
-    ApexChartOptions<Job> options = new();
+    private ApexChart<Job> chart = default!;
 
 
 
