@@ -1,0 +1,173 @@
+﻿@page "/projectInfo/{projectId}"
+@using JIRA.Shared.Entity
+@using TabBlazor
+@using MatBlazor
+@using System
+@using System.Collections.Generic
+
+@using ApexCharts
+@inject HttpClient client
+
+<Tabs>
+    <Tab Title="Главная" Icon="home">
+        <div class="container">
+            @if (CurrentProject is not null)
+            {
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>Информация о проекте</h3>
+                        <p>Название проекта: @CurrentProject.Name</p>
+                        <p>Описание проекта: @CurrentProject.Description</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Информация о заданиях</h3>
+                        <p>Количество заданий: @Jobs.Count()</p>
+                        <div class="btn btn-primary text-center" @onclick="GetJobs">Получить список Задач</div>
+                        @if (Jobs.Any())
+                        {
+                            <h3>Список Задач:</h3>
+                            <ul>
+                                @foreach (var job in Jobs)
+                                {
+                                    <li>@job.Name - @job.Description</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Календарь</h3>
+
+                        <Datepicker @bind-SelectedDate="SelectedDate" Label="Выберите дату"/>
+                        <Button class="btn-primary" @onclick="OnSelectedDateChanged"></Button>
+
+                        @if (SelectedDateTasks != null && SelectedDateTasks.Any())
+                        {
+                            <h4>Задания на @SelectedDate.ToString("d"):</h4>
+                            <ul>
+                                @foreach (var task in SelectedDateTasks)
+                                {
+                                    <li>@task.Name</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>На @SelectedDate.ToString("d") заданий нет.</p>
+                        }
+                    </div>
+                </div>
+                @if (Jobs is not null)
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Графики</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <ApexChart @ref=chart TItem="Job"
+                                               Title="Job Status Distribution" Debug>
+
+                                        <ApexPointSeries TItem="Job"
+                                                         Items="Jobs"
+                                                         Name="Job Status"
+                                                         SeriesType="SeriesType.Pie"
+                                                         XValue="@(e => e.Status)"
+                                                         YAggregate="@(e => e.Count())"
+                                                         OrderByDescending="@(e=>e.Y)"
+                                                         PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
+                                    </ApexChart>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Список участников заданий -->
+                            <h3>Участники заданий</h3>
+                            <ul>
+                                @*  @foreach (var assignee in TaskAssignees)
+                        {
+                        <li>@assignee.User.FirstName @assignee.User.LastName</li>
+                        } *@
+                            </ul>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+
+    </Tab>
+    <Tab Title="Другая вкладка" Icon="other-icon">
+    </Tab>
+</Tabs>
+
+@code {
+    public Project CurrentProject { get; set; } = default!;
+    [Parameter]
+    public string projectId { get; set; }
+
+    private List<Job> SelectedDateTasks { get; set; } = new List<Job>();
+
+    private DateTime SelectedDate { get; set; } = DateTime.UtcNow.ToLocalTime();
+
+    private List<Job> Jobs = new List<Job>();
+
+    private List<TaskAssignee> TaskAssignees = new List<TaskAssignee>();
+
+    private ApexChart<Job> chart = default!;
+
+    private async Task GetJobs()
+    {
+        Jobs = await client.GetFromJsonAsync<List<Job>>($"api/project/GetProjectJobs?projectId={projectId}");
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        SelectedDate = DateTime.Today;
+
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        CurrentProject = await client.GetFromJsonAsync<Project>($"api/project/GetProject?projectId={projectId}");
+        await GetJobs();
+        await UpdateTasksForSelectedDate();
+        StateHasChanged();
+    }
+
+    private async Task OnSelectedDateChanged() => await UpdateTasksForSelectedDate();
+
+    private async Task UpdateTasksForSelectedDate()
+    {
+        try
+        {
+            // Преобразование даты в строку в формате "yyyy-MM-ddTHH:mm:ssZ" (UTC)
+            string formattedDate = SelectedDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+            // Использование явного форматирования даты в адресе запроса
+            SelectedDateTasks = await client.GetFromJsonAsync<List<Job>>($"api/project/GetJobsByDate?projectId={projectId}&date={formattedDate}");
+        }
+        catch (Exception ex)
+        {
+            // Обработка ошибок
+            Console.WriteLine($"Ошибка при получении заданий для даты: {ex.Message}");
+        }
+    }
+
+    private string GetPointColor(Job job)
+    {
+        switch (job.Status)
+        {
+            case "Completed":
+                return "#00783c"; // зеленый
+            case "Uncompleted":
+                return "#e3001b"; // красный
+            default:
+                return "#87775d"; // серый
+        }
+    }
+}

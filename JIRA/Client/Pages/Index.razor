@@ -1,278 +1,34 @@
 ﻿@page "/"
 @using JIRA.Shared.Entity
 @using TabBlazor
-@using MatBlazor
 @using System
 @using System.Collections.Generic
 
-@using ApexCharts
 @inject HttpClient client
-<Tabs>
-    <Tab Title="Главная" Icon="home">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <!-- Информация о проекте -->
-                    <h3>Информация о проекте</h3>
-                    <p>Название проекта: @CurrentProject.Name</p>
-                    <p>Описание проекта: @CurrentProject.Description</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
 
-                    <!-- Информация о заданиях -->
-                    <h3>Информация о заданиях</h3>
-                    <p>Количество заданий: @Jobs.Count()</p>
-                    <div class="btn btn-primary text-center" @onclick="GetAllProjects">Получить список Задач</div>
-                    @if (Jobs != null)
-                    {
-                        <h3>Список Задач:</h3>
-                        <ul>
-                            @foreach (var job in Jobs)
-                            {
-                                <li>@job.Name - @job.Description</li>
-                            }
-                        </ul>
-                    }
-                    <!-- Здесь может быть другая информация о заданиях -->
-                </div>
-                <div class="col-md-6">
-                    <!-- Календарь -->
-                    <h3>Календарь</h3>
-
-                    <Datepicker @bind-SelectedDate="SelectedDate" Label="Выберите дату"
-                                OnSelectedDateChanged="OnSelectedDateChanged" />
-
-
-                    <!-- Отображение заданий для выбранной даты -->
-                    @if (SelectedDateTasks != null && SelectedDateTasks.Any())
-                    {
-                        <h4>Задания на @SelectedDate.ToString("d"):</h4>
-                        <ul>
-                            @foreach (var task in SelectedDateTasks)
-                            {
-                                <li>@task.Name</li>
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <p>На @SelectedDate.ToString("d") заданий нет.</p>
-                    }
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <!-- Графики -->
-                    <h3>Графики</h3>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- Диаграмма выполненных/невыполненных/в разработке задач -->
-
-                            <ApexChart @ref=chart TItem="Job"
-                                       Title="Job Status Distribution" Debug>
-
-                                <ApexPointSeries TItem="Job"
-                                                 Items="Jobs"
-                                                 Name="Job Status"
-                                                 SeriesType="SeriesType.Pie"
-                                                 XValue="@(e => e.Status)"
-                                                 YAggregate="@(e => e.Count())"
-                                                 OrderByDescending="@(e=>e.Y)"
-                                                 PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
-                             </ApexChart>
-
-                         </div>
-                     </div>
-                 </div>
-                 <div class="col-md-6">
-                     <!-- Список участников заданий -->
-                     <h3>Участники заданий</h3>
-                     <ul>
-                         @foreach (var assignee in TaskAssignees)
-                        {
-                            @* <li>@assignee.User.FirstName @assignee.User.LastName</li> *@
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </Tab>
-    <Tab Title="Другая вкладка" Icon="other-icon">
-        <!-- Содержимое другой вкладки -->
-    </Tab>
-    <!-- Добавьте другие вкладки здесь с аналогичным содержимым и иконками -->
-</Tabs>
-
+<ul>
+    @foreach (var user in users)
+    {
+        <li>
+            Логин @user.UserName
+            Пароль @user.FirstName
+        </li>
+    }
+</ul>
 @code {
+    List<User> users = new List<User>();
 
-
-    private List<Job> SelectedDateTasks { get; set; }
-    private DateTime SelectedDate { get; set; } = DateTime.UtcNow.ToLocalTime();
-
-
-    private Project CurrentProject = new Project { Name = "Проект", Description = "Описание проекта" };
-
-    private List<User> Users { get; set; }
-    private List<TaskAssignee> TaskAssignees = new List<TaskAssignee>(); // Предположим, что у вас есть список участников заданий
-
-
-    private List<Project> Projects { get; set; } = new List<Project>();
-
-    [Parameter]
-    public Project Project { get; set; }
-
-
-
-
-    private string projectName = "";
-
-
-    private async Task GetAllProjects()
+    protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            Jobs = await client.GetFromJsonAsync<List<Job>>("api/project/GetAllJobs");
-            await chart.RenderAsync();
-            await chart.UpdateSeriesAsync();
-        }
-        catch (Exception ex)
-        {
-            // Обработка ошибок, например, вывод сообщения об ошибке
-            Console.WriteLine($"Ошибка при получении списка проектов: {ex.Message}");
-        }
-    }
-    protected override void OnInitialized()
-    {
-        SelectedDate = DateTime.Today;
-        UpdateTasksForSelectedDate();
-    }
-    private async Task OnSelectedDateChanged(DateTime newDate)
-    {
-        SelectedDate = newDate.ToUniversalTime(); // Преобразование в UTC формат
-        await UpdateTasksForSelectedDate();
-    }
-    // private async Task UpdateTasksForSelectedDate()
-    // {
-    //     try
-    //     {
-    //         // Преобразование даты в строку в формате "dd.MM.yyyy HH:mm:ss"
-    //         string formattedDate = SelectedDate.ToString("yyyy-MM-ddTHH:mm:ss");
-
-
-
-
-    //         // Использование явного форматирования даты в адресе запроса
-    //         SelectedDateTasks = await client.GetFromJsonAsync<List<Job>>($"api/project/GetJobsByDate?date={formattedDate}");
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         // Обработка ошибок
-    //         Console.WriteLine($"Ошибка при получении заданий для даты: {ex.Message}");
-    //     }
-    // }
-    private async Task UpdateTasksForSelectedDate()
-    {
-        try
-        {
-            // Преобразование даты в строку в формате "yyyy-MM-ddTHH:mm:ssZ" (UTC)
-            string formattedDate = SelectedDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
-
-            // Использование явного форматирования даты в адресе запроса
-            SelectedDateTasks = await client.GetFromJsonAsync<List<Job>>($"api/project/GetJobsByDate?date={formattedDate}");
-        }
-        catch (Exception ex)
-        {
-            // Обработка ошибок
-            Console.WriteLine($"Ошибка при получении заданий для даты: {ex.Message}");
-        }
+        await Refresh();
     }
 
-    // private async Task<List<Job>> GetJobsByProjectId(Guid projectId)
-    // {
-    //     var response = await client.GetAsync($"api/Project/{projectId}/jobs");
-    //     response.EnsureSuccessStatusCode();
-    //     return await response.Content.ReadFromJsonAsync<List<Job>>();
-    // }
-
-    // private List<Order> Orders { get; set; } = SampleData.GetOrders();
-    // private ApexChartOptions<Order> options { get; set; } = new();
-    // public class Order
-    // {
-    //     public string Country { get; set; }
-    //     public decimal GrossValue { get; set; }
-    // }
-    // public static class SampleData
-    // {
-    //     public static List<Order> GetOrders()
-    //     {
-    //         // Создаем список заказов и заполняем его данными
-    //         var orders = new List<Order>
-    //     {
-    //         new Order { Country = "France", GrossValue = 1000 },
-    //         new Order { Country = "Brazil", GrossValue = 1500 },
-    //         new Order { Country = "Sweden", GrossValue = 1200 },
-    //         new Order { Country = "Spain", GrossValue = 800 }
-    //     };
-
-    //         return orders;
-    //     }
-    // }
-    // protected override void OnInitialized()
-    // {
-    //     options.DataLabels = new DataLabels { DropShadow = new DropShadow { Enabled = false } };
-    // }
-    //    <DemoContainer>
-    //  <ApexChart TItem="Order"
-    //        Title="Order Gross Value" Options=options Debug>
-
-    //    <ApexPointSeries TItem="Order"
-    //             Items="Orders"
-    //             Name="Gross Value"
-    //             SeriesType="SeriesType.Pie"
-    //             XValue="@(e => e.Country)"
-    //             YAggregate="@(e => e.Sum(e => e.GrossValue))"
-    //             OrderByDescending="e=>e.Y"
-    //             PointColor="e=> GetPointColor(e)" ShowDataLabels />
-    //   </ApexChart>
-    // </DemoContainer>
-    [Parameter]
-    public Job Job { get; set; }
-
-    private List<Job> Jobs = new List<Job>(); // Предположим, что у вас есть список заданий
-
-    private ApexChart<Job> chart = default!;
-
-
-
-    private string GetPointColor(Job job)
+    async Task Refresh()
     {
-        switch (job.Status)
-        {
-            case "Completed":
-                return "#00783c"; // зеленый
-            case "Uncompleted":
-                return "#e3001b"; // красный
-            default:
-                return "#87775d"; // серый
-        }
+        await client.GetFromJsonAsync<List<Project>>($"/api/project/GetAllProjects");
+        users = await client.GetFromJsonAsync<List<User>>($"/api/account/GetAllUsers");
+        StateHasChanged();
     }
-    // private string GetPointColor(Order order)
-    // {
-    //     switch (order.Country)
-    //     {
-    //         case "France":
-    //             return "#e3001b";
-    //         case "Brazil":
-    //             return "#005ba3";
-    //         case "Sweden":
-    //             return "#ffd500";
-    //         case "Spain":
-    //             return "#00783c";
-    //         default:
-    //             return "#87775d";
-    //     }
 }
 
 

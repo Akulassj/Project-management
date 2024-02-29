@@ -3,6 +3,8 @@ using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Identity;
+using JIRA.Shared;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -15,43 +17,47 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             this.context = context;
             if (!context.Projects.Any())
             {
+                Random rnd = new Random();
                 List<Project> projects = new List<Project>();
 
                 for (int i = 0; i < 10; i++)
                 {
+                    int c = rnd.Next(Data.projects.Count);
                     var project = new Project();
-                    project.Name = Faker.Company.Name();
-                    project.Description = Faker.Lorem.Paragraph();
+                    project.Name = Data.projects[c][0];
+                    project.Description = Data.projects[c][1];
                     projects.Add(project);
                 }
                 context.Projects.AddRange(projects);
                 context.SaveChanges();
+
                 List<User> users = new List<User>();
 
                 for (int i = 0; i < 50; i++)
                 {
                     var user = new User();
-                    user.FirstName = Faker.Name.First();
-                    user.LastName = Faker.Name.Last();
+                    user.FirstName = Data.userFirstNames[Random.Shared.Next(Data.userFirstNames.Count)];
+                    user.LastName = Data.userLastNames[Random.Shared.Next(Data.userLastNames.Count)];
                     user.Position = "Developer";
-                    user.UserName = Faker.Internet.UserName();
+                    user.UserName = Data.userNickNames[Random.Shared.Next(Data.userNickNames.Count)];
                     user.Email = Faker.Internet.Email();
                     user.NormalizedUserName = user.UserName.ToUpperInvariant();
                     user.NormalizedEmail = user.Email.ToUpperInvariant();
-                    user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.FirstName);
+                    user.PasswordHash = new PasswordHasher<User>().HashPassword(null, user.FirstName);
                     user.SecurityStamp = Guid.NewGuid().ToString();
                     users.Add(user);
                 }
 
-                
+
 
                 List<Job> jobs = new List<Job>();
 
                 for (int i = 0; i < 100; i++)
                 {
+                    int c = rnd.Next(Data.projects.Count);
                     var job = new Job();
-                    job.Name = Faker.Lorem.Sentence(3);
-                    job.Description = Faker.Lorem.Paragraph(2);
+                    job.Name = Data.jobs[c][0];
+                    job.Description = Data.jobs[c][1];
                     job.Status = Faker.Enum.Random<JobStatus>().ToString();
                     job.ProjectId = projects[Random.Shared.Next(projects.Count)].Id;
                     jobs.Add(job);
@@ -86,12 +92,12 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
                 context.Users.AddRange(users);
                 context.Jobs.AddRange(jobs);
-                
+
                 context.TaskAssignees.AddRange(taskAssignees);
 
                 context.Comments.AddRange(comments);
                 context.SaveChanges();
-            }   
+            }
         }
         public Project GetProjectById(Guid id)
         {
@@ -121,6 +127,18 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
+        public List<Project> GetProjectsByUserName(string userName)
+        {
+            var id = context.Users.FirstOrDefault(x => x.UserName == userName).Id;
+            return context.TaskAssignees.Where(ta => ta.UserId == id)
+                .Select(ta => ta.JobId)
+                .Distinct()
+                .SelectMany(jobId => context.Jobs.Where(j => j.Id == jobId))
+                .Select(j => j.ProjectId)
+                .Distinct()
+                .SelectMany(projectId => context.Projects.Where(p => p.Id == projectId))
+                .ToList();
 
+        }
     }
 }

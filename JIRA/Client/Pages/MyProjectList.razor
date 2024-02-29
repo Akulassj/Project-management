@@ -1,0 +1,34 @@
+﻿@page "/projects/{userName}"
+@inject HttpClient client
+@inject NavigationManager navigate
+
+<h3>MyProjectList</h3>
+<ul>
+    @foreach (var project in projects)
+    {
+        <li @onclick="() => ProjectClick(project.Id)">
+            @project.Name @project.Description
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public string userName { get; set; }
+    private List<Project> projects = new List<Project>();
+    protected override async void OnInitialized()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects/?userName={userName}");
+        StateHasChanged();
+    }
+
+    private void ProjectClick(Guid id)
+    {
+        navigate.NavigateTo($"/projectInfo/{id}");
+    }
+}

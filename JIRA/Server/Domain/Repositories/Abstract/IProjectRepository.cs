@@ -7,6 +7,8 @@ namespace JIRA.Server.Domain.Repositories.Abstract
     {
         public List<Project> GetAllProjects();
         public Project GetProjectById(Guid id);
+        
+        public List<Project> GetProjectsByUserName(string userName);
 
         public void Add(Project project);
         public void Delete(Guid id);

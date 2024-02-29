@@ -35,6 +35,7 @@ internal class Program
         //{
         //    options.UseNpgsql(configuration.GetConnectionString(nameof(ProjectManagementContext)));
         //});
+        builder.Services.AddAuthorizationCore();
         builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false; // Установите параметры, если это необходимо
