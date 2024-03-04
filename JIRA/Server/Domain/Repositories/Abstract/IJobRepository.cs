@@ -14,5 +14,7 @@ namespace JIRA.Server.Domain.Repositories.Abstract
 
         public List<Job> GetProjectJobsByDate(Guid projectID, DateTime date);
         public List<JobStatus> GetJobStatuses();
+
+        public List<Job> GetJobsByUserName(string userName);
     }
 }

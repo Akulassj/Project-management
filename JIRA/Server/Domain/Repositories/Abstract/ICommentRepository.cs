@@ -8,5 +8,7 @@ namespace JIRA.Server.Domain.Repositories.Abstract
     {
        public Comment GetCommentById(Guid id);
        public List<Comment> GetCommentsByJobId(Guid jobId);
+        public void Add(Comment comment);
+        public void Delete(Guid id);
     }
 }

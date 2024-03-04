@@ -1,4 +1,5 @@
 ﻿using JIRA.Server.Domain;
+using JIRA.Shared.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JIRA.Server.Controllers
@@ -27,6 +28,12 @@ namespace JIRA.Server.Controllers
             var projects = dataManager.ProjectRepository.GetProjectsByUserName(userName);
             return Ok(projects);
         }
+        [HttpGet]
+        public IActionResult GetJobsByUserName(string userName)
+        {
+            var jobs = dataManager.JobRepository.GetJobsByUserName(userName);
+            return Ok(jobs);
+        }
 
         [HttpGet]
         public IActionResult GetProject(Guid projectId)
@@ -41,6 +48,10 @@ namespace JIRA.Server.Controllers
             var projects = dataManager.JobRepository.GetJobsByProjectId(projectId);
             return Ok(projects);
         }
+
+       
+      
+
 
         [HttpGet]
         public IActionResult GetAllJobs()

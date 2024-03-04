@@ -39,6 +39,24 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.Jobs.Select(j => Enum.Parse<JobStatus>(j.Status)).Distinct().ToList();
         }
+        public List<Job> GetJobsByUserName(string userName)
+        {
+            var userId = context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            if (userId == null)
+            {
+                throw new Exception($"Пользователь с именем {userName} не найден.");
+            }
+
+            return context.TaskAssignees
+                .Where(ta => ta.UserId == userId)
+                .Select(ta => ta.JobId)
+                .Distinct()
+                .SelectMany(jobId => context.Jobs.Where(j => j.Id == jobId))
+                .Distinct()
+                .ToList();
+        }
+
+
 
 
 

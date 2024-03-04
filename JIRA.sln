@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JIRA.Server", "JIRA\Server\JIRA.Server.csproj", "{2B0BAF5C-4A6F-414B-A690-34CE20B83057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIRA.Server", "JIRA\Server\JIRA.Server.csproj", "{2B0BAF5C-4A6F-414B-A690-34CE20B83057}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JIRA.Client", "JIRA\Client\JIRA.Client.csproj", "{89DA09D7-5266-4ED7-9029-3D8A496A1226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIRA.Client", "JIRA\Client\JIRA.Client.csproj", "{89DA09D7-5266-4ED7-9029-3D8A496A1226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JIRA.Shared", "JIRA\Shared\JIRA.Shared.csproj", "{0DE37A8B-7E9E-4BEF-876A-1C046FFD8A6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIRA.Shared", "JIRA\Shared\JIRA.Shared.csproj", "{0DE37A8B-7E9E-4BEF-876A-1C046FFD8A6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

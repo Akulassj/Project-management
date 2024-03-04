@@ -1,0 +1,62 @@
+﻿@page "/jobinfo/{JobId}"
+@inject HttpClient client
+
+<h3>Comments</h3>
+<ul>
+    @foreach (var comment in Comments)
+    {
+        <li>@comment.Text</li>
+    }
+</ul>
+<div>
+    <input type="text" @bind="NewCommentText" placeholder="Enter your comment" />
+    <div class="btn btn-primary text-center" @onclick="AddComment">Добавить комментарий</div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string JobId { get; set; }
+
+    private List<Comment> Comments = new List<Comment>();
+
+    private string NewCommentText;
+
+    protected override async void OnInitialized()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        if (!string.IsNullOrEmpty(JobId))
+        {
+            
+            var comments = await client.GetFromJsonAsync<List<Comment>>($"/api/comment/GetCommentsByJobId/?jobId={JobId}");
+
+                Comments = comments;
+                StateHasChanged();
+            
+        }
+    }
+    private async Task AddComment()
+    {
+        if (!string.IsNullOrEmpty(NewCommentText))
+        {
+            var comment = new Comment
+                {
+                    Text = NewCommentText,
+                    JobId = Guid.Parse(JobId) 
+                };
+
+            var response = await client.PostAsJsonAsync("/api/comment/Add", comment);
+            if (response.IsSuccessStatusCode)
+            {
+                await Refresh(); 
+                NewCommentText = ""; 
+            }
+           
+            
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿@page "/jobs/{userName}"
+@inject HttpClient client
+@inject NavigationManager navigate
+
+<h3>MyTaskList</h3>
+
+<ul>
+    @foreach (var job in jobs)
+    {
+        <li @onclick="() => JobClick(job.Id)">
+            @job.Name @job.Description
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public string userName { get; set; }
+    private List<Job> jobs = new List<Job>();
+    protected override async void OnInitialized()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        
+        
+        jobs = await client.GetFromJsonAsync<List<Job>>($"/api/project/GetJobsByUserName/?userName={userName}");
+            StateHasChanged();
+        
+        
+    }
+
+
+    private void JobClick(Guid id)
+    {
+        navigate.NavigateTo($"/jobInfo/{id}");
+    }
+}

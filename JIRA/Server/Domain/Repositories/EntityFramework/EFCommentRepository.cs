@@ -20,5 +20,16 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.Comments.Where(c => c.JobId == jobId).ToList();
         }
+        public void Add(Comment comment)
+        {
+            context.Comments.Add(comment);
+            context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            context.Comments.Remove(context.Comments.FirstOrDefault(x => x.Id == id));
+            context.SaveChanges();
+        }
     }
 }
