@@ -17,6 +17,10 @@ namespace JIRA.Shared
         [Compare(nameof(Password), ErrorMessage = "Passwords do not match!")]
         public string PasswordConfirm { get; set; }
         [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
         public string Role { get; set; }
     }
 }

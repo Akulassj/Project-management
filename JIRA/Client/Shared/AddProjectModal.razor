@@ -1,0 +1,58 @@
+﻿@using TabBlazor.Services﻿
+@inject IModalService modalService
+@inject HttpClient client
+
+<InputText @oninput=Reset @bind-Value="Name"></InputText>
+<InputTextArea @oninput=Reset @bind-Value="Description"></InputTextArea>
+
+<div class="modal-footer">
+    <a @onclick="Cancel" class="btn btn-link link-secondary" data-dismiss="modal">
+        Cancel
+    </a>
+    <a @onclick="CreateProject" class="btn btn-primary ms-auto" data-dismiss="modal">
+        Create new project
+    </a>
+</div>
+
+<div>@message</div>
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = "";
+
+    [Parameter]
+    public string Description { get; set; } = "";
+
+    [CascadingParameter] public bool CascadingParameter { get; set; } = false;
+
+    string message = "";
+
+    private async Task CreateProject()
+    {
+        if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Description))
+        {
+            message = "Check fields!";
+        }
+        else
+        {
+            var project = new Project()
+                {
+                    Name = Name,
+                    Description = Description
+                };
+            var response = await client.PostAsJsonAsync<Project>($"api/project/CreateNewProject", project);
+            if (response.IsSuccessStatusCode)
+                modalService.Close(ModalResult.Ok());
+        }
+    }
+
+    private void Cancel()
+    {
+        modalService.Close(ModalResult.Cancel());
+    }
+
+    private void Reset()
+    {
+        message = "";
+    }
+}

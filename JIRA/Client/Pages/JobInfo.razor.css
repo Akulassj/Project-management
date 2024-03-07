@@ -1,0 +1,18 @@
+﻿.comment {
+    margin-bottom: 0.5rem;
+    border: 1px solid !important;
+    border-color: black;
+    border-radius: 1rem;
+}
+.comment-username{
+    text-align:start;
+    margin-left:0.5rem;
+    margin-top:0.1rem;
+}
+.comment-body {
+    margin-left: 0.5rem;
+}
+.comment-date{
+    color:grey;
+    font-size:small;
+}

@@ -1,0 +1,6 @@
+﻿.my-card-body {
+    background-color: transparent !important;
+}
+    .my-card-body:hover {
+        background-color: darkcyan !important;
+    }

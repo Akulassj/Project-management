@@ -13,11 +13,11 @@
     <DataAnnotationsValidator />
 
     <label for="inputLogin" class="sr-only">Login</label>
-    <InputText id="inputUsername" class="form-control" @bind-Value="loginRequest.Login" autofocus placeholder="Login" />
+    <InputText id="inputUsername" class="form-control mb-2" @bind-Value="loginRequest.Login" autofocus placeholder="Login" />
     <ValidationMessage For="@(() => loginRequest.Login)" />
 
     <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginRequest.Password" />
+    <InputText type="password" id="inputPassword" class="form-control mb-2" placeholder="Password" @bind-Value="loginRequest.Password" />
     <ValidationMessage For="@(() => loginRequest.Password)" />
 
     <div class="form-check m-3">

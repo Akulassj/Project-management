@@ -4,19 +4,25 @@
 
 <h3>MyTaskList</h3>
 
-<ul>
+<Card Size="CardSize.Default">
     @foreach (var job in jobs)
     {
-        <li @onclick="() => JobClick(job.Id)">
-            @job.Name @job.Description
-        </li>
+        <CardBody class="my-card-body" @onclick="() => JobClick(job.Id)">
+            <CardTitle>
+                <h3> @job.Name</h3>
+            </CardTitle>
+            @job.Description
+        </CardBody>
     }
-</ul>
+</Card>
+
 
 @code {
     [Parameter]
     public string userName { get; set; }
+
     private List<Job> jobs = new List<Job>();
+
     protected override async void OnInitialized()
     {
         await Refresh();
@@ -24,12 +30,8 @@
 
     private async Task Refresh()
     {
-        
-        
         jobs = await client.GetFromJsonAsync<List<Job>>($"/api/project/GetJobsByUserName/?userName={userName}");
-            StateHasChanged();
-        
-        
+        StateHasChanged();
     }
 
 
@@ -38,3 +40,10 @@
         navigate.NavigateTo($"/jobInfo/{id}");
     }
 }
+<style>
+
+    .card-body:hover {
+        background-color: darkcyan !important;
+    }
+
+</style>

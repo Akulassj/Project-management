@@ -40,37 +40,48 @@ namespace Authorization.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest parameters)
         {
-            var user = new User();
-            user.UserName = parameters.Login;
-            var result = await _userManager.CreateAsync(user, parameters.Password);
-            if (!result.Succeeded)
-                return BadRequest(result.Errors.FirstOrDefault()?.Description);
-
-            var roleExists = await _roleManager.RoleExistsAsync(parameters.Role);
-
-            if (!roleExists)
+            try
             {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole<Guid>(parameters.Role));
-                if (!roleResult.Succeeded)
+                var user = new User
                 {
-                    return BadRequest("Error creating role.");
-                }
-            }
+                    UserName = parameters.Login,
+                    FirstName = parameters.FirstName,
+                    LastName = parameters.LastName,
+                };
+                var result = await _userManager.CreateAsync(user, parameters.Password);
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors.FirstOrDefault()?.Description);
 
-            var role = await _userManager.AddToRoleAsync(user, parameters.Role);
-            if (role.Succeeded)
-            {
+                var roleExists = await _roleManager.RoleExistsAsync(parameters.Role);
+
+                if (!roleExists)
+                {
+                    var roleResult = await _roleManager.CreateAsync(new IdentityRole<Guid>(parameters.Role));
+                    if (!roleResult.Succeeded)
+                    {
+                        return BadRequest("Error creating role.");
+                    }
+                }
+
+                var role = await _userManager.AddToRoleAsync(user, parameters.Role);
+                if (role.Succeeded)
+                {
+                    return await Login(new LoginRequest
+                    {
+                        Login = parameters.Login,
+                        Password = parameters.Password
+                    });
+                }
                 return await Login(new LoginRequest
                 {
                     Login = parameters.Login,
                     Password = parameters.Password
                 });
             }
-            return await Login(new LoginRequest
+            catch(Exception ex)
             {
-                Login = parameters.Login,
-                Password = parameters.Password
-            });
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize]
@@ -90,6 +101,7 @@ namespace Authorization.Server.Controllers
                 var roles = _userManager.GetRolesAsync(us.Result).Result;
                 var user = new CurrentUser
                 {
+                    Id = us.Result.Id,
                     IsAuthenticated = User.Identity.IsAuthenticated,
                     UserName = User.Identity.Name,
                     Role = roles.Any() ? roles.First() :"",

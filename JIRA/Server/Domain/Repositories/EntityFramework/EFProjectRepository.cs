@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Identity;
 using JIRA.Shared;
+using Blazorise.States;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -32,14 +33,15 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 context.SaveChanges();
 
                 List<User> users = new List<User>();
-
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     var user = new User();
                     user.FirstName = Data.userFirstNames[Random.Shared.Next(Data.userFirstNames.Count)];
                     user.LastName = Data.userLastNames[Random.Shared.Next(Data.userLastNames.Count)];
                     user.Position = "Developer";
-                    user.UserName = Data.userNickNames[Random.Shared.Next(Data.userNickNames.Count)];
+                    var name = Data.userNickNames[Random.Shared.Next(Data.userNickNames.Count)];
+                    Data.userNickNames.Remove(name);
+                    user.UserName = name;
                     user.Email = Faker.Internet.Email();
                     user.NormalizedUserName = user.UserName.ToUpperInvariant();
                     user.NormalizedEmail = user.Email.ToUpperInvariant();

@@ -1,21 +1,29 @@
 ﻿@page "/projects/{userName}"
+@using TabBlazor.Services
 @inject HttpClient client
 @inject NavigationManager navigate
+@inject IModalService ModalService
 
 <h3>MyProjectList</h3>
-<ul>
+<Button class="mb-2" @onclick="ShowModal" BackgroundColor="TablerColor.Green" Shape="ButtonShape.Pill">Create new project</Button>
+<Card>
     @foreach (var project in projects)
     {
-        <li @onclick="() => ProjectClick(project.Id)">
-            @project.Name @project.Description
-        </li>
+        <CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
+            <CardTitle>
+                <h3>@project.Name</h3>
+            </CardTitle>
+            @project.Description
+        </CardBody>
     }
-</ul>
+    </Card>
 
-@code {
+    @code {
     [Parameter]
     public string userName { get; set; }
+
     private List<Project> projects = new List<Project>();
+
     protected override async void OnInitialized()
     {
         await Refresh();
@@ -31,4 +39,16 @@
     {
         navigate.NavigateTo($"/projectInfo/{id}");
     }
+
+    protected async Task ShowModal()
+    {
+        var component = new RenderComponent<AddProjectModal>().Set(e => e.Name, "New project");
+        var result = await ModalService.ShowAsync("New Project", component, new ModalOptions { Size = ModalSize.Large });
+        await Refresh();
+    }
 }
+<style>
+    .card-body:hover {
+        background-color: darkcyan !important;
+    }
+</style>

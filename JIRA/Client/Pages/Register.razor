@@ -12,15 +12,27 @@
     <label for="inputLogin" class="sr-only">Login</label>
     <InputText id="inputLogin" class="form-control" placeholder="Login" autofocus @bind-Value="@registerRequest.Login" />
     <ValidationMessage For="@(() => registerRequest.Login)" />
-    <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerRequest.Password" />
-    <ValidationMessage For="@(() => registerRequest.Password)" />
-    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerRequest.PasswordConfirm" />
-    <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
+
+    <label for="inputFirstName" class="sr-only">FirstName</label>
+    <InputText id="inputFirstName" class="form-control" placeholder="FirstName" autofocus @bind-Value="@registerRequest.FirstName" />
+    <ValidationMessage For="@(() => registerRequest.FirstName)" />
+
+    <label for="inputLastName" class="sr-only">LastName</label>
+    <InputText id="inputLastName" class="form-control" placeholder="LastName" autofocus @bind-Value="@registerRequest.LastName" />
+    <ValidationMessage For="@(() => registerRequest.LastName)" />
+
     <label for="inputRole" class="sr-only">Role</label>
     <InputText id="inputRole" class="form-control" placeholder="Role" autofocus @bind-Value="@registerRequest.Role" />
     <ValidationMessage For="@(() => registerRequest.Role)" />
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerRequest.Password" />
+    <ValidationMessage For="@(() => registerRequest.Password)" />
+
+    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
+    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerRequest.PasswordConfirm" />
+    <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
+    
     <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
     <label class="text-danger">@error</label>
     <NavLink href="login">
