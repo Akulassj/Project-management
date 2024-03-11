@@ -1,28 +1,70 @@
 ﻿@page "/projects/{userName}"
 @using TabBlazor.Services
+@using Blazorise
 @inject HttpClient client
 @inject NavigationManager navigate
-@inject IModalService ModalService
+@inject Blazorise.IModalService ModalService
 
 <h3>MyProjectList</h3>
-<Button class="mb-2" @onclick="ShowModal" BackgroundColor="TablerColor.Green" Shape="ButtonShape.Pill">Create new project</Button>
-<Card>
+@* <Button class="mb-2" @onclick="ShowModal" BackgroundColor="TablerColor.Green" Shape="ButtonShape.Pill">Create new project</Button> *@
+
+<Blazorise.Button Color="Color.Success" Clicked="@ShowModal">Show Modal</Blazorise.Button>
+
+<Blazorise.Modal @ref="modalRef">
+    <Blazorise.ModalContent Centered>
+        <Blazorise.ModalHeader>
+            <ModalTitle>Create project</ModalTitle>
+            <CloseButton />
+        </Blazorise.ModalHeader>
+        <Blazorise.ModalBody>
+            <Blazorise.Field>
+                <FieldLabel>Name</FieldLabel>
+                <TextEdit Placeholder="Enter project name..." @bind-Text="newProject.Name" />
+            </Blazorise.Field>
+            <Blazorise.Field>
+                <FieldLabel>Description</FieldLabel>
+                <TextEdit Placeholder="Enter project description..." @bind-Text="newProject.Description" />
+            </Blazorise.Field>
+            <Blazorise.Field>
+                <FieldLabel>Users</FieldLabel>
+                <Blazorise.Dropdown TValue="User" Multiple Selection="@newProject.Users" Placeholder="Select users...">
+                    @foreach (var user in users)
+                    {
+                        <Blazorise.DropdownItem Value="user">@user.FirstName @user.LastName</Blazorise.DropdownItem>
+                    }
+                  
+                </Blazorise.Dropdown>
+            </Blazorise.Field>
+        </Blazorise.ModalBody>
+        <ModalFooter>
+            <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+            <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject">Save Changes</Blazorise.Button>
+        </ModalFooter>
+    </Blazorise.ModalContent>
+</Blazorise.Modal>
+
+
+<TabBlazor.Card>
     @foreach (var project in projects)
     {
-        <CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
-            <CardTitle>
+    <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
+            <TabBlazor.CardTitle>
                 <h3>@project.Name</h3>
-            </CardTitle>
+            </TabBlazor.CardTitle>
             @project.Description
-        </CardBody>
+        </TabBlazor.CardBody>
     }
-    </Card>
+  </TabBlazor.Card>
 
     @code {
     [Parameter]
     public string userName { get; set; }
 
     private List<Project> projects = new List<Project>();
+
+    private Project newProject = new Project();
+    private List<User> users = new List<User>();
+    private List<User> selectedUsers = new List<User>();
 
     protected override async void OnInitialized()
     {
@@ -39,13 +81,50 @@
     {
         navigate.NavigateTo($"/projectInfo/{id}");
     }
+    private Modal modalRef;
 
-    protected async Task ShowModal()
+    private Task ShowModal()
     {
-        var component = new RenderComponent<AddProjectModal>().Set(e => e.Name, "New project");
-        var result = await ModalService.ShowAsync("New Project", component, new ModalOptions { Size = ModalSize.Large });
-        await Refresh();
+        return modalRef.Show();
     }
+
+    private Task HideModal()
+    {
+        return modalRef.Hide();
+    }
+    private async Task LoadUsers(User selectedUser)
+    {
+        if (selectedUser == null)
+        {
+            users = await client.GetFromJsonAsync<List<User>>($"/api/account/GetAllUsers");
+        }
+        else
+        {
+            if (selectedUsers.Contains(selectedUser))
+            {
+                selectedUsers.Remove(selectedUser);
+            }
+            else
+            {
+                selectedUsers.Add(selectedUser);
+            }
+        }
+    }
+    private async Task CreateProject()
+    {
+        await client.PostAsJsonAsync("api/Project/Add", newProject);
+        newProject = new Project();
+        await HideModal();
+    }
+
+    
+
+    // protected async Task ShowModal()
+    // {
+    //     var component = new RenderComponent<AddProjectModal>().Set(e => e.Name, "New project");
+    //     var result = await ModalService.ShowAsync("New Project", component, new ModalOptions { Size = ModalSize.Large });
+    //     await Refresh();
+    // }
 }
 <style>
     .card-body:hover {

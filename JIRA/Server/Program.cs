@@ -9,6 +9,7 @@ using TabBlazor;
 using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Server.Domain.Repositories.EntityFramework;
 using System;
+using Blazorise;
 
 internal class Program
 {
@@ -48,7 +49,7 @@ internal class Program
         })
             .AddEntityFrameworkStores<ProjectManagementContext>()
             .AddDefaultTokenProviders(); // Добавьте токен-провайдеры, если они необходимы
-
+        builder.Services.AddBlazorise();
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
         var app = builder.Build();
