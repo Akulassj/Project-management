@@ -10,7 +10,10 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         
         public List<Project> GetProjectsByUserName(string userName);
 
+        public List<User> GetAsigneeProjectUsers(Guid projectId);
+
         public void Add(Project project);
+
         public void Delete(Guid id);
 
         public void Update(Project project);

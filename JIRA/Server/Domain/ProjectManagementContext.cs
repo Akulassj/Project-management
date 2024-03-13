@@ -80,5 +80,7 @@ namespace JIRA.Shared.Domain
         public DbSet<TaskAssignee> TaskAssignees { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+
+        public DbSet<ProjectAsignee> ProjectAsignees { get; set; }
     }
 }

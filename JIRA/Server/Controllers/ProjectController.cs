@@ -87,6 +87,21 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetProjectAsigneeUsers(Guid projjectId)
+        {
+            var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projjectId);
+            return Ok(users);
+        }
+
+        [HttpPost]
+        public IActionResult AddProject(ProjectsAsignees projectAsignees)
+        {
+            dataManager.ProjectRepository.Add(projectAsignees.Project);
+            dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
+            return Ok();
+        }
+
+        [HttpGet]
         public IActionResult GetJobsByDate(Guid projectID, DateTime date)
         {
             try

@@ -28,7 +28,8 @@ internal class Program
         builder.Services.AddTransient<IJobRepository, EFJobRepository>();
         builder.Services.AddTransient<ITaskAssigneeRepository, EFTaskAssigneeRepository>();
         builder.Services.AddTransient<IUserRepository, EFUserRepository>();
-        
+        builder.Services.AddTransient<IProjectAsigneeRepository, EFProjectAsigneeRepository>();
+
         builder.Services.AddTransient<DataManager>();
 
         builder.Services.AddDbContext<ProjectManagementContext>();

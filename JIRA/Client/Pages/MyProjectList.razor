@@ -27,13 +27,13 @@
             </Blazorise.Field>
             <Blazorise.Field>
                 <FieldLabel>Users</FieldLabel>
-                <Blazorise.Dropdown TValue="User" Multiple Selection="@newProject.Users" Placeholder="Select users...">
+                 <Blazorise.Select TValue="User" Multiple @bind-SelectedItems="selectedUsers">
                     @foreach (var user in users)
                     {
-                        <Blazorise.DropdownItem Value="user">@user.FirstName @user.LastName</Blazorise.DropdownItem>
+                        <Blazorise.SelectItem Value="user">@user.FirstName @user.LastName</Blazorise.SelectItem>
                     }
-                  
-                </Blazorise.Dropdown>
+
+                </Blazorise.Select>
             </Blazorise.Field>
         </Blazorise.ModalBody>
         <ModalFooter>
@@ -47,24 +47,26 @@
 <TabBlazor.Card>
     @foreach (var project in projects)
     {
-    <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
+        <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
             <TabBlazor.CardTitle>
                 <h3>@project.Name</h3>
             </TabBlazor.CardTitle>
             @project.Description
         </TabBlazor.CardBody>
     }
-  </TabBlazor.Card>
+</TabBlazor.Card>
 
-    @code {
+@code {
     [Parameter]
     public string userName { get; set; }
 
     private List<Project> projects = new List<Project>();
 
-    private Project newProject = new Project();
     private List<User> users = new List<User>();
+
     private List<User> selectedUsers = new List<User>();
+
+    private Project newProject = new Project();
 
     protected override async void OnInitialized()
     {
@@ -74,6 +76,7 @@
     private async Task Refresh()
     {
         projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects/?userName={userName}");
+        users = await client.GetFromJsonAsync<List<User>>("api/account/GetAllUsers");//await client.GetFromJsonAsync<List<User>>($"/api/project/GetProjectAsigneeUsers?projectId={}");
         StateHasChanged();
     }
 
@@ -81,6 +84,7 @@
     {
         navigate.NavigateTo($"/projectInfo/{id}");
     }
+
     private Modal modalRef;
 
     private Task ShowModal()
@@ -92,32 +96,25 @@
     {
         return modalRef.Hide();
     }
-    private async Task LoadUsers(User selectedUser)
-    {
-        if (selectedUser == null)
-        {
-            users = await client.GetFromJsonAsync<List<User>>($"/api/account/GetAllUsers");
-        }
-        else
-        {
-            if (selectedUsers.Contains(selectedUser))
-            {
-                selectedUsers.Remove(selectedUser);
-            }
-            else
-            {
-                selectedUsers.Add(selectedUser);
-            }
-        }
-    }
+
     private async Task CreateProject()
     {
-        await client.PostAsJsonAsync("api/Project/Add", newProject);
+        var asigneeList = new List<ProjectAsignee>();
+        foreach (var user in selectedUsers)
+        {
+            asigneeList.Add(new ProjectAsignee() { UserId = user.Id, ProjectId = newProject.Id });
+        }
+        var pj = new ProjectsAsignees()
+        {
+            Project = newProject,
+            ProjectAsignees = asigneeList
+        };
+        await client.PostAsJsonAsync("api/Project/Add", pj);
         newProject = new Project();
         await HideModal();
     }
 
-    
+
 
     // protected async Task ShowModal()
     // {
