@@ -22,7 +22,10 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             return context.Users.ToList();
         }
 
-
+        public User GetUserByName(string name)
+        {
+            return context.Users.FirstOrDefault(u => u.UserName == name);
+        }
 
     }
 }

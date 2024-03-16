@@ -65,18 +65,24 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                     jobs.Add(job);
                 }
 
-                
+
 
                 List<ProjectAsignee> projectAsignees = new List<ProjectAsignee>();
 
                 foreach (var user in users)
                 {
-                    for (int i = 0; i < Random.Shared.Next(1, 3); i++)
+                    var userProjects = new List<Project>();
+                    for (int i = 0; i < Random.Shared.Next(1, 4); i++)
                     {
                         var projectAsignee = new ProjectAsignee();
-                        projectAsignee.ProjectId = projects[Random.Shared.Next(projects.Count)].Id;
-                        projectAsignee.UserId = user.Id;
-                        projectAsignees.Add(projectAsignee);
+                        var project = projects[Random.Shared.Next(projects.Count)];
+                        if (!userProjects.Contains(project))
+                        {
+                            userProjects.Add(project);
+                            projectAsignee.ProjectId = project.Id;
+                            projectAsignee.UserId = user.Id;
+                            projectAsignees.Add(projectAsignee);
+                        }
                     }
                 }
 
@@ -116,6 +122,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 context.TaskAssignees.AddRange(taskAssignees);
 
                 context.Comments.AddRange(comments);
+                context.ProjectAsignees.AddRange(projectAsignees);
                 context.SaveChanges();
             }
         }
@@ -150,6 +157,12 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         public List<Project> GetProjectsByUserName(string userName)
         {
             var id = context.Users.FirstOrDefault(x => x.UserName == userName).Id;
+            return context.ProjectAsignees.Where(pa => pa.UserId == id)
+                .Select(pa => pa.ProjectId)
+                .SelectMany(projectId => context.Projects.Where(p => p.Id == projectId))
+                .Distinct()
+                .ToList();
+
             return context.TaskAssignees.Where(ta => ta.UserId == id)
                 .Select(ta => ta.JobId)
                 .Distinct()

@@ -96,6 +96,13 @@ namespace JIRA.Server.Controllers
         [HttpPost]
         public IActionResult AddProject(ProjectsAsignees projectAsignees)
         {
+            var user = dataManager.UserRepository.GetUserByName(projectAsignees.UserName);
+            projectAsignees.ProjectAsignees.Add(new ProjectAsignee()
+            {
+                IsCreator = true,
+                UserId = user.Id,
+                ProjectId = projectAsignees.Project.Id
+            });
             dataManager.ProjectRepository.Add(projectAsignees.Project);
             dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
             return Ok();

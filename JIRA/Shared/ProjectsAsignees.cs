@@ -11,5 +11,6 @@ namespace JIRA.Shared
     {
         public Project Project { get; set; }
         public List<ProjectAsignee> ProjectAsignees { get; set; }
+        public string UserName { get; set; }
     }
 }

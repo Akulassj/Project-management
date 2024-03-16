@@ -15,7 +15,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         public void Add(List<ProjectAsignee> projectAsignees)
         {
-            context.AddRange(projectAsignees);
+            context.ProjectAsignees.AddRange(projectAsignees);
             context.SaveChanges();
         }
     }

@@ -87,10 +87,7 @@
                             <!-- Список участников заданий -->
                             <h3>Участники заданий</h3>
                             <ul>
-                                @*  @foreach (var assignee in TaskAssignees)
-                        {
-                        <li>@assignee.User.FirstName @assignee.User.LastName</li>
-                        } *@
+                                 <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div>
                             </ul>
                         </div>
                     </div>
@@ -117,6 +114,8 @@
 
     private List<TaskAssignee> TaskAssignees = new List<TaskAssignee>();
 
+    private List<User> AssignedUsers = new List<User>();
+
     private ApexChart<Job> chart = default!;
 
     private async Task GetJobs()
@@ -130,6 +129,12 @@
         SelectedDate = DateTime.Today;
 
         await Refresh();
+    }
+
+    private async Task GetAssignedUsers()
+    {
+        AssignedUsers = await client.GetFromJsonAsync<List<User>>($"/api/project/GetProjectAsigneeUsers?projectId={projectId}");
+      
     }
 
     private async Task Refresh()

@@ -5,7 +5,8 @@ namespace JIRA.Server.Domain.Repositories.Abstract
 {
     public interface IUserRepository
     {
-      public  User GetUserById(Guid id);
-      public  List<User> GetAllUsers();
+        public User GetUserById(Guid id);
+        public User GetUserByName(string name);
+        public List<User> GetAllUsers();
     }
 }
