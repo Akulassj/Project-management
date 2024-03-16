@@ -26,75 +26,33 @@
                 <TextEdit Placeholder="Enter project description..." @bind-Text="newProject.Description" />
             </Blazorise.Field>
 
-            @*  <Blazorise.Field>
-            @if (selectedUsers.Any())
-            {
-            <FieldLabel>Users</FieldLabel>
-            <Blazorise.Select TValue="bool">
-            @for (int i = 0; i < users.Count; i++)
-            {
-            <Blazorise.SelectItem>
-
-            </Blazorise.SelectItem>
-            }
-            </Blazorise.Select>
-            }
-            </Blazorise.Field> *@
-            @*   <Blazorise.Field>
-            @if (users.Any())
-            {
-            <Blazorise.FieldLabel>Users</Blazorise.FieldLabel>
-            <Blazorise.Dropdown>
-            <Blazorise.DropdownToggle Color="Color.Primary">Select Users</Blazorise.DropdownToggle>
-            <Blazorise.DropdownMenu>
-            @foreach (var user in users)
-            {
-            <Blazorise.DropdownItem>
-            <Checkbox @bind="selectedUsers[users.IndexOf(user)]" />
-            @user.FirstName @user.LastName
-            </Blazorise.DropdownItem>
-            }
-            </Blazorise.DropdownMenu>
-            </Blazorise.Dropdown>
-            }
-            </Blazorise.Field> *@
-          @*   <Blazorise.Dropdown>
-                <Blazorise.DropdownToggle Color="Color.Primary">
-                    Dropdown With Checkboxes
-                </Blazorise.DropdownToggle>
-                <Blazorise.DropdownMenu>
-                    @foreach (var user in users)
-            {
-                        <Blazorise.DropdownItem ShowCheckbox @onclick="() => UpdateSelectedUsers(user.Id, !selectedUsers[users.IndexOf(user)])">
-                        @user.FirstName @user.LastName
-                    </Blazorise.DropdownItem>
-            }
-                </Blazorise.DropdownMenu>
-            </Blazorise.Dropdown> *@
-            <Blazorise.Field>
-                <FieldLabel>Search</FieldLabel>
-                <TextEdit Placeholder="Search by name or surname..." @bind-Text="searchText" @onchange="FilterUsers" />
+          <Blazorise.Field>
+                <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
+                <Blazorise.TextEdit Placeholder="Search by name or surname..." @bind-Text="searchText" @onchange="GetUsersSearch" />
             </Blazorise.Field>
 
-            @if (!string.IsNullOrEmpty(searchText))
+            @if (users != null)
             {
                 <div class="search-results">
-                    @foreach (var user in filteredUsers)
+                    @foreach (var user in users)
                     {
-                        <div class="search-result" @onclick="() => ToggleUserSelection(user)">
-                            @user.FirstName @user.LastName
+                        <div class="search-result" @onclick="() => AddUser(user)">
+                           @user.UserName
                         </div>
                     }
                 </div>
             }
 
-            @if (selectedFilteredUsers.Any())
+            @if (selectedUsers.Any())
             {
                 <div>
                     <h4>Selected Users:</h4>
-                    @foreach (var user in selectedFilteredUsers)
+                    @foreach (var user in selectedUsers)
                     {
-                        <p>@user.FirstName @user.LastName</p>
+                        <div>
+                            <p>@user.UserName</p>
+                            <Blazorise.Button Color="Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
+                        </div>
                     }
                 </div>
             }
@@ -126,15 +84,8 @@
     public string userName { get; set; }
 
     private List<Project> projects = new List<Project>();
-
-    private List<User> users = new List<User>();
-
-    private List<bool> selectedUsers = new List<bool>();
-
-    private List<User> filteredUsers = new List<User>();
-    private List<User> selectedFilteredUsers = new List<User>();
-
-
+    private List<User> users;
+    private List<User> selectedUsers = new List<User>();
     private Project newProject = new Project();
     private string searchText = "";
 
@@ -146,11 +97,12 @@
     private async Task Refresh()
     {
         projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects/?userName={userName}");
-        users = await client.GetFromJsonAsync<List<User>>("api/account/GetAllUsers");//await client.GetFromJsonAsync<List<User>>($"/api/project/GetProjectAsigneeUsers?projectId={}");
-       
-        // selectedUsers.AddRange(new bool[users.Count]);
-        selectedUsers = new List<bool>(new bool[users.Count]);
-        FilterUsers();
+        //users = await client.GetFromJsonAsync<List<User>>("api/account/GetAllUsers");
+        //await client.GetFromJsonAsync<List<User>>($"/api/project/GetProjectAsigneeUsers?projectId={}");
+
+
+
+
         StateHasChanged();
     }
 
@@ -170,69 +122,62 @@
     {
         return modalRef.Hide();
     }
-    // private void UpdateSelectedUsers(Guid userId, bool isChecked)
-    // {
-    //     var index = users.FindIndex(u => u.Id == userId);
-    //     if (index >= 0)
-    //     {
-    //         selectedUsers[index] = isChecked;
-    //     }
-    // }
-    private void ToggleUserSelection(User user)
+
+    private async Task GetUsersSearch()
     {
-        var index = selectedFilteredUsers.FindIndex(u => u.Id == user.Id);
-        if (index >= 0)
+        if (!string.IsNullOrWhiteSpace(searchText))
         {
-            selectedFilteredUsers.RemoveAt(index);
+            // Отправить запрос на сервер для поиска пользователей
+            users = await client.GetFromJsonAsync<List<User>>($"api/project/SearchUsers?username={searchText}");
+
         }
         else
         {
-            selectedFilteredUsers.Add(user);
-        }
-    }
-    private void FilterUsers()
-    {
-        if (string.IsNullOrWhiteSpace(searchText))
-        {
-            filteredUsers = new List<User>(); // Очищаем список при отсутствии текста
-        }
-        else
-        {
-            filteredUsers = users.Where(u =>
-                searchText.ToLower().All(term =>
-                    u.FirstName.ToLower().Contains(term) ||
-                    u.LastName.ToLower().Contains(term)
-                )
-            ).ToList();
+            users = null;
+            selectedUsers = new List<User>();
         }
     }
 
+    private void AddUser(User user)
+    {
+        if (!selectedUsers.Contains(user))
+        {
+            selectedUsers.Add(user);
+        }
+    }
+
+    private void RemoveUser(User user)
+    {
+        selectedUsers.Remove(user);
+    }
 
 
 
     private async Task CreateProject()
     {
         var asigneeList = new List<ProjectAsignee>();
-        @for (int i = 0; i < selectedUsers.Count; i++)
+        foreach (var user in selectedUsers)
         {
-            if (selectedUsers[i])
-            {
-                asigneeList.Add(new ProjectAsignee() { UserId = users[i].Id, ProjectId = newProject.Id });
-            }
+            asigneeList.Add(new ProjectAsignee() { UserId = user.Id, ProjectId = newProject.Id });
         }
+
         var pj = new ProjectsAsignees()
             {
                 Project = newProject,
                 ProjectAsignees = asigneeList,
                 UserName = userName
             };
+
         await client.PostAsJsonAsync("api/Project/AddProject", pj);
 
         newProject = new Project();
-
+        searchText = ""; // Очищаем поле поиска
+        selectedUsers.Clear(); // Очищаем список выбранных пользователей
+        users.Clear();
         await Refresh();
         await HideModal();
     }
+
 }
 <style>
     .card-body:hover {

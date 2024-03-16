@@ -126,5 +126,8 @@ namespace Authorization.Server.Controllers
             
             return Ok(_userManager.Users.ToList());
         }
+        
+
+
     }
 }

@@ -26,6 +26,9 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.Users.FirstOrDefault(u => u.UserName == name);
         }
-
+        public List<User> SearchUsersByUsername(string username)
+        {
+            return context.Users.Where(u => u.UserName.Contains(username)).ToList();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public User GetUserById(Guid id);
         public User GetUserByName(string name);
         public List<User> GetAllUsers();
+        public List<User> SearchUsersByUsername(string username);
     }
 }

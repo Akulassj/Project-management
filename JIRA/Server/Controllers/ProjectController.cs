@@ -1,6 +1,7 @@
 ﻿using JIRA.Server.Domain;
 using JIRA.Shared;
 using JIRA.Shared.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JIRA.Server.Controllers
@@ -130,6 +131,23 @@ namespace JIRA.Server.Controllers
         {
             var statuses = dataManager.JobRepository.GetJobStatuses();
             return Ok(statuses);
+        }
+        [HttpGet]
+        public IActionResult SearchUsers(string username)
+        {
+            try
+            {
+                // Вызываем метод репозитория для поиска пользователей по имени пользователя
+                var users = dataManager.UserRepository.SearchUsersByUsername(username);
+
+                // Возвращаем найденных пользователей в ответе
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                // Обработка исключения при возникновении ошибки
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }
