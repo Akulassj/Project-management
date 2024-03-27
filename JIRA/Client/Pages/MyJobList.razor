@@ -1,20 +1,25 @@
 ﻿@page "/jobs/{userName}"
 @inject HttpClient client
 @inject NavigationManager navigate
+@using TabBlazor.Services
+@using Blazorise
+@inject Blazorise.IModalService ModalService
 
 <h3>MyTaskList</h3>
 
-<Card Size="CardSize.Default">
+
+
+<TabBlazor.Card Size="CardSize.Default">
     @foreach (var job in jobs)
     {
-        <CardBody class="my-card-body" @onclick="() => JobClick(job.Id)">
-            <CardTitle>
+    <TabBlazor.CardBody class="my-card-body" @onclick="() => JobClick(job.Id)">
+            <TabBlazor.CardTitle>
                 <h3> @job.Name</h3>
-            </CardTitle>
+            </TabBlazor.CardTitle>
             @job.Description
-        </CardBody>
+        </TabBlazor.CardBody>
     }
-</Card>
+</TabBlazor.Card>
 
 
 @code {
@@ -22,6 +27,7 @@
     public string userName { get; set; }
 
     private List<Job> jobs = new List<Job>();
+   
 
     protected override async void OnInitialized()
     {
@@ -34,11 +40,16 @@
         StateHasChanged();
     }
 
+   
+
+
+
 
     private void JobClick(Guid id)
     {
         navigate.NavigateTo($"/jobInfo/{id}");
     }
+
 }
 <style>
 

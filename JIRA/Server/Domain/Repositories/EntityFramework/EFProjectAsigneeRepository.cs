@@ -18,5 +18,16 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.ProjectAsignees.AddRange(projectAsignees);
             context.SaveChanges();
         }
+        public List<User> SearchUsersByUsernameInProject(Guid projectId, string username)
+        {
+            return context.ProjectAsignees
+                          .Where(pa => pa.ProjectId == projectId)
+                          .Join(context.Users,
+                                pa => pa.UserId,
+                                u => u.Id,
+                                (pa, u) => u)
+                          .Where(u => u.UserName.Contains(username))
+                          .ToList();
+        }
     }
 }

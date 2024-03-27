@@ -55,6 +55,11 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 .Distinct()
                 .ToList();
         }
+        public void Add(Job job)
+        {
+            context.Jobs.Add(job);
+            context.SaveChanges();
+        }
 
 
 

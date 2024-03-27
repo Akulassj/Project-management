@@ -178,5 +178,6 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.ProjectAsignees.Where(p => p.ProjectId == projectId).Select(a => a.UserId).SelectMany(u => context.Users.Where(user => user.Id == u)).ToList();
         }
+
     }
 }

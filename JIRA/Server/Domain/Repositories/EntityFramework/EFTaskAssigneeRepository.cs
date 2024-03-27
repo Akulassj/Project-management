@@ -23,5 +23,10 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.TaskAssignees.Where(t => t.UserId == userId).ToList();
         }
+        public void Add(List<TaskAssignee> taskAsignees)
+        {
+            context.TaskAssignees.AddRange(taskAsignees);
+            context.SaveChanges();
+        }
     }
 }

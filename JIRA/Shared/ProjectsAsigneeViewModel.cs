@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JIRA.Shared
 {
-    public class ProjectsAsignees
+    public class ProjectsAsigneeViewModel
     {
         public Project Project { get; set; }
         public List<ProjectAsignee> ProjectAsignees { get; set; }

@@ -8,7 +8,7 @@
 <h3>MyProjectList</h3>
 @* <Button class="mb-2" @onclick="ShowModal" BackgroundColor="TablerColor.Green" Shape="ButtonShape.Pill">Create new project</Button> *@
 
-<Blazorise.Button Color="Color.Success" Clicked="@ShowModal">Show Modal</Blazorise.Button>
+<Blazorise.Button Color="Color.Success" Clicked="@ShowModal">Create project</Blazorise.Button>
 
 <Blazorise.Modal @ref="modalRef">
     <Blazorise.ModalContent Centered>
@@ -87,7 +87,7 @@
     private List<User> users;
     private List<User> selectedUsers = new List<User>();
     private Project newProject = new Project();
-    private string searchText = "";
+    private string searchText = string.Empty;
 
     protected override async void OnInitialized()
     {
@@ -129,7 +129,7 @@
         {
             // Отправить запрос на сервер для поиска пользователей
             users = await client.GetFromJsonAsync<List<User>>($"api/project/SearchUsers?username={searchText}");
-
+            
         }
         else
         {
@@ -161,7 +161,7 @@
             asigneeList.Add(new ProjectAsignee() { UserId = user.Id, ProjectId = newProject.Id });
         }
 
-        var pj = new ProjectsAsignees()
+        var pj = new ProjectsAsigneeViewModel()
             {
                 Project = newProject,
                 ProjectAsignees = asigneeList,
@@ -171,8 +171,8 @@
         await client.PostAsJsonAsync("api/Project/AddProject", pj);
 
         newProject = new Project();
-        searchText = ""; // Очищаем поле поиска
-        selectedUsers.Clear(); // Очищаем список выбранных пользователей
+        searchText = ""; 
+        selectedUsers.Clear(); 
         users.Clear();
         await Refresh();
         await HideModal();

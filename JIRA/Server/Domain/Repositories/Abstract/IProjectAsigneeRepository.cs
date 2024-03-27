@@ -5,7 +5,7 @@ namespace JIRA.Server.Domain.Repositories.Abstract
 {
     public interface IProjectAsigneeRepository
     {
-
+        public List<User> SearchUsersByUsernameInProject(Guid projectId, string username);
         public void Add(List<ProjectAsignee> projectAsignees);
     }
 }

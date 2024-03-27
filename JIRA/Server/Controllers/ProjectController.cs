@@ -88,14 +88,14 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProjectAsigneeUsers(Guid projjectId)
+        public IActionResult GetProjectAsigneeUsers(Guid projectId)
         {
-            var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projjectId);
+            var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectId);
             return Ok(users);
         }
 
         [HttpPost]
-        public IActionResult AddProject(ProjectsAsignees projectAsignees)
+        public IActionResult AddProject(ProjectsAsigneeViewModel projectAsignees)
         {
             var user = dataManager.UserRepository.GetUserByName(projectAsignees.UserName);
             projectAsignees.ProjectAsignees.Add(new ProjectAsignee()

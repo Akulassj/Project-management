@@ -16,5 +16,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public List<JobStatus> GetJobStatuses();
 
         public List<Job> GetJobsByUserName(string userName);
+        public void Add(Job job);
     }
 }

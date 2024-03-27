@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIRA.Client", "JIRA\Client\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIRA.Shared", "JIRA\Shared\JIRA.Shared.csproj", "{0DE37A8B-7E9E-4BEF-876A-1C046FFD8A6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectManagment", "TestProjectManagment\TestProjectManagment.csproj", "{81FA6A52-F33F-4102-84F2-4C8C9622305C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0DE37A8B-7E9E-4BEF-876A-1C046FFD8A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE37A8B-7E9E-4BEF-876A-1C046FFD8A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DE37A8B-7E9E-4BEF-876A-1C046FFD8A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81FA6A52-F33F-4102-84F2-4C8C9622305C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81FA6A52-F33F-4102-84F2-4C8C9622305C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81FA6A52-F33F-4102-84F2-4C8C9622305C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81FA6A52-F33F-4102-84F2-4C8C9622305C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
