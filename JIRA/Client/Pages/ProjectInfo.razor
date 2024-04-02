@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <h3>Информация о заданиях</h3>
                         <p>Количество заданий: @Jobs.Count()</p>
                         <div class="btn btn-primary text-center" @onclick="GetJobs">Получить список Задач</div>
@@ -95,7 +95,7 @@
                             </ul>
                         }
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <h3>Календарь</h3>
 
                         <TabBlazor.Datepicker @bind-SelectedDate="SelectedDate" Label="Выберите дату" />
@@ -120,7 +120,7 @@
                 @if (Jobs is not null)
                 {
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <h3>Графики</h3>
                             <div class="row">
                                 <div class="col-md-12">
@@ -170,7 +170,7 @@
         </div>
 
     </TabBlazor.Tab>
-    <TabBlazor.Tab Title="Другая вкладка" Icon="other-icon">
+    <TabBlazor.Tab Title="Список задач" Icon="other-icon">
     </TabBlazor.Tab>
 </TabBlazor.Tabs>
 
@@ -238,7 +238,7 @@
         }
         catch (Exception ex)
         {
-            // Обработка ошибок
+            
             Console.WriteLine($"Ошибка при получении заданий для даты: {ex.Message}");
         }
     }
@@ -259,7 +259,7 @@
     {
         if (!string.IsNullOrWhiteSpace(searchText))
         {
-            // Отправить запрос на сервер для поиска пользователей, закрепленных за проектом
+            
             users = await client.GetFromJsonAsync<List<User>>($"api/job/SearchUsersInProject?projectId={projectId}&username={searchText}");
             await Task.Delay(1000);
         }
@@ -270,30 +270,7 @@
         }
     }
 
-    // private async Task CreateJob()
-    // {
-    //     var taskAssigneeList = new List<TaskAssignee>();
-    //     foreach (var user in selectedUsers)
-    //     {
-    //         taskAssigneeList.Add(new TaskAssignee() { UserId = user.Id, JobId = newJob.Id });
-    //     }
-
-    //     var taskAssignees = new TasksAssignees()
-    //         {
-    //             Job = newJob,
-    //             TaskAsignees = taskAssigneeList,
-    //             UserName = userName
-    //         };
-
-    //     await client.PostAsJsonAsync("api/Job/AddJob", taskAssignees);
-
-    //     newJob = new Job(); 
-    //     searchText = "";
-    //     selectedUsers.Clear();
-    //     users.Clear();
-    //     await Refresh();
-    //     await HideModal();
-    // }
+   
 
     private async Task CreateJob()
     {
@@ -327,7 +304,7 @@
 
             if (response.IsSuccessStatusCode)
             {
-                // Успешно добавлено
+               
                 newJob = new Job();
                 searchText = "";
                 selectedUsers.Clear();
@@ -339,61 +316,17 @@
             }
             else
             {
-                // Обработка ошибки
+               
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("Ошибка при добавлении задачи: " + errorMessage);
             }
         }
         catch (Exception ex)
         {
-            // Обработка других ошибок
+            
             Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
         }
     }
-
-
-
-
-    // private async Task CreateJob()
-    // {
-    //     Создаем новую задачу с заданными свойствами
-    //     var newJob = new Job
-    //         {
-    //             Name = this.newJob.Name,
-    //             Description = this.newJob.Description,
-    //             Status = "Uncompleted" Устанавливаем статус "Uncompleted"
-    //         };
-
-    //     Создаем список назначенных пользователей
-    //     var taskAssigneeList = new List<TaskAssignee>();
-    //     foreach (var user in selectedUsers)
-    //     {
-    //         taskAssigneeList.Add(new TaskAssignee { UserId = user.Id });
-    //     }
-
-    //     Формируем анонимный объект с данными о задаче и назначенных пользователях
-    //     var requestData = new
-    //     {
-    //         Job = newJob,
-    //         TaskAssignees = taskAssigneeList
-    //     };
-
-    //     Отправляем запрос на сервер с данными о задаче и ее назначениях
-    //     await client.PostAsJsonAsync("api/Job/AddJob", requestData);
-
-    //     Очищаем переменные после создания задачи
-    //     this.newJob = new Job();
-    //     searchText = "";
-    //     selectedUsers.Clear();
-    //     users.Clear();
-    //     await Refresh();
-    //     await HideModal();
-    // }
-
-
-
-
-
 
 
 
@@ -414,7 +347,7 @@
         if (!selectedUsers.Contains(user))
         {
             selectedUsers.Add(user);
-            searchText = user.UserName; // Обновляем searchText при выборе пользователя
+            searchText = user.UserName; 
         }
     }
 

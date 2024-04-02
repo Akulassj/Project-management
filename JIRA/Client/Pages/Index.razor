@@ -7,8 +7,9 @@
 @inject HttpClient client
 
 <ul>
-    @foreach (var user in users)
-    {
+    
+    @foreach (var user in users.Take(3))
+    {   
         <li>
             Логин @user.UserName
             Пароль @user.FirstName
