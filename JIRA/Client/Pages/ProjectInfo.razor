@@ -171,7 +171,49 @@
 
     </TabBlazor.Tab>
     <TabBlazor.Tab Title="Список задач" Icon="other-icon">
+        <div class="container">
+            <h3>Список задач</h3>
+            @if (Jobs.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th>Статус</th>
+                            <th>Дата создания</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var job in Jobs)
+                        {
+                            <tr>
+                                <td>@job.Name</td>
+                                <td>@job.Description</td>
+                                <td>
+                                    <select @onchange="@(e => ChangeJobStatus(job, e.Value.ToString()))">
+                                        <option value="Completed" selected="@((job.Status == "Completed"))">Выполнено</option>
+                                        <option value="Uncompleted" selected="@((job.Status == "Uncompleted"))">Невыполнено</option>
+                                    </select>
+                                </td>
+                                <td>@job.CreatedAt.ToString("yyyy-MM-dd")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Задачи отсутствуют.</p>
+            }
+        </div>
     </TabBlazor.Tab>
+
+
+
+
+
+
 </TabBlazor.Tabs>
 
 @code {
@@ -195,7 +237,9 @@
     private List<User> users;
     private List<User> selectedUsers = new List<User>();
     private Job newJob = new Job();
-    private string searchText = "";
+    private string searchText = string.Empty;
+
+    private bool jobStatus;
 
     private async Task GetJobs()
     {
@@ -238,7 +282,7 @@
         }
         catch (Exception ex)
         {
-            
+
             Console.WriteLine($"Ошибка при получении заданий для даты: {ex.Message}");
         }
     }
@@ -255,6 +299,17 @@
                 return "#87775d"; 
         }
     }
+    private async Task ChangeJobStatus(Job job, string status)
+    {
+        job.Status = status;
+
+      
+    }
+    private void UpdateJobStatus(Job job)
+    {
+        jobStatus = job.Status.ToLower() == "completed";
+    }
+   
     private async Task GetUsersSearch()
     {
         if (!string.IsNullOrWhiteSpace(searchText))

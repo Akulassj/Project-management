@@ -24,32 +24,6 @@ namespace JIRA.Server.Controllers
             return Ok();
         }
 
-        //[HttpPost]
-        //public IActionResult AddJob([FromBody] dynamic requestData)
-        //{
-        //    try
-        //    {
-        //        //Извлекаем данные о задаче и назначенных пользователях из запроса
-        //       var job = requestData.Job.ToObject<Job>();
-        //        var taskAssignees = requestData.TaskAssignees.ToObject<List<TaskAssignee>>();
-
-        //        //Добавляем задачу в репозиторий
-        //        dataManager.JobRepository.Add(job);
-
-        //       // Добавляем назначенных пользователей в репозиторий
-        //        dataManager.TaskAssigneeRepository.Add(taskAssignees);
-
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //       // Обработка ошибок
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
-
-
-
         [HttpGet]
         public IActionResult SearchUsersInProject(Guid projectId, string username)
         {
