@@ -28,8 +28,8 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         public List<Job> GetProjectJobsByDate(Guid projectID, DateTime date)
         {
-            DateTime startDate = date.Date.ToUniversalTime(); // Преобразование в UTC формат
-            DateTime endDate = startDate.AddDays(1).AddSeconds(-1); // Конец дня
+            DateTime startDate = date.Date.ToUniversalTime(); 
+            DateTime endDate = startDate.AddDays(1).AddSeconds(-1); 
 
             return context.Jobs
                 .Where(j => j.CreatedAt >= startDate && j.CreatedAt <= endDate && j.ProjectId == projectID)
@@ -61,8 +61,12 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
-
-
+        public void Update(Job job)
+        {
+            context.Jobs.Entry(job).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+      
 
 
     }

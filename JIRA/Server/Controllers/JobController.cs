@@ -37,6 +37,58 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpGet]
+        public IActionResult GetTaskAssigneesByUserId(Guid userId)
+        {
+            try
+            {
+                var taskAssignees = dataManager.TaskAssigneeRepository.GetTaskAssigneesByUserId(userId);
+                return Ok(taskAssignees);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        public IActionResult GetTaskAssigneeUsers(Guid jobId)
+        {
+            try
+            {
+                var users = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(jobId);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        public IActionResult UpdateJobStatus(Job job)
+        {
+            try
+            {
+                // Поиск задачи по идентификатору
+                var existingJob = dataManager.JobRepository.GetJobById(job.Id);
+
+                if (existingJob == null)
+                {
+                    return NotFound();
+                }
+
+                // Обновление статуса задачи
+                existingJob.Status = job.Status;
+
+                // Сохранение изменений
+                dataManager.JobRepository.Update(existingJob);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
 
     }
 }

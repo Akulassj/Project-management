@@ -170,43 +170,56 @@
         </div>
 
     </TabBlazor.Tab>
-    <TabBlazor.Tab Title="Список задач" Icon="other-icon">
+    <TabBlazor.Tab Title="Список задач" Icon="other-icon" >
         <div class="container">
             <h3>Список задач</h3>
             @if (Jobs.Any())
             {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>Описание</th>
-                            <th>Статус</th>
-                            <th>Дата создания</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var job in Jobs)
-                        {
+                <div class="table-responsive-sm">
+                    <table class="table table-bordered border-dark">
+                        <thead>
                             <tr>
-                                <td>@job.Name</td>
-                                <td>@job.Description</td>
-                                <td>
-                                    <select @onchange="@(e => ChangeJobStatus(job, e.Value.ToString()))">
-                                        <option value="Completed" selected="@((job.Status == "Completed"))">Выполнено</option>
-                                        <option value="Uncompleted" selected="@((job.Status == "Uncompleted"))">Невыполнено</option>
-                                    </select>
-                                </td>
-                                <td>@job.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <th scope="col">Название</th>
+                                <th scope="col">Описание</th>
+                                <th scope="col">Статус</th>
+                                @* <th scope="col">Ответственные</th> *@
+                                <th scope="col">Дата создания</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var job in Jobs)
+                            {
+                                <tr>
+                                    <td>
+                                        
+                                            @job.Name
+                                        
+                                    </td>
+
+                                    <td>@job.Description</td>
+                                    <td>
+                                        <select class="form-select" @onchange="@(e => ChangeJobStatus(job, e.Value.ToString()))">
+                                            <option value="Completed" selected="@((job.Status == "Completed"))">Выполнено</option>
+                                            <option value="Uncompleted" selected="@((job.Status == "Uncompleted"))">Невыполнено</option>
+                                        </select>
+                                    </td>
+
+                                   @*  <td>
+                                        @GetTaskAssignees(job.Id)
+                                    </td> *@
+                                    <td>@job.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
             else
             {
                 <p>Задачи отсутствуют.</p>
             }
         </div>
+
     </TabBlazor.Tab>
 
 
@@ -230,6 +243,7 @@
     private List<TaskAssignee> TaskAssignees = new List<TaskAssignee>();
 
     private List<User> AssignedUsers = new List<User>();
+    private List<User> AssignedTaskUsers = new List<User>();
 
     private ApexChart<Job> chart = default!;
 
@@ -303,12 +317,9 @@
     {
         job.Status = status;
 
-      
+        await client.PutAsJsonAsync("api/Job/UpdateJobStatus", job);
     }
-    private void UpdateJobStatus(Job job)
-    {
-        jobStatus = job.Status.ToLower() == "completed";
-    }
+    
    
     private async Task GetUsersSearch()
     {
@@ -382,6 +393,20 @@
             Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
         }
     }
+    
+    // private async Task GetTaskAssignees(Guid jobId)
+    // {
+    //     try
+    //     {
+    //         AssignedTaskUsers = await client.GetFromJsonAsync<List<User>>($"api/job/GetTaskAssigneeUsers?jobId={jobId}");
+           
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
+    //     }
+    // }
+
 
 
 
