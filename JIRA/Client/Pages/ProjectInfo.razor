@@ -28,62 +28,7 @@
                         <h3>Информация о заданиях</h3>
                         <p>Количество заданий: @Jobs.Count()</p>
                         <div class="btn btn-primary text-center" @onclick="GetJobs">Получить список Задач</div>
-                        <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
-                        <Blazorise.Modal @ref="modalRef">
-                            <Blazorise.ModalContent Centered>
-                             <Blazorise.ModalHeader>
-                                 <ModalTitle>Create Task</ModalTitle>
-                                 <CloseButton />
-                             </Blazorise.ModalHeader>
-                             <Blazorise.ModalBody>
-                                 <Blazorise.Field>
-                                     <FieldLabel>Name</FieldLabel>
-                                     <TextEdit Placeholder="Enter task name..." @bind-Text="newJob.Name" />
-                                 </Blazorise.Field>
-                                 <Blazorise.Field>
-                                     <FieldLabel>Description</FieldLabel>
-                                     <TextEdit Placeholder="Enter task description..." @bind-Text="newJob.Description" />
-                                 </Blazorise.Field>
-
-                                 <Blazorise.Field>
-                                     <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                                     <Blazorise.TextEdit Placeholder="Search by name or surname..." @bind-Text="searchText" @onkeypress=GetUsersSearch />
-                                 </Blazorise.Field>
-
-                                 @if (users != null)
-                                    {
-                                        <div class="search-results">
-                                            @foreach (var user in users)
-                                            {
-                                                <div class="search-result" @onclick="() => AddUser(user)">
-                                                    @user.UserName
-                                                </div>
-                                            }
-                                        </div>
-                                    }
-
-                                    @if (selectedUsers.Any())
-                                    {
-                                        <div>
-                                            <h4>Selected Users:</h4>
-                                            @foreach (var user in selectedUsers)
-                                            {
-                                                <div>
-                                                    <p>@user.UserName</p>
-                                                    <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
-                                                </div>
-                                            }
-                                        </div>
-                                    }
-
-
-                                </Blazorise.ModalBody>
-                                <ModalFooter>
-                                    <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
-                                    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateJob">Save Changes</Blazorise.Button>
-                                </ModalFooter>
-                            </Blazorise.ModalContent>
-                        </Blazorise.Modal>
+                        
                         @if (Jobs.Any())
                         {
                             <h3>Список Задач:</h3>
@@ -171,6 +116,62 @@
 
     </TabBlazor.Tab>
     <TabBlazor.Tab Title="Список задач" Icon="other-icon" >
+        <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
+        <Blazorise.Modal @ref="modalRef">
+            <Blazorise.ModalContent Centered>
+                <Blazorise.ModalHeader>
+                    <ModalTitle>Create Task</ModalTitle>
+                    <CloseButton />
+                </Blazorise.ModalHeader>
+                <Blazorise.ModalBody>
+                    <Blazorise.Field>
+                        <FieldLabel>Name</FieldLabel>
+                        <TextEdit Placeholder="Enter task name..." @bind-Text="newJob.Name" />
+                    </Blazorise.Field>
+                    <Blazorise.Field>
+                        <FieldLabel>Description</FieldLabel>
+                        <TextEdit Placeholder="Enter task description..." @bind-Text="newJob.Description" />
+                    </Blazorise.Field>
+
+                    <Blazorise.Field>
+                        <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
+                        <Blazorise.TextEdit Placeholder="Search by name or surname..." @bind-Text="searchText" @onkeypress=GetUsersSearch />
+                    </Blazorise.Field>
+
+                    @if (users != null)
+                    {
+                        <div class="search-results">
+                            @foreach (var user in users)
+                            {
+                                <div class="search-result" @onclick="() => AddUser(user)">
+                                    @user.UserName
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    @if (selectedUsers.Any())
+                    {
+                        <div>
+                            <h4>Selected Users:</h4>
+                            @foreach (var user in selectedUsers)
+                            {
+                                <div>
+                                    <p>@user.UserName</p>
+                                    <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
+                                </div>
+                            }
+                        </div>
+                    }
+
+
+                </Blazorise.ModalBody>
+                <ModalFooter>
+                    <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+                    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateJob">Save Changes</Blazorise.Button>
+                </ModalFooter>
+            </Blazorise.ModalContent>
+        </Blazorise.Modal>
         <div class="container">
             <h3>Список задач</h3>
             @if (Jobs.Any())
@@ -182,20 +183,16 @@
                                 <th scope="col">Название</th>
                                 <th scope="col">Описание</th>
                                 <th scope="col">Статус</th>
-                                @* <th scope="col">Ответственные</th> *@
+                               @*  <th scope="col">Ответственные</th> *@
                                 <th scope="col">Дата создания</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var job in Jobs)
                             {
+                               
                                 <tr>
-                                    <td>
-                                        
-                                            @job.Name
-                                        
-                                    </td>
-
+                                    <td>@job.Name</td>
                                     <td>@job.Description</td>
                                     <td>
                                         <select class="form-select" @onchange="@(e => ChangeJobStatus(job, e.Value.ToString()))">
@@ -203,17 +200,30 @@
                                             <option value="Uncompleted" selected="@((job.Status == "Uncompleted"))">Невыполнено</option>
                                         </select>
                                     </td>
-
                                    @*  <td>
-                                        @GetTaskAssignees(job.Id)
+                                        @if (AssignedTaskUsers != null && AssignedTaskUsers.Any())
+                                        {
+                                            <ul>
+                                                @foreach (var user in AssignedTaskUsers)
+                                                {
+                                                    <li>@user.UserName - @user.Position</li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <p>Назначенных пользователей нет.</p>
+                                        }
                                     </td> *@
                                     <td>@job.CreatedAt.ToString("yyyy-MM-dd")</td>
                                 </tr>
                             }
+
                         </tbody>
                     </table>
                 </div>
             }
+           
             else
             {
                 <p>Задачи отсутствуют.</p>
@@ -233,6 +243,8 @@
     public Project CurrentProject { get; set; } = default!;
     [Parameter]
     public string projectId { get; set; }
+    [Parameter]
+    public Guid JobId { get; set; }
 
     private List<Job> SelectedDateTasks { get; set; } = new List<Job>();
 
@@ -253,6 +265,8 @@
     private Job newJob = new Job();
     private string searchText = string.Empty;
 
+
+
     private bool jobStatus;
 
     private async Task GetJobs()
@@ -266,6 +280,8 @@
         SelectedDate = DateTime.Today;
 
         await Refresh();
+
+
     }
 
     private async Task GetAssignedUsers()
@@ -279,6 +295,7 @@
         CurrentProject = await client.GetFromJsonAsync<Project>($"api/project/GetProject?projectId={projectId}");
         await GetJobs();
         await UpdateTasksForSelectedDate();
+        await GetAssignedTaskUsers(JobId);
         StateHasChanged();
     }
 
@@ -406,6 +423,10 @@
     //         Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
     //     }
     // }
+    private async Task GetAssignedTaskUsers(Guid jobId)
+    {
+        AssignedTaskUsers = await client.GetFromJsonAsync<List<User>>($"api/job/GetTaskAssigneeUsers?jobId={jobId}");
+    }
 
 
 
