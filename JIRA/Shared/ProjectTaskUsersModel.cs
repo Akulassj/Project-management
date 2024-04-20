@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace JIRA.Shared
 {
-    public class JobComments
+    public class ProjectTaskUsersModel
     {
-        public Job Job { get; set; }
-        public List<Comment> Comments { get; set; }
+        public ProjectTask ProjectTask { get; set; }
+        public List<User> AssignedUsers { get; set; }
     }
 }

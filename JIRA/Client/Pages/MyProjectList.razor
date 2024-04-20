@@ -3,13 +3,10 @@
 @using Blazorise
 @inject HttpClient client
 @inject NavigationManager navigate
-@inject Blazorise.IModalService ModalService
 
 <h3>MyProjectList</h3>
-@* <Button class="mb-2" @onclick="ShowModal" BackgroundColor="TablerColor.Green" Shape="ButtonShape.Pill">Create new project</Button> *@
 
 <Blazorise.Button Color="Color.Success" Clicked="@ShowModal">Create project</Blazorise.Button>
-
 <Blazorise.Modal @ref="modalRef">
     <Blazorise.ModalContent Centered>
         <Blazorise.ModalHeader>
@@ -26,28 +23,28 @@
                 <TextEdit Placeholder="Enter project description..." @bind-Text="newProject.Description" />
             </Blazorise.Field>
 
-          <Blazorise.Field>
+            <Blazorise.Field>
                 <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                <Blazorise.TextEdit Placeholder="Search by name or surname..." @bind-Text="searchText" @onchange="GetUsersSearch" />
+                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="GetUsersSearch" />
             </Blazorise.Field>
 
-            @if (users != null)
+            @if (users is not null && users.Any())
             {
                 <div class="search-results">
                     @foreach (var user in users)
                     {
                         <div class="search-result" @onclick="() => AddUser(user)">
-                           @user.UserName
+                            @user.UserName
                         </div>
                     }
                 </div>
             }
 
-            @if (selectedUsers.Any())
+            @if (SelectedUsers is not null && SelectedUsers.Any())
             {
                 <div>
                     <h4>Selected Users:</h4>
-                    @foreach (var user in selectedUsers)
+                    @foreach (var user in SelectedUsers)
                     {
                         <div>
                             <p>@user.UserName</p>
@@ -57,7 +54,6 @@
                 </div>
             }
 
-
         </Blazorise.ModalBody>
         <ModalFooter>
             <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
@@ -66,28 +62,35 @@
     </Blazorise.ModalContent>
 </Blazorise.Modal>
 
-
 <TabBlazor.Card>
     @foreach (var project in projects)
-            {
-    <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
-        <TabBlazor.CardTitle>
-            <h3>@project.Name</h3>
-        </TabBlazor.CardTitle>
-        @project.Description
-    </TabBlazor.CardBody>
-            }
-</TabBlazor.Card>
+    {
+        <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
+            <TabBlazor.CardTitle>
+                <h3>@project.Name</h3>
+            </TabBlazor.CardTitle>
+            @project.Description
+        </TabBlazor.CardBody>
+    }
+    </TabBlazor.Card>
 
 @code {
+
+    private Project newProject = new Project();
+
+    private string searchText = string.Empty;
+
+    private List<User> users { get; set; } = new List<User>();
+
+    [Parameter]
+    public List<User> SelectedUsers { get; set; } = new List<User>();
+
     [Parameter]
     public string userName { get; set; }
 
     private List<Project> projects = new List<Project>();
-    private List<User> users;
-    private List<User> selectedUsers = new List<User>();
-    private Project newProject = new Project();
-    private string searchText = string.Empty;
+
+    List<User> selectedUsers { get; set; } = new List<User>();
 
     protected override async void OnInitialized()
     {
@@ -97,12 +100,9 @@
     private async Task Refresh()
     {
         projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects/?userName={userName}");
-        //users = await client.GetFromJsonAsync<List<User>>("api/account/GetAllUsers");
-        //await client.GetFromJsonAsync<List<User>>($"/api/project/GetProjectAsigneeUsers?projectId={}");
-
-
-
-
+        selectedUsers.Clear();
+        searchText = string.Empty;
+        users.Clear();
         StateHasChanged();
     }
 
@@ -118,45 +118,43 @@
         return modalRef.Show();
     }
 
-    private Task HideModal()
+    private async Task GetUsersSearch(string value)
     {
-        return modalRef.Hide();
-    }
-
-    private async Task GetUsersSearch()
-    {
+        searchText = value;
         if (!string.IsNullOrWhiteSpace(searchText))
         {
-            // Отправить запрос на сервер для поиска пользователей
+
             users = await client.GetFromJsonAsync<List<User>>($"api/project/SearchUsers?username={searchText}");
-            
+
         }
         else
         {
-            users = null;
-            selectedUsers = new List<User>();
+            users.Clear();
         }
     }
 
     private void AddUser(User user)
     {
-        if (!selectedUsers.Contains(user))
+        if (!SelectedUsers.Contains(user))
         {
-            selectedUsers.Add(user);
+            SelectedUsers.Add(user);
         }
     }
 
     private void RemoveUser(User user)
     {
-        selectedUsers.Remove(user);
+        SelectedUsers.Remove(user);
     }
 
-
+    private Task HideModal()
+    {
+        return modalRef.Hide();
+    }
 
     private async Task CreateProject()
     {
         var asigneeList = new List<ProjectAsignee>();
-        foreach (var user in selectedUsers)
+        foreach (var user in SelectedUsers)
         {
             asigneeList.Add(new ProjectAsignee() { UserId = user.Id, ProjectId = newProject.Id });
         }
@@ -171,11 +169,9 @@
         await client.PostAsJsonAsync("api/Project/AddProject", pj);
 
         newProject = new Project();
-        searchText = ""; 
-        selectedUsers.Clear(); 
-        users.Clear();
-        await Refresh();
+        SelectedUsers.Clear();
         await HideModal();
+        Refresh();
     }
 
 }

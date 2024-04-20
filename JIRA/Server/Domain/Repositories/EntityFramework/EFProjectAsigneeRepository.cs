@@ -26,7 +26,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                                 pa => pa.UserId,
                                 u => u.Id,
                                 (pa, u) => u)
-                          .Where(u => u.UserName.Contains(username))
+                          .Where(u => u.UserName.ToLower().Contains(username.ToLower()))
                           .ToList();
         }
     }

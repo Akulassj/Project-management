@@ -52,17 +52,17 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
 
 
-                List<Job> jobs = new List<Job>();
+                List<ProjectTask> projectTasks = new List<ProjectTask>();
 
                 for (int i = 0; i < 100; i++)
                 {
                     int c = rnd.Next(Data.projects.Count);
-                    var job = new Job();
-                    job.Name = Data.jobs[c][0];
-                    job.Description = Data.jobs[c][1];
-                    job.Status = Faker.Enum.Random<JobStatus>().ToString();
-                    job.ProjectId = projects[Random.Shared.Next(projects.Count)].Id;
-                    jobs.Add(job);
+                    var projectTask = new ProjectTask();
+                    projectTask.Name = Data.projectTasks[c][0];
+                    projectTask.Description = Data.projectTasks[c][1];
+                    projectTask.Status = Faker.Enum.Random<ProjectTaskStatus>().ToString();
+                    projectTask.ProjectId = projects[Random.Shared.Next(projects.Count)].Id;
+                    projectTasks.Add(projectTask);
                 }
 
 
@@ -73,14 +73,16 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 {
                     var userProjects = new List<Project>();
                     for (int i = 0; i < Random.Shared.Next(1, 4); i++)
-                    {
-                        var projectAsignee = new ProjectAsignee();
+                    {                    
                         var project = projects[Random.Shared.Next(projects.Count)];
                         if (!userProjects.Contains(project))
                         {
                             userProjects.Add(project);
-                            projectAsignee.ProjectId = project.Id;
-                            projectAsignee.UserId = user.Id;
+                            var projectAsignee = new ProjectAsignee
+                            {
+                                ProjectId = project.Id,
+                                UserId = user.Id
+                            };
                             projectAsignees.Add(projectAsignee);
                         }
                     }
@@ -88,36 +90,51 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
                 List<TaskAssignee> taskAssignees = new List<TaskAssignee>();
 
-                foreach (var user in users)
+                foreach (var task in projectTasks)
                 {
-                    for (int i = 0; i < Random.Shared.Next(1, 3); i++)
-                    {
-                        var taskAssignee = new TaskAssignee();
-                        var userProjects = projectAsignees.Where(x => x.UserId == user.Id).Select(x => x.ProjectId).SelectMany(p => context.Projects.Where(x => x.Id == p)).ToList();
-                        var project = userProjects[Random.Shared.Next(userProjects.Count)];
-                        var projectJobs = jobs.Where(j => j.ProjectId == project.Id).ToList();
-                        taskAssignee.JobId = projectJobs[Random.Shared.Next(1, projectJobs.Count)].Id;
-                        taskAssignee.UserId = user.Id;
-                        taskAssignees.Add(taskAssignee);
-                    }
+                    var projectUsers = projectAsignees.Where(p => p.ProjectId == task.ProjectId)
+                                                    .Select(p => p.UserId)
+                                                    .SelectMany(id => users.Where(user => user.Id == id))
+                                                    .ToList();
+
+                    var taskAssignee = new TaskAssignee() 
+                    { 
+                        ProjectTaskId = task.Id,
+                        UserId = projectUsers[Random.Shared.Next(projectUsers.Count)].Id
+                    };
+                    taskAssignees.Add(taskAssignee);
+
+
+                    //var taskAssignee = new TaskAssignee();
+                    //var userProjects = projectAsignees
+                    //    .Where(x => x.UserId == user.Id)
+                    //    .Select(x => x.ProjectId)
+                    //    .SelectMany(p => context.Projects.Where(x => x.Id == p))
+                    //    .ToList();
+                    //var project = userProjects[Random.Shared.Next(userProjects.Count)];
+                    //var projectProjectTasks = projectTasks.Where(j => j.ProjectId == project.Id).ToList();
+                    //taskAssignee.ProjectTaskId = projectProjectTasks[Random.Shared.Next(1, projectProjectTasks.Count)].Id;
+                    //taskAssignee.UserId = user.Id;
+                    //taskAssignees.Add(taskAssignee);
+
                 }
 
                 List<Comment> comments = new List<Comment>();
 
-                foreach (var job in jobs)
+                foreach (var projectTask in projectTasks)
                 {
                     for (int i = 0; i < Random.Shared.Next(2, 5); i++)
                     {
                         var comment = new Comment();
                         comment.Text = Faker.Lorem.Sentence(5);
-                        comment.JobId = job.Id;
+                        comment.ProjectTaskId = projectTask.Id;
                         comment.UserId = users[Random.Shared.Next(users.Count)].Id;
                         comments.Add(comment);
                     }
                 }
 
                 context.Users.AddRange(users);
-                context.Jobs.AddRange(jobs);
+                context.ProjectTasks.AddRange(projectTasks);
 
                 context.TaskAssignees.AddRange(taskAssignees);
 
@@ -162,16 +179,6 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 .SelectMany(projectId => context.Projects.Where(p => p.Id == projectId))
                 .Distinct()
                 .ToList();
-
-            return context.TaskAssignees.Where(ta => ta.UserId == id)
-                .Select(ta => ta.JobId)
-                .Distinct()
-                .SelectMany(jobId => context.Jobs.Where(j => j.Id == jobId))
-                .Select(j => j.ProjectId)
-                .Distinct()
-                .SelectMany(projectId => context.Projects.Where(p => p.Id == projectId))
-                .ToList();
-
         }
 
         public List<User> GetAsigneeProjectUsers(Guid projectId)

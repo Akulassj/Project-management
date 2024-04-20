@@ -25,7 +25,7 @@ internal class Program
         builder.Services.AddTransient<IProjectRepository, EFProjectRepository>();
         builder.Services.AddTransient<IAttachmentRepository, EFAttachmentRepository>();
         builder.Services.AddTransient<ICommentRepository, EFCommentRepository>();
-        builder.Services.AddTransient<IJobRepository, EFJobRepository>();
+        builder.Services.AddTransient<IProjectTaskRepository, EFProjectTaskRepository>();
         builder.Services.AddTransient<ITaskAssigneeRepository, EFTaskAssigneeRepository>();
         builder.Services.AddTransient<IUserRepository, EFUserRepository>();
         builder.Services.AddTransient<IProjectAsigneeRepository, EFProjectAsigneeRepository>();

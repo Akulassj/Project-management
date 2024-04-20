@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace JIRA.Shared
 {
-    public class TasksAssigneeViewModel
+    public class ProjectTaskComments
     {
         public ProjectTask ProjectTask { get; set; }
-        public List<TaskAssignee> TaskAssignees { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

@@ -95,7 +95,7 @@ namespace JIRA.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 columns: new[] { "Id", "CreatedAt", "Description", "Name", "ProjectId", "Status" },
                 values: new object[,]
                 {
@@ -203,7 +203,7 @@ namespace JIRA.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Comments",
-                columns: new[] { "Id", "CreatedAt", "JobId", "Text", "UserId" },
+                columns: new[] { "Id", "CreatedAt", "ProjectTaskId", "Text", "UserId" },
                 values: new object[,]
                 {
                     { new Guid("00092bc4-b906-4c9c-a841-ba50fe693bfd"), new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(7899), new Guid("3ef69913-7090-4045-b920-db77b99deca7"), "Debitis eos et officia consequatur quibusdam laudantium.", new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63") },
@@ -508,7 +508,7 @@ namespace JIRA.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "TaskAssignees",
-                columns: new[] { "Id", "JobId", "UserId" },
+                columns: new[] { "Id", "ProjectTaskId", "UserId" },
                 values: new object[,]
                 {
                     { new Guid("09e0f46a-a042-45a5-a010-d302db4f2125"), new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"), new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b") },
@@ -2702,502 +2702,502 @@ namespace JIRA.Server.Migrations
                 keyValue: new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("0e3e241b-6b85-4726-bb7f-0d5dd78f374a"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("16c90236-0556-4f83-a836-57d88764f88c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("18c53473-ded0-4c56-981c-268bb575521c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("2c867491-604a-4d8a-8f93-53364575334f"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("2eebc587-e9eb-4a6d-a810-a0f8ab84f3ed"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("304bcd67-0bef-49d1-bde7-92a185269842"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("35912039-370c-4ae4-96b5-2b61213a3350"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("3a39bf14-a065-46df-887a-7c021786af3c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("3ef69913-7090-4045-b920-db77b99deca7"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("535dfdfc-42e7-4fec-8f25-100eb6c5b034"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("6051c954-41cd-4a35-8564-f6f63a560624"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("642b2c5f-cc57-4b7d-8635-9cff7835dc2b"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("694aaf4e-7aa9-4ab3-8342-3510027457d4"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("6a2c586f-753c-4bef-99ae-a7d4208b7d66"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("819fb850-d846-4c40-b8bc-e547a60af603"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("92529999-5d05-4653-ab8e-32a596cf1f7a"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("97229606-9c9b-4766-8e97-f285447326b4"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("a0ab31bd-053d-47af-875f-3c6371354046"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("b3a372a7-e713-4862-a888-7326fe442864"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("c62c4969-4be5-4957-aa1d-fceb7016372c"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("c9e3a639-110c-424e-8b1f-00dba4255e68"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("d0fec011-9763-458b-b0b4-acab3562c246"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("d6327803-30e9-473b-a70e-51604a032e1b"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f513902d-9af6-4832-802b-6a12639a7975"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("fc1e9849-af7d-4bcf-94cb-3ae5a79c32f0"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"));
 
             migrationBuilder.DeleteData(
-                table: "Jobs",
+                table: "ProjectTasks",
                 keyColumn: "Id",
                 keyValue: new Guid("ff670869-cc90-4f53-bdb3-cdcca08e55fa"));
 

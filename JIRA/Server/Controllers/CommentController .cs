@@ -18,9 +18,9 @@ namespace JIRA.Server.Controllers
 
 
         [HttpGet]
-        public IActionResult GetCommentsByJobId(Guid jobId)
+        public IActionResult GetCommentsByProjectTaskId(Guid projectTaskId)
         {
-            var comments = dataManager.CommentRepository.GetCommentsByJobId(jobId);
+            var comments = dataManager.CommentRepository.GetCommentsByProjectTaskId(projectTaskId);
             return Ok(comments);
         }
 

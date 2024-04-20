@@ -43,7 +43,7 @@ namespace JIRA.Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("JobId")
+                    b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UploadedAt")
@@ -51,7 +51,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.ToTable("Attachments");
                 });
@@ -65,7 +65,7 @@ namespace JIRA.Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("JobId")
+                    b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Text")
@@ -77,14 +77,14 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Job", b =>
+            modelBuilder.Entity("JIRA.Server.Domain.Entity.ProjectTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,7 +112,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("ProjectTasks");
                 });
 
             modelBuilder.Entity("JIRA.Server.Domain.Entity.Project", b =>
@@ -143,7 +143,7 @@ namespace JIRA.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("JobId")
+                    b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
@@ -151,7 +151,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.HasIndex("UserId");
 
@@ -407,20 +407,20 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("JIRA.Server.Domain.Entity.Attachment", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.Job", "Job")
+                    b.HasOne("JIRA.Server.Domain.Entity.ProjectTask", "ProjectTask")
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("ProjectTask");
                 });
 
             modelBuilder.Entity("JIRA.Server.Domain.Entity.Comment", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.Job", "Job")
+                    b.HasOne("JIRA.Server.Domain.Entity.ProjectTask", "ProjectTask")
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -430,15 +430,15 @@ namespace JIRA.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("ProjectTask");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Job", b =>
+            modelBuilder.Entity("JIRA.Server.Domain.Entity.ProjectTask", b =>
                 {
                     b.HasOne("JIRA.Server.Domain.Entity.Project", "Project")
-                        .WithMany("Jobs")
+                        .WithMany("ProjectTasks")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -448,9 +448,9 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("JIRA.Server.Domain.Entity.TaskAssignee", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.Job", "Job")
+                    b.HasOne("JIRA.Server.Domain.Entity.ProjectTask", "ProjectTask")
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -460,7 +460,7 @@ namespace JIRA.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("ProjectTask");
 
                     b.Navigation("User");
                 });
@@ -518,7 +518,7 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("JIRA.Server.Domain.Entity.Project", b =>
                 {
-                    b.Navigation("Jobs");
+                    b.Navigation("ProjectTasks");
                 });
 
             modelBuilder.Entity("JIRA.Server.Domain.Entity.User", b =>

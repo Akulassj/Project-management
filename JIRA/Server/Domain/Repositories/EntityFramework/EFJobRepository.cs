@@ -5,41 +5,41 @@ using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
-    public class EFJobRepository : IJobRepository
+    public class EFProjectTaskRepository : IProjectTaskRepository
     {
         private readonly ProjectManagementContext context;
-        public EFJobRepository(ProjectManagementContext context)
+        public EFProjectTaskRepository(ProjectManagementContext context)
         {
             this.context = context;
         }
-        public Job GetJobById(Guid id)
+        public ProjectTask GetProjectTaskById(Guid id)
         {
-            return context.Jobs.FirstOrDefault(j => j.Id == id);
+            return context.ProjectTasks.FirstOrDefault(j => j.Id == id);
         }
 
-        public List<Job> GetJobsByProjectId(Guid projectId)
+        public List<ProjectTask> GetProjectTasksByProjectId(Guid projectId)
         {
-            return context.Jobs.Where(j => j.ProjectId == projectId).ToList();
+            return context.ProjectTasks.Where(j => j.ProjectId == projectId).ToList();
         }
-        public List<Job> GetAllJobs()
+        public List<ProjectTask> GetAllProjectTasks()
         {
-            return context.Jobs.ToList();
+            return context.ProjectTasks.ToList();
         }
 
-        public List<Job> GetProjectJobsByDate(Guid projectID, DateTime date)
+        public List<ProjectTask> GetProjectProjectTasksByDate(Guid projectID, DateTime date)
         {
             DateTime startDate = date.Date.ToUniversalTime(); 
             DateTime endDate = startDate.AddDays(1).AddSeconds(-1); 
 
-            return context.Jobs
+            return context.ProjectTasks
                 .Where(j => j.CreatedAt >= startDate && j.CreatedAt <= endDate && j.ProjectId == projectID)
                 .ToList();
         }
-        public List<JobStatus> GetJobStatuses()
+        public List<ProjectTaskStatus> GetProjectTaskStatuses()
         {
-            return context.Jobs.Select(j => Enum.Parse<JobStatus>(j.Status)).Distinct().ToList();
+            return context.ProjectTasks.Select(j => Enum.Parse<ProjectTaskStatus>(j.Status)).Distinct().ToList();
         }
-        public List<Job> GetJobsByUserName(string userName)
+        public List<ProjectTask> GetProjectTasksByUserName(string userName)
         {
             var userId = context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             if (userId == null)
@@ -49,21 +49,21 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
             return context.TaskAssignees
                 .Where(ta => ta.UserId == userId)
-                .Select(ta => ta.JobId)
+                .Select(ta => ta.ProjectTaskId)
                 .Distinct()
-                .SelectMany(jobId => context.Jobs.Where(j => j.Id == jobId))
+                .SelectMany(projectTaskId => context.ProjectTasks.Where(j => j.Id == projectTaskId))
                 .Distinct()
                 .ToList();
         }
-        public void Add(Job job)
+        public void Add(ProjectTask projectTask)
         {
-            context.Jobs.Add(job);
+            context.ProjectTasks.Add(projectTask);
             context.SaveChanges();
         }
 
-        public void Update(Job job)
+        public void Update(ProjectTask projectTask)
         {
-            context.Jobs.Entry(job).State = EntityState.Modified;
+            context.ProjectTasks.Entry(projectTask).State = EntityState.Modified;
             context.SaveChanges();
         }
       

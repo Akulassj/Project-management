@@ -19,23 +19,23 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <h3>Информация о проекте</h3>
-                        <p>Название проекта: @CurrentProject.Name</p>
-                        <p>Описание проекта: @CurrentProject.Description</p>
+                        <p>Название проекта: @CurrentProject.Project.Name</p>
+                        <p>Описание проекта: @CurrentProject.Project.Description</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <h3>Информация о заданиях</h3>
-                        <p>Количество заданий: @Jobs.Count()</p>
-                        <div class="btn btn-primary text-center" @onclick="GetJobs">Получить список Задач</div>
-                        
-                        @if (Jobs.Any())
+                        <p>Количество заданий: @CurrentProject.ProjectTaskUsers.Count()</p>
+                        @*  <div class="btn btn-primary text-center" @onclick="GetProjectTasks">Получить список Задач</div> *@
+
+                        @if (CurrentProject.ProjectTaskUsers.Any())
                         {
                             <h3>Список Задач:</h3>
                             <ul>
-                                @foreach (var job in Jobs)
+                                @foreach (var projectTask in CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask))
                                 {
-                                    <li @onclick="() => JobClick(job.Id)">@job.Name - @job.Description</li>
+                                    <li @onclick="() => ProjectTaskClick(projectTask.Id)">@projectTask.Name - @projectTask.Description</li>
                                 }
                             </ul>
                         }
@@ -52,7 +52,7 @@
                             <ul>
                                 @foreach (var task in SelectedDateTasks)
                                 {
-                                    <li @onclick="() => JobClick(task.Id)">@task.Name</li>
+                                    <li @onclick="() => ProjectTaskClick(task.Id)">@task.Name</li>
                                 }
                             </ul>
                         }
@@ -62,7 +62,7 @@
                         }
                     </div>
                 </div>
-                @if (Jobs is not null)
+                @if (CurrentProject.ProjectTaskUsers is not null)
                 {
                     <div class="row">
                         <div class="col-md-6">
@@ -70,32 +70,32 @@
                             <div class="row">
                                 <div class="col-md-12">
 
-                                    <ApexChart @ref=chart TItem="Job"
-                                               Title="Job Status Distribution" Debug>
+                                    <ApexChart @ref=chart TItem="ProjectTask"
+                                               Title="ProjectTask Status Distribution" Debug>
 
-                                     <ApexPointSeries TItem="Job"
-                                                      Items="Jobs"
-                                                      Name="Job Status"
-                                                      SeriesType="SeriesType.Pie"
-                                                      XValue="@(e => e.Status)"
-                                                      YAggregate="@(e => e.Count())"
-                                                      OrderByDescending="@(e=>e.Y)"
-                                                      PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
-                                     </ApexChart>
+                                        <ApexPointSeries TItem="ProjectTask"
+                                                         Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
+                                                         Name="ProjectTask Status"
+                                                         SeriesType="SeriesType.Pie"
+                                                         XValue="@(e => e.Status)"
+                                                         YAggregate="@(e => e.Count())"
+                                                         OrderByDescending="@(e=>e.Y)"
+                                                         PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
+                                    </ApexChart>
 
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="col-md-6">
-                             <!-- Список участников заданий -->
-                             <h3>Участники заданий</h3>
-                             <ul>
-                                 <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div>
-                                 @if (AssignedUsers != null && AssignedUsers.Any())
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Список участников заданий -->
+                            <h3>Участники заданий</h3>
+                            <ul>
+                                @* <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div> *@
+                                @if (CurrentProject.AssignedUsers.Any())
                                 {
                                     <h3>Участники проекта:</h3>
                                     <ul>
-                                        @foreach (var user in AssignedUsers)
+                                        @foreach (var user in CurrentProject.AssignedUsers)
                                         {
                                             <li>@user.UserName - @user.Position</li>
                                         }
@@ -115,7 +115,7 @@
         </div>
 
     </TabBlazor.Tab>
-    <TabBlazor.Tab Title="Список задач" Icon="other-icon" >
+    <TabBlazor.Tab Title="Список задач" Icon="other-icon">
         <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
         <Blazorise.Modal @ref="modalRef">
             <Blazorise.ModalContent Centered>
@@ -126,16 +126,16 @@
                 <Blazorise.ModalBody>
                     <Blazorise.Field>
                         <FieldLabel>Name</FieldLabel>
-                        <TextEdit Placeholder="Enter task name..." @bind-Text="newJob.Name" />
+                        <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
                     </Blazorise.Field>
                     <Blazorise.Field>
                         <FieldLabel>Description</FieldLabel>
-                        <TextEdit Placeholder="Enter task description..." @bind-Text="newJob.Description" />
+                        <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
                     </Blazorise.Field>
 
                     <Blazorise.Field>
                         <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                        <Blazorise.TextEdit Placeholder="Search by name or surname..." @bind-Text="searchText" @onkeypress=GetUsersSearch />
+                        <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
                     </Blazorise.Field>
 
                     @if (users != null)
@@ -168,13 +168,14 @@
                 </Blazorise.ModalBody>
                 <ModalFooter>
                     <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
-                    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateJob">Save Changes</Blazorise.Button>
+                    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
                 </ModalFooter>
             </Blazorise.ModalContent>
         </Blazorise.Modal>
+
         <div class="container">
             <h3>Список задач</h3>
-            @if (Jobs.Any())
+            @if (CurrentProject.ProjectTaskUsers.Any())
             {
                 <div class="table-responsive-sm">
                     <table class="table table-bordered border-dark">
@@ -183,28 +184,28 @@
                                 <th scope="col">Название</th>
                                 <th scope="col">Описание</th>
                                 <th scope="col">Статус</th>
-                               @*  <th scope="col">Ответственные</th> *@
+                                <th scope="col">Ответственные</th>
                                 <th scope="col">Дата создания</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var job in Jobs)
+                            @foreach (var model in CurrentProject.ProjectTaskUsers)
                             {
-                               
+
                                 <tr>
-                                    <td>@job.Name</td>
-                                    <td>@job.Description</td>
+                                    <td>@model.ProjectTask.Name</td>
+                                    <td>@model.ProjectTask.Description</td>
                                     <td>
-                                        <select class="form-select" @onchange="@(e => ChangeJobStatus(job, e.Value.ToString()))">
-                                            <option value="Completed" selected="@((job.Status == "Completed"))">Выполнено</option>
-                                            <option value="Uncompleted" selected="@((job.Status == "Uncompleted"))">Невыполнено</option>
+                                        <select class="form-select" @onchange="@(e => ChangeProjectTaskStatus(model.ProjectTask, e.Value.ToString()))">
+                                            <option value="Completed" selected="@((model.ProjectTask.Status == "Completed"))">Выполнено</option>
+                                            <option value="Uncompleted" selected="@((model.ProjectTask.Status == "Uncompleted"))">Невыполнено</option>
                                         </select>
                                     </td>
-                                   @*  <td>
-                                        @if (AssignedTaskUsers != null && AssignedTaskUsers.Any())
+                                    <td>
+                                        @if (model.AssignedUsers.Any())
                                         {
                                             <ul>
-                                                @foreach (var user in AssignedTaskUsers)
+                                                @foreach (var user in model.AssignedUsers)
                                                 {
                                                     <li>@user.UserName - @user.Position</li>
                                                 }
@@ -214,8 +215,8 @@
                                         {
                                             <p>Назначенных пользователей нет.</p>
                                         }
-                                    </td> *@
-                                    <td>@job.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                    </td>
+                                    <td>@model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</td>
                                 </tr>
                             }
 
@@ -223,7 +224,7 @@
                     </table>
                 </div>
             }
-           
+
             else
             {
                 <p>Задачи отсутствуют.</p>
@@ -240,40 +241,21 @@
 </TabBlazor.Tabs>
 
 @code {
-    public Project CurrentProject { get; set; } = default!;
+    public ProjectInfoViewModel CurrentProject { get; set; } = default!;
     [Parameter]
     public string projectId { get; set; }
-    [Parameter]
-    public Guid JobId { get; set; }
 
-    private List<Job> SelectedDateTasks { get; set; } = new List<Job>();
+    private List<ProjectTask> SelectedDateTasks { get; set; } = new List<ProjectTask>();
 
     private DateTime SelectedDate { get; set; } = DateTime.UtcNow.ToLocalTime();
 
-    private List<Job> Jobs = new List<Job>();
-
-    private List<TaskAssignee> TaskAssignees = new List<TaskAssignee>();
-
-    private List<User> AssignedUsers = new List<User>();
-    private List<User> AssignedTaskUsers = new List<User>();
-
-    private ApexChart<Job> chart = default!;
+    private ApexChart<ProjectTask> chart = default!;
 
     public string userName { get; set; }
     private List<User> users;
     private List<User> selectedUsers = new List<User>();
-    private Job newJob = new Job();
+    private ProjectTask newProjectTask = new ProjectTask();
     private string searchText = string.Empty;
-
-
-
-    private bool jobStatus;
-
-    private async Task GetJobs()
-    {
-        Jobs = await client.GetFromJsonAsync<List<Job>>($"api/project/GetProjectJobs?projectId={projectId}");
-    }
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -284,18 +266,10 @@
 
     }
 
-    private async Task GetAssignedUsers()
-    {
-        AssignedUsers = await client.GetFromJsonAsync<List<User>>($"/api/project/GetProjectAsigneeUsers?projectId={projectId}");
-
-    }
-
     private async Task Refresh()
     {
-        CurrentProject = await client.GetFromJsonAsync<Project>($"api/project/GetProject?projectId={projectId}");
-        await GetJobs();
+        CurrentProject = await client.GetFromJsonAsync<ProjectInfoViewModel>($"api/project/GetProjectInfoViewModel?projectId={projectId}");
         await UpdateTasksForSelectedDate();
-        await GetAssignedTaskUsers(JobId);
         StateHasChanged();
     }
 
@@ -309,7 +283,7 @@
             string formattedDate = SelectedDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
 
-            SelectedDateTasks = await client.GetFromJsonAsync<List<Job>>($"api/project/GetJobsByDate?projectId={projectId}&date={formattedDate}");
+            SelectedDateTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"api/project/GetProjectTasksByDate?projectId={projectId}&date={formattedDate}");
         }
         catch (Exception ex)
         {
@@ -318,32 +292,33 @@
         }
     }
 
-    private string GetPointColor(Job job)
+    private string GetPointColor(ProjectTask projectTask)
     {
-        switch (job.Status)
+        switch (projectTask.Status)
         {
             case "Completed":
-                return "#00783c"; 
+                return "#00783c";
             case "Uncompleted":
-                return "#e3001b"; 
+                return "#e3001b";
             default:
-                return "#87775d"; 
+                return "#87775d";
         }
     }
-    private async Task ChangeJobStatus(Job job, string status)
+    private async Task ChangeProjectTaskStatus(ProjectTask projectTask, string status)
     {
-        job.Status = status;
+        projectTask.Status = status;
 
-        await client.PutAsJsonAsync("api/Job/UpdateJobStatus", job);
+        await client.PutAsJsonAsync("api/ProjectTask/UpdateProjectTaskStatus", projectTask);
     }
-    
-   
-    private async Task GetUsersSearch()
+
+
+    private async Task GetUsersSearch(string value)
     {
+        searchText = value;
         if (!string.IsNullOrWhiteSpace(searchText))
         {
-            
-            users = await client.GetFromJsonAsync<List<User>>($"api/job/SearchUsersInProject?projectId={projectId}&username={searchText}");
+
+            users = await client.GetFromJsonAsync<List<User>>($"api/projectTask/SearchUsersInProject?projectId={projectId}&username={searchText}");
             await Task.Delay(1000);
         }
         else
@@ -353,14 +328,14 @@
         }
     }
 
-   
 
-    private async Task CreateJob()
+
+    private async Task CreateProjectTask()
     {
-        var newJob = new Job()
+        var newProjectTask = new ProjectTask()
             {
-                Name = this.newJob.Name,
-                Description = this.newJob.Description,
+                Name = this.newProjectTask.Name,
+                Description = this.newProjectTask.Description,
                 Status = "Uncompleted",
                 ProjectId = new Guid(projectId)
             };
@@ -371,64 +346,43 @@
             taskAssignees.Add(new TaskAssignee()
                 {
                     UserId = user.Id,
-                    JobId = newJob.Id
+                    ProjectTaskId = newProjectTask.Id
                 });
         }
 
         var taskAssigneeModel = new TasksAssigneeViewModel()
             {
-                Job = newJob,
-                TaskAssignees = selectedUsers.Select(user => new TaskAssignee { UserId = user.Id, JobId = newJob.Id }).ToList(),
+                ProjectTask = newProjectTask,
+                TaskAssignees = selectedUsers.Select(user => new TaskAssignee { UserId = user.Id, ProjectTaskId = newProjectTask.Id }).ToList(),
             };
 
         try
         {
-            var response = await client.PostAsJsonAsync("api/Job/AddJob", taskAssigneeModel);
+            var response = await client.PostAsJsonAsync("api/ProjectTask/AddProjectTask", taskAssigneeModel);
 
             if (response.IsSuccessStatusCode)
             {
-               
-                newJob = new Job();
+
+                newProjectTask = new ProjectTask();
                 searchText = "";
                 selectedUsers.Clear();
                 users.Clear();
                 await Refresh();
-                await GetJobs();
                 await HideModal();
-
             }
             else
             {
-               
+
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("Ошибка при добавлении задачи: " + errorMessage);
             }
         }
         catch (Exception ex)
         {
-            
+
             Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
         }
     }
-    
-    // private async Task GetTaskAssignees(Guid jobId)
-    // {
-    //     try
-    //     {
-    //         AssignedTaskUsers = await client.GetFromJsonAsync<List<User>>($"api/job/GetTaskAssigneeUsers?jobId={jobId}");
-           
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
-    //     }
-    // }
-    private async Task GetAssignedTaskUsers(Guid jobId)
-    {
-        AssignedTaskUsers = await client.GetFromJsonAsync<List<User>>($"api/job/GetTaskAssigneeUsers?jobId={jobId}");
-    }
-
-
 
 
     private Modal modalRef;
@@ -448,7 +402,7 @@
         if (!selectedUsers.Contains(user))
         {
             selectedUsers.Add(user);
-            searchText = user.UserName; 
+            searchText = user.UserName;
         }
     }
 
@@ -460,8 +414,8 @@
 
 
 
-    private void JobClick(Guid id)
+    private void ProjectTaskClick(Guid id)
     {
-        navigate.NavigateTo($"/jobInfo/{id}");
+        navigate.NavigateTo($"/projectTaskInfo/{id}");
     }
 }

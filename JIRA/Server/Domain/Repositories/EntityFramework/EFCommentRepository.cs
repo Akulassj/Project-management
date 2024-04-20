@@ -16,9 +16,9 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             return context.Comments.FirstOrDefault(c => c.Id == id);
         }
 
-        public List<Comment> GetCommentsByJobId(Guid jobId)
+        public List<Comment> GetCommentsByProjectTaskId(Guid projectTaskId)
         {
-            return context.Comments.Where(c => c.JobId == jobId).Include(c => c.User).ToList();
+            return context.Comments.Where(c => c.ProjectTaskId == projectTaskId).Include(c => c.User).ToList();
         }
         public void Add(Comment comment)
         {

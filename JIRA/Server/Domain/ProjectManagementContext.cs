@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JIRA.Shared.Domain
 {
-    public enum JobStatus
+    public enum ProjectTaskStatus
     {
         Completed,
         Uncompleted,
@@ -32,7 +32,7 @@ namespace JIRA.Shared.Domain
 
             //builder.Entity<User>().HasData(users);
             //builder.Entity<Project>().HasData(projects) ;
-            //builder.Entity<Job>().HasData(jobs);
+            //builder.Entity<ProjectTask>().HasData(projectTasks);
             //builder.Entity<TaskAssignee>().HasData(taskAssignees);
             //builder.Entity<Comment>().HasData(comments);
 
@@ -76,7 +76,7 @@ namespace JIRA.Shared.Domain
 
         public DbSet<Project> Projects { get; set; }
          
-        public DbSet<Job> Jobs { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
         public DbSet<TaskAssignee> TaskAssignees { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Attachment> Attachments { get; set; }

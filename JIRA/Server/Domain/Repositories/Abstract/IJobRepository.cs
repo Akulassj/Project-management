@@ -5,19 +5,19 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JIRA.Server.Domain.Repositories.Abstract
 {
-    public interface IJobRepository
+    public interface IProjectTaskRepository
     {
-        public Job GetJobById(Guid id);
-        public List<Job> GetJobsByProjectId(Guid projectId);
-        public List<Job> GetAllJobs();
+        public ProjectTask GetProjectTaskById(Guid id);
+        public List<ProjectTask> GetProjectTasksByProjectId(Guid projectId);
+        public List<ProjectTask> GetAllProjectTasks();
 
 
-        public List<Job> GetProjectJobsByDate(Guid projectID, DateTime date);
-        public List<JobStatus> GetJobStatuses();
+        public List<ProjectTask> GetProjectProjectTasksByDate(Guid projectID, DateTime date);
+        public List<ProjectTaskStatus> GetProjectTaskStatuses();
 
-        public List<Job> GetJobsByUserName(string userName);
-        public void Add(Job job);
-        public void Update(Job job);
+        public List<ProjectTask> GetProjectTasksByUserName(string userName);
+        public void Add(ProjectTask projectTask);
+        public void Update(ProjectTask projectTask);
         
     }
 }

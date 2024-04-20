@@ -177,7 +177,7 @@ namespace JIRA.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Jobs",
+                name: "ProjectTasks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -189,9 +189,9 @@ namespace JIRA.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Jobs", x => x.Id);
+                    table.PrimaryKey("PK_ProjectTasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jobs_Projects_ProjectId",
+                        name: "FK_ProjectTasks_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
@@ -207,15 +207,15 @@ namespace JIRA.Server.Migrations
                     FileExtension = table.Column<string>(type: "text", nullable: false),
                     FilePath = table.Column<string>(type: "text", nullable: false),
                     UploadedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    JobId = table.Column<Guid>(type: "uuid", nullable: false)
+                    ProjectTaskId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attachments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attachments_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
+                        name: "FK_Attachments_ProjectTasks_ProjectTaskId",
+                        column: x => x.ProjectTaskId,
+                        principalTable: "ProjectTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -227,7 +227,7 @@ namespace JIRA.Server.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Text = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    JobId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProjectTaskId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -240,9 +240,9 @@ namespace JIRA.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comments_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
+                        name: "FK_Comments_ProjectTasks_ProjectTaskId",
+                        column: x => x.ProjectTaskId,
+                        principalTable: "ProjectTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -252,7 +252,7 @@ namespace JIRA.Server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    JobId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProjectTaskId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -265,9 +265,9 @@ namespace JIRA.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TaskAssignees_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
+                        name: "FK_TaskAssignees_ProjectTasks_ProjectTaskId",
+                        column: x => x.ProjectTaskId,
+                        principalTable: "ProjectTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -329,14 +329,14 @@ namespace JIRA.Server.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attachments_JobId",
+                name: "IX_Attachments_ProjectTaskId",
                 table: "Attachments",
-                column: "JobId");
+                column: "ProjectTaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_JobId",
+                name: "IX_Comments_ProjectTaskId",
                 table: "Comments",
-                column: "JobId");
+                column: "ProjectTaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserId",
@@ -344,14 +344,14 @@ namespace JIRA.Server.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_ProjectId",
-                table: "Jobs",
+                name: "IX_ProjectTasks_ProjectId",
+                table: "ProjectTasks",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskAssignees_JobId",
+                name: "IX_TaskAssignees_ProjectTaskId",
                 table: "TaskAssignees",
-                column: "JobId");
+                column: "ProjectTaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaskAssignees_UserId",
@@ -393,7 +393,7 @@ namespace JIRA.Server.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "ProjectTasks");
 
             migrationBuilder.DropTable(
                 name: "Projects");

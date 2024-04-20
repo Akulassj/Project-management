@@ -1,4 +1,4 @@
-﻿@page "/jobs/{userName}"
+﻿@page "/projectTasks/{userName}"
 @inject HttpClient client
 @inject NavigationManager navigate
 @using TabBlazor.Services
@@ -10,13 +10,13 @@
 
 
 <TabBlazor.Card Size="CardSize.Default">
-    @foreach (var job in jobs)
+    @foreach (var projectTask in projectTasks)
     {
-    <TabBlazor.CardBody class="my-card-body" @onclick="() => JobClick(job.Id)">
+    <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectTaskClick(projectTask.Id)">
             <TabBlazor.CardTitle>
-                <h3> @job.Name</h3>
+                <h3> @projectTask.Name</h3>
             </TabBlazor.CardTitle>
-            @job.Description
+            @projectTask.Description
         </TabBlazor.CardBody>
     }
 </TabBlazor.Card>
@@ -26,7 +26,7 @@
     [Parameter]
     public string userName { get; set; }
 
-    private List<Job> jobs = new List<Job>();
+    private List<ProjectTask> projectTasks = new List<ProjectTask>();
    
 
     protected override async void OnInitialized()
@@ -36,7 +36,7 @@
 
     private async Task Refresh()
     {
-        jobs = await client.GetFromJsonAsync<List<Job>>($"/api/project/GetJobsByUserName/?userName={userName}");
+        projectTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"/api/project/GetProjectTasksByUserName/?userName={userName}");
         StateHasChanged();
     }
 
@@ -45,9 +45,9 @@
 
 
 
-    private void JobClick(Guid id)
+    private void ProjectTaskClick(Guid id)
     {
-        navigate.NavigateTo($"/jobInfo/{id}");
+        navigate.NavigateTo($"/projectTaskInfo/{id}");
     }
 
 }

@@ -18,9 +18,9 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             return context.Attachments.FirstOrDefault(a => a.Id == id);
         }
 
-        public List<Attachment> GetAttachmentsByJobId(Guid jobId)
+        public List<Attachment> GetAttachmentsByProjectTaskId(Guid projectTaskId)
         {
-            return context.Attachments.Where(a => a.JobId == jobId).ToList();
+            return context.Attachments.Where(a => a.ProjectTaskId == projectTaskId).ToList();
         }
     }
 }

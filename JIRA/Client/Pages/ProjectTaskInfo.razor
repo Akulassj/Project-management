@@ -1,4 +1,4 @@
-﻿@page "/jobInfo/{JobId}"
+﻿@page "/projectTaskInfo/{ProjectTaskId}"
 @using JIRA.Client.Services
 @using JIRA.Shared
 @using System.Security.Claims
@@ -6,17 +6,17 @@
 @inject HttpClient client
 @inject CustomStateProvider stateProvider
 
-@if (jobComments is not null)
+@if (projectTaskComments is not null)
 {
     <div>
-        <h4>Job name: @jobComments.Job.Name</h4>
-        <h5>Description: @jobComments.Job.Description</h5>
+        <h4>ProjectTask name: @projectTaskComments.ProjectTask.Name</h4>
+        <h5>Description: @projectTaskComments.ProjectTask.Description</h5>
     </div>
 
     <h3>Comments</h3>
 
     <Timeline Type="TimelineType.Default">
-        @foreach (var comment in jobComments.Comments)
+        @foreach (var comment in projectTaskComments.Comments)
         {
             <TimelineItem Time=@comment.CreatedAt.ToString("f") Title="@comment.User.UserName" IconColor="TablerColor.Green" IconText="@comment.User.UserName[0..1]">
                 <p class="text-secondary">@comment.Text</p>
@@ -33,9 +33,9 @@
 @code {
 
     [Parameter]
-    public string JobId { get; set; }
+    public string ProjectTaskId { get; set; }
 
-    private JobComments jobComments;
+    private ProjectTaskComments projectTaskComments;
 
     private string NewCommentText = "";
 
@@ -46,11 +46,11 @@
 
     private async Task Refresh()
     {
-        if (!string.IsNullOrEmpty(JobId))
+        if (!string.IsNullOrEmpty(ProjectTaskId))
         {
 
-            jobComments = await client.GetFromJsonAsync<JobComments>($"/api/project/GetJobCommentsById?jobId={JobId}");
-            jobComments.Comments.Sort();
+            projectTaskComments = await client.GetFromJsonAsync<ProjectTaskComments>($"/api/project/GetProjectTaskCommentsById?projectTaskId={ProjectTaskId}");
+            projectTaskComments.Comments.Sort();
             StateHasChanged();
 
         }
@@ -64,7 +64,7 @@
             var comment = new Comment
                 {
                     Text = NewCommentText,
-                    JobId = Guid.Parse(JobId),
+                    ProjectTaskId = Guid.Parse(ProjectTaskId),
                     UserId = Guid.Parse(user.User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 };
 

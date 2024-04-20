@@ -9,7 +9,7 @@
     public class TaskAssignee
     {
         public Guid Id { get; set; }
-        public Guid JobId { get; set; }
+        public Guid ProjectTaskId { get; set; }
         public Guid UserId { get; set; }
        
 

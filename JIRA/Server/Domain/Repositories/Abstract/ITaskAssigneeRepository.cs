@@ -7,6 +7,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
       public  TaskAssignee GetTaskAssigneeById(Guid id);
       public  List<TaskAssignee> GetTaskAssigneesByUserId(Guid userId);
        public void Add(List<TaskAssignee> taskAsignees);
-        public List<User> GetTaskAssigneeUsers(Guid jobId);
+        public List<User> GetTaskAssigneeUsers(Guid projectTaskId);
     }
 }

@@ -8,18 +8,19 @@ namespace JIRA.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class JobController : Controller
+    public class ProjectTaskController : Controller
     {
         private readonly DataManager dataManager;
 
-        public JobController(DataManager dataManager)
+        public ProjectTaskController(DataManager dataManager)
         {
             this.dataManager = dataManager;
         }
+
         [HttpPost]
-        public IActionResult AddJob(TasksAssigneeViewModel tasksAssignees)
+        public IActionResult AddProjectTask(TasksAssigneeViewModel tasksAssignees)
         {
-            dataManager.JobRepository.Add(tasksAssignees.Job);
+            dataManager.ProjectTaskRepository.Add(tasksAssignees.ProjectTask);
             dataManager.TaskAssigneeRepository.Add(tasksAssignees.TaskAssignees);
             return Ok();
         }
@@ -37,6 +38,7 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
         [HttpGet]
         public IActionResult GetTaskAssigneesByUserId(Guid userId)
         {
@@ -50,11 +52,12 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        public IActionResult GetTaskAssigneeUsers(Guid jobId)
+
+        public IActionResult GetTaskAssigneeUsers(Guid projectTaskId)
         {
             try
             {
-                var users = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(jobId);
+                var users = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(projectTaskId);
                 return Ok(users);
             }
             catch (Exception ex)
@@ -62,23 +65,24 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        public IActionResult UpdateJobStatus(Job job)
+
+        public IActionResult UpdateProjectTaskStatus(ProjectTask projectTask)
         {
             try
             {
-                // Поиск задачи по идентификатору
-                var existingJob = dataManager.JobRepository.GetJobById(job.Id);
+                
+                var existingProjectTask = dataManager.ProjectTaskRepository.GetProjectTaskById(projectTask.Id);
 
-                if (existingJob == null)
+                if (existingProjectTask == null)
                 {
                     return NotFound();
                 }
 
-                // Обновление статуса задачи
-                existingJob.Status = job.Status;
+               
+                existingProjectTask.Status = projectTask.Status;
 
-                // Сохранение изменений
-                dataManager.JobRepository.Update(existingJob);
+                
+                dataManager.ProjectTaskRepository.Update(existingProjectTask);
 
                 return Ok();
             }

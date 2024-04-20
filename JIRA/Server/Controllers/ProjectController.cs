@@ -38,10 +38,37 @@ namespace JIRA.Server.Controllers
             return Ok(projects);
         }
         [HttpGet]
-        public IActionResult GetJobsByUserName(string userName)
+        public IActionResult GetProjectTasksByUserName(string userName)
         {
-            var jobs = dataManager.JobRepository.GetJobsByUserName(userName);
-            return Ok(jobs);
+            var projectTasks = dataManager.ProjectTaskRepository.GetProjectTasksByUserName(userName);
+            return Ok(projectTasks);
+        }
+
+        [HttpGet]
+        public IActionResult GetProjectInfoViewModel(Guid projectId)
+        {
+            var project = dataManager.ProjectRepository.GetProjectById(projectId);
+            var projectTasks = dataManager.ProjectTaskRepository.GetProjectTasksByProjectId(projectId);
+            var assignedUsers = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectId);
+            var projectTaskUsers = new List<ProjectTaskUsersModel>();
+
+            foreach (var task in projectTasks)
+            {
+                projectTaskUsers.Add(new ProjectTaskUsersModel() 
+                { 
+                    ProjectTask = task, 
+                    AssignedUsers = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(task.Id)
+                });
+            }
+
+            var projectInfoViewModel = new ProjectInfoViewModel()
+            {
+                Project = project,
+                AssignedUsers = assignedUsers,
+                ProjectTaskUsers = projectTaskUsers
+            };
+
+            return Ok(projectInfoViewModel);
         }
 
         [HttpGet]
@@ -52,39 +79,39 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProjectJobs(Guid projectId)
+        public IActionResult GetProjectProjectTasks(Guid projectId)
         {
-            var projects = dataManager.JobRepository.GetJobsByProjectId(projectId);
+            var projects = dataManager.ProjectTaskRepository.GetProjectTasksByProjectId(projectId);
             return Ok(projects);
         }
 
         [HttpGet]
-        public IActionResult GetJobCommentsById(Guid jobId)
+        public IActionResult GetProjectTaskCommentsById(Guid projectTaskId)
         {
-            var job = dataManager.JobRepository.GetJobById(jobId);
-            var comments = dataManager.CommentRepository.GetCommentsByJobId(jobId);
+            var projectTask = dataManager.ProjectTaskRepository.GetProjectTaskById(projectTaskId);
+            var comments = dataManager.CommentRepository.GetCommentsByProjectTaskId(projectTaskId);
 
-            var jobComments = new JobComments
+            var projectTaskComments = new ProjectTaskComments
             {
-                Job = job,
+                ProjectTask = projectTask,
                 Comments = comments
             };
 
-            return Ok(jobComments);
+            return Ok(projectTaskComments);
         }
 
         [HttpGet]
-        public IActionResult GetAllJobs()
+        public IActionResult GetAllProjectTasks()
         {
-            var jobs = dataManager.JobRepository.GetAllJobs();
-            return Ok(jobs);
+            var projectTasks = dataManager.ProjectTaskRepository.GetAllProjectTasks();
+            return Ok(projectTasks);
         }
 
         [HttpGet]
-        public IActionResult GetUserJobs(Guid userId)
+        public IActionResult GetUserProjectTasks(Guid userId)
         {
-            var jobs = dataManager.JobRepository.GetAllJobs();
-            return Ok(jobs);
+            var projectTasks = dataManager.ProjectTaskRepository.GetAllProjectTasks();
+            return Ok(projectTasks);
         }
 
         [HttpGet]
@@ -110,15 +137,15 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetJobsByDate(Guid projectID, DateTime date)
+        public IActionResult GetProjectTasksByDate(Guid projectID, DateTime date)
         {
             try
             {
                 // Приведение даты к началу дня
                 date = date.Date;
 
-                var jobs = dataManager.JobRepository.GetProjectJobsByDate(projectID, date);
-                return Ok(jobs);
+                var projectTasks = dataManager.ProjectTaskRepository.GetProjectProjectTasksByDate(projectID, date);
+                return Ok(projectTasks);
             }
             catch (Exception ex)
             {
@@ -127,9 +154,9 @@ namespace JIRA.Server.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetJobStatuses()
+        public IActionResult GetProjectTaskStatuses()
         {
-            var statuses = dataManager.JobRepository.GetJobStatuses();
+            var statuses = dataManager.ProjectTaskRepository.GetProjectTaskStatuses();
             return Ok(statuses);
         }
         [HttpGet]

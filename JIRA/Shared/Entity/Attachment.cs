@@ -7,7 +7,7 @@
         public string FileExtension { get; set; }
         public string FilePath { get; set; }
         public DateTime UploadedAt { get; set; }
-        public Guid JobId { get; set; }
+        public Guid ProjectTaskId { get; set; }
        
     }
 }

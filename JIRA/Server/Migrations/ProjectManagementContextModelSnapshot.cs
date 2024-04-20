@@ -40,7 +40,7 @@ namespace JIRA.Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("JobId")
+                    b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UploadedAt")
@@ -48,7 +48,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.ToTable("Attachments");
                 });
@@ -62,7 +62,7 @@ namespace JIRA.Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("JobId")
+                    b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Text")
@@ -74,7 +74,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.HasIndex("UserId");
 
@@ -85,7 +85,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("eba1adaf-c0aa-42fb-8ca1-3a0a871f8988"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 173, DateTimeKind.Utc).AddTicks(5436),
-                            JobId = new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"),
+                            ProjectTaskId = new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"),
                             Text = "Nisi et saepe rerum deserunt fugiat aut sed aliquid.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -93,7 +93,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b59947c9-15f3-41f8-a7dd-116cb90fce90"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 173, DateTimeKind.Utc).AddTicks(5966),
-                            JobId = new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"),
+                            ProjectTaskId = new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"),
                             Text = "In ipsa soluta eveniet laboriosam.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -101,7 +101,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("bc5eb2fd-8b6f-486f-9229-ad8879a55cae"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 173, DateTimeKind.Utc).AddTicks(6272),
-                            JobId = new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"),
+                            ProjectTaskId = new Guid("b8a78d7d-f646-4908-9f81-ebf3bd038d01"),
                             Text = "Sapiente et numquam dolorum amet.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -109,7 +109,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4e83a6ea-a6c1-4d4a-a3ce-52496134ac4b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 173, DateTimeKind.Utc).AddTicks(6523),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             Text = "Culpa illo vel error sunt accusantium pariatur.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -117,7 +117,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5cf89fe2-4c61-4f43-9f03-ad7a567cba77"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 173, DateTimeKind.Utc).AddTicks(6814),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             Text = "Aperiam est neque sed ipsa facilis in aut non.",
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
@@ -125,7 +125,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4c47484d-41d7-48da-ba5b-7bd20011cf50"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 173, DateTimeKind.Utc).AddTicks(8918),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             Text = "Blanditiis natus aliquam debitis maxime exercitationem natus perspiciatis.",
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
@@ -133,7 +133,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a4c4a03e-365d-4a78-8fbe-c0104ab4ae1d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(848),
-                            JobId = new Guid("ff670869-cc90-4f53-bdb3-cdcca08e55fa"),
+                            ProjectTaskId = new Guid("ff670869-cc90-4f53-bdb3-cdcca08e55fa"),
                             Text = "Nemo atque error dolores beatae architecto incidunt quidem et quia consectetur.",
                             UserId = new Guid("80252af2-71a8-4b36-9581-f450605f71ff")
                         },
@@ -141,7 +141,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9fe809e6-acf1-4e4f-a829-15559d07c375"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(1442),
-                            JobId = new Guid("ff670869-cc90-4f53-bdb3-cdcca08e55fa"),
+                            ProjectTaskId = new Guid("ff670869-cc90-4f53-bdb3-cdcca08e55fa"),
                             Text = "Veniam cum non recusandae autem rerum fuga ab eos ut repellendus.",
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
@@ -149,7 +149,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8dda4b0d-5262-44b5-b87c-a4b3529cee67"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(1985),
-                            JobId = new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"),
+                            ProjectTaskId = new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"),
                             Text = "Illo consectetur architecto sed voluptas voluptas dignissimos quibusdam voluptatum doloribus minima.",
                             UserId = new Guid("729078f5-9ae5-4969-9173-3067e41761d7")
                         },
@@ -157,7 +157,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7f7a01b0-908b-4612-9a73-578ee1581399"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(2542),
-                            JobId = new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"),
+                            ProjectTaskId = new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"),
                             Text = "Sed aut et quis rerum officia quia numquam.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -165,7 +165,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("64480041-cd6e-424f-a16c-1d930c3c1f33"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(2967),
-                            JobId = new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"),
+                            ProjectTaskId = new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"),
                             Text = "Et ut impedit est non in labore eos vitae.",
                             UserId = new Guid("450981d2-4d92-44ba-9a21-fa1d00f689fe")
                         },
@@ -173,7 +173,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d79aafdf-a862-4c41-bbd5-27d8fbaf260a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(3393),
-                            JobId = new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"),
+                            ProjectTaskId = new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"),
                             Text = "Iure sunt quia vel tempore voluptates.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -181,7 +181,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("157f7205-c340-4c50-983b-b944125b430e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(3729),
-                            JobId = new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"),
+                            ProjectTaskId = new Guid("86e4147c-894a-4e40-9bd6-e6bc4a2b2123"),
                             Text = "Eum tempore reprehenderit omnis rem ex iure.",
                             UserId = new Guid("3c9f30f0-c5ac-4479-a74f-8267befb14e2")
                         },
@@ -189,7 +189,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a0f4c98a-4b8c-4b01-af0d-664bd5208614"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(4061),
-                            JobId = new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"),
+                            ProjectTaskId = new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"),
                             Text = "Voluptatem modi animi sed voluptatem qui in libero ea maxime sunt.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -197,7 +197,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("cd519f03-a0ee-4c95-98ab-6cc9c078bf0d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(4592),
-                            JobId = new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"),
+                            ProjectTaskId = new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"),
                             Text = "Harum quod alias ad fuga et ullam.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -205,7 +205,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d66ee611-42e5-486f-aa12-fd0880668c69"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(4949),
-                            JobId = new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"),
+                            ProjectTaskId = new Guid("840b2da0-e7fe-4261-9bd4-6ec6408ffec0"),
                             Text = "Soluta facere quaerat excepturi ipsa dolor explicabo dolores voluptas ut.",
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
@@ -213,7 +213,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("465ea832-4953-4dd1-ab21-2a409d868060"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(5526),
-                            JobId = new Guid("2eebc587-e9eb-4a6d-a810-a0f8ab84f3ed"),
+                            ProjectTaskId = new Guid("2eebc587-e9eb-4a6d-a810-a0f8ab84f3ed"),
                             Text = "In aut voluptas ratione similique amet quia omnis.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -221,7 +221,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("06d946e2-3381-4bf6-a744-285239b0337a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(6024),
-                            JobId = new Guid("2eebc587-e9eb-4a6d-a810-a0f8ab84f3ed"),
+                            ProjectTaskId = new Guid("2eebc587-e9eb-4a6d-a810-a0f8ab84f3ed"),
                             Text = "Cum vel iste reprehenderit illo reprehenderit quaerat.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -229,7 +229,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2e3ddbc4-b4b7-4b70-8b6b-13d705476b78"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(6446),
-                            JobId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
+                            ProjectTaskId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
                             Text = "Veniam blanditiis delectus earum aut asperiores provident quis quisquam quae.",
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
@@ -237,7 +237,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4574a565-ad4c-4809-b0c9-c6c584f1dd6b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(7108),
-                            JobId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
+                            ProjectTaskId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
                             Text = "Et laborum dolorem omnis unde.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -245,7 +245,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("cdd4e56a-7a1c-44b6-9303-73235a7edb93"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(7361),
-                            JobId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
+                            ProjectTaskId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
                             Text = "Placeat porro quam ea esse quasi dignissimos qui et eos.",
                             UserId = new Guid("e886031d-c2d1-48b9-8b70-fddf68832b0d")
                         },
@@ -253,7 +253,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("83346755-c935-48cd-8899-c6757e509e48"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(7860),
-                            JobId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
+                            ProjectTaskId = new Guid("185adf5a-57ab-444d-82c0-8f3a1a9c934a"),
                             Text = "At in similique vel consequatur minima eaque.",
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
@@ -261,7 +261,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("884e772d-37a5-4c26-9999-d056ca6b93e7"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(8203),
-                            JobId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
+                            ProjectTaskId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
                             Text = "Nesciunt hic voluptatem corporis voluptatem.",
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
@@ -269,7 +269,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("77286b85-983e-41f2-aec4-d2dd5134afef"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(8450),
-                            JobId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
+                            ProjectTaskId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
                             Text = "Nihil sed fugiat sed dolore saepe ut quisquam sint.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -277,7 +277,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("743414ed-0b41-49dd-b4e9-ade236324fd3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(8918),
-                            JobId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
+                            ProjectTaskId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
                             Text = "Perspiciatis excepturi doloribus dignissimos quam aut id odio.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -285,7 +285,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ce902cc1-4ac0-4c20-bf47-2e8a4c2e7191"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(9312),
-                            JobId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
+                            ProjectTaskId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
                             Text = "Labore qui quo aut et velit in ab.",
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
@@ -293,7 +293,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7d590dea-03c6-4e82-8ec6-7032afc6d2b9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(9701),
-                            JobId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
+                            ProjectTaskId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
                             Text = "Non fuga accusamus qui rerum necessitatibus.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -301,7 +301,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e2596921-4a25-450e-b3f3-9b09b338eeaf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 174, DateTimeKind.Utc).AddTicks(9990),
-                            JobId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
+                            ProjectTaskId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
                             Text = "Voluptates ratione recusandae corrupti repellat porro et.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -309,7 +309,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("045525e0-9899-4aa0-9c4e-e71952df5f1b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(364),
-                            JobId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
+                            ProjectTaskId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
                             Text = "Possimus blanditiis velit ex quibusdam vero aut.",
                             UserId = new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b")
                         },
@@ -317,7 +317,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0379d961-aeee-4678-95ad-724475c3983a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(694),
-                            JobId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
+                            ProjectTaskId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
                             Text = "Debitis repellat labore eius voluptatibus optio nihil autem.",
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
@@ -325,7 +325,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8819d1d0-8eca-4786-9f53-a8efa9dbb7ff"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(1142),
-                            JobId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
+                            ProjectTaskId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
                             Text = "Maxime magnam et similique perferendis veniam numquam fuga delectus voluptate est.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -333,7 +333,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ddea65f6-527c-45fc-94aa-74fccffdb111"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(1698),
-                            JobId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
+                            ProjectTaskId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
                             Text = "Inventore quod et in totam et aut molestiae rerum.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -341,7 +341,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("209c2b1a-051a-418f-a901-b1effa1fa49f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(2134),
-                            JobId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
+                            ProjectTaskId = new Guid("1e3949e9-92f5-4786-803e-b6de9e9a45e7"),
                             Text = "Veniam voluptate temporibus neque vel non quo.",
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
@@ -349,7 +349,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d69dbe6c-8eee-4343-b923-cc0fa666c332"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(2498),
-                            JobId = new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"),
+                            ProjectTaskId = new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"),
                             Text = "Tenetur numquam ipsum vitae qui delectus quia accusantium cumque minus.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -357,7 +357,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7858b26c-3003-4863-98d3-6f4c40bbf5a2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(2980),
-                            JobId = new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"),
+                            ProjectTaskId = new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"),
                             Text = "Corrupti temporibus deserunt magni soluta qui rerum ut voluptas maiores.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -365,7 +365,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ea4f4899-f930-473e-ac91-89981fc95842"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(3525),
-                            JobId = new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"),
+                            ProjectTaskId = new Guid("b1707e94-c3b1-4532-8fff-9f1d3400cb5a"),
                             Text = "Veniam illum totam animi sequi.",
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
@@ -373,7 +373,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("71f7702c-bc6d-4bf9-898d-0a5c1de23c1c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(3770),
-                            JobId = new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"),
+                            ProjectTaskId = new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"),
                             Text = "Aut harum corporis quo et eligendi quos ut perspiciatis.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -381,7 +381,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7b293a53-eddb-4f63-aa48-85f840425518"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(4218),
-                            JobId = new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"),
+                            ProjectTaskId = new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"),
                             Text = "Velit porro sequi natus id.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -389,7 +389,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f9524ad5-1cd4-4a86-891d-12802f6822d8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(4464),
-                            JobId = new Guid("f513902d-9af6-4832-802b-6a12639a7975"),
+                            ProjectTaskId = new Guid("f513902d-9af6-4832-802b-6a12639a7975"),
                             Text = "Expedita commodi sequi dolores voluptatem quis ut nam et rerum.",
                             UserId = new Guid("a6e48cdc-9659-4981-b38e-e46a9ff54618")
                         },
@@ -397,7 +397,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("78c4324a-7a63-4001-8717-b15fe0ade5c9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(4998),
-                            JobId = new Guid("f513902d-9af6-4832-802b-6a12639a7975"),
+                            ProjectTaskId = new Guid("f513902d-9af6-4832-802b-6a12639a7975"),
                             Text = "Enim velit dolores et consequatur.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -405,7 +405,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a5d0600a-f497-4350-8cba-2dee837947ab"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(5271),
-                            JobId = new Guid("f513902d-9af6-4832-802b-6a12639a7975"),
+                            ProjectTaskId = new Guid("f513902d-9af6-4832-802b-6a12639a7975"),
                             Text = "Nemo occaecati vel earum quos dolorum voluptatibus explicabo tempora non fuga.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -413,7 +413,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("88d30669-6696-4701-891b-d490b5fe322c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(5809),
-                            JobId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
+                            ProjectTaskId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
                             Text = "Ut et quod et dicta sapiente ducimus velit quaerat quas.",
                             UserId = new Guid("8a360533-65da-4c55-ac4e-1399787bc9bb")
                         },
@@ -421,7 +421,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("504cd576-f137-4d03-a351-6ae961958182"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(6310),
-                            JobId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
+                            ProjectTaskId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
                             Text = "Dolor velit aliquam consequuntur optio explicabo sit.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -429,7 +429,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("05dc8f8d-a5e4-4b24-8490-d32a7e91c01b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(6633),
-                            JobId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
+                            ProjectTaskId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
                             Text = "Aut harum in maiores fuga rem nihil veniam voluptatem quisquam ratione.",
                             UserId = new Guid("1c5f4cf0-7b01-4c8a-bfc8-441b2cc1d3ba")
                         },
@@ -437,7 +437,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("908cf09c-5e50-47fd-9d5f-9a1ec44b66e9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(7155),
-                            JobId = new Guid("92529999-5d05-4653-ab8e-32a596cf1f7a"),
+                            ProjectTaskId = new Guid("92529999-5d05-4653-ab8e-32a596cf1f7a"),
                             Text = "Minus in eius architecto saepe est voluptatem quidem.",
                             UserId = new Guid("9ae212b9-54d8-4bdc-b13a-feba18b7b094")
                         },
@@ -445,7 +445,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f67d03e7-b1d2-469b-8e33-d860d7b34e0a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(8748),
-                            JobId = new Guid("92529999-5d05-4653-ab8e-32a596cf1f7a"),
+                            ProjectTaskId = new Guid("92529999-5d05-4653-ab8e-32a596cf1f7a"),
                             Text = "Asperiores accusamus ut illum accusamus minima quia.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -453,7 +453,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b27a33a6-52c4-4495-b89f-ce1d75e5d6d0"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(9097),
-                            JobId = new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"),
+                            ProjectTaskId = new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"),
                             Text = "Non non ab totam sunt.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -461,7 +461,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b700f00d-017d-46f5-90ca-379bc08d1386"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(9345),
-                            JobId = new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"),
+                            ProjectTaskId = new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"),
                             Text = "Cumque qui atque id natus totam et voluptas labore temporibus.",
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
@@ -469,7 +469,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("fd48efdf-1750-4657-9bdf-4b1fe5c6801e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 175, DateTimeKind.Utc).AddTicks(9880),
-                            JobId = new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"),
+                            ProjectTaskId = new Guid("75043ee0-57d0-4ae6-afcc-e3f12492f3b5"),
                             Text = "Incidunt sit autem rerum nostrum iusto eum hic.",
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
@@ -477,7 +477,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7a4f5c85-b325-4bda-aa0d-e9ad460a5a73"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(267),
-                            JobId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
+                            ProjectTaskId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
                             Text = "Perspiciatis et deleniti ullam fugit ut tenetur hic.",
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
@@ -485,7 +485,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("51d15be8-a9a1-4e90-b7e5-2c67e917ec9e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(650),
-                            JobId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
+                            ProjectTaskId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
                             Text = "Quia fugit aliquid itaque enim est aut consequatur est molestias dolore.",
                             UserId = new Guid("d0938672-275f-461f-acf5-ee7187049ff6")
                         },
@@ -493,7 +493,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("942f81ed-7e53-4080-a878-33187bff70c5"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(1209),
-                            JobId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
+                            ProjectTaskId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
                             Text = "Aut quidem vel quia rerum hic.",
                             UserId = new Guid("5850dc7c-9818-4d6e-a334-36561aec0149")
                         },
@@ -501,7 +501,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8f5c3c97-b9ab-47eb-8209-3134d13f57f3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(1519),
-                            JobId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
+                            ProjectTaskId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
                             Text = "Dicta ducimus officiis minima sed.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -509,7 +509,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4b01dccf-dbe2-49c5-af85-02876d7520e8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(1768),
-                            JobId = new Guid("2c867491-604a-4d8a-8f93-53364575334f"),
+                            ProjectTaskId = new Guid("2c867491-604a-4d8a-8f93-53364575334f"),
                             Text = "Voluptatibus cum veritatis odio voluptatum.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -517,7 +517,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("93382d25-85f2-47c7-b867-6881b76f2e3e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(2017),
-                            JobId = new Guid("2c867491-604a-4d8a-8f93-53364575334f"),
+                            ProjectTaskId = new Guid("2c867491-604a-4d8a-8f93-53364575334f"),
                             Text = "Expedita nulla fugit qui fuga.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -525,7 +525,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b2094daa-627c-4756-a714-49c688a5c270"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(2240),
-                            JobId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
+                            ProjectTaskId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
                             Text = "Aut eos consequatur molestiae laboriosam eligendi ab.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -533,7 +533,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f2581d4c-0eec-451f-9cfb-90c8ad1871cc"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(2691),
-                            JobId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
+                            ProjectTaskId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
                             Text = "Sint magnam molestias quo rerum sit sapiente.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -541,7 +541,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("80371fad-d456-4c81-972f-dd4e41454ad6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(3047),
-                            JobId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
+                            ProjectTaskId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
                             Text = "Sint aspernatur qui qui magni.",
                             UserId = new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b")
                         },
@@ -549,7 +549,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3ed1d576-2dc2-43d7-bb35-64131ee95fd8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(3293),
-                            JobId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
+                            ProjectTaskId = new Guid("317332ff-3fbf-479d-b71e-6e13d46fb963"),
                             Text = "Rerum sit adipisci non dolorem rerum qui.",
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
@@ -557,7 +557,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("80dc1608-d78c-4b40-999b-3694f6bef045"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(3639),
-                            JobId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
+                            ProjectTaskId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
                             Text = "Aut autem ipsum consequuntur quia.",
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
@@ -565,7 +565,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("526159ef-e6bc-458e-aa49-d5ca3a13e958"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(3869),
-                            JobId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
+                            ProjectTaskId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
                             Text = "Esse et cum ut laudantium consequatur reiciendis temporibus molestiae dolor enim.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -573,7 +573,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6168640b-28cd-49c8-8c32-50546b1734fa"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(4418),
-                            JobId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
+                            ProjectTaskId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
                             Text = "Qui nihil necessitatibus odit omnis animi eum nobis maxime.",
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
@@ -581,7 +581,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e0d23595-8611-4b61-a655-371ea3a89c56"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(4845),
-                            JobId = new Guid("535dfdfc-42e7-4fec-8f25-100eb6c5b034"),
+                            ProjectTaskId = new Guid("535dfdfc-42e7-4fec-8f25-100eb6c5b034"),
                             Text = "Sed quibusdam facere quia non.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -589,7 +589,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c62b2744-da26-427e-bbdc-2981eeb055d6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(5091),
-                            JobId = new Guid("535dfdfc-42e7-4fec-8f25-100eb6c5b034"),
+                            ProjectTaskId = new Guid("535dfdfc-42e7-4fec-8f25-100eb6c5b034"),
                             Text = "Sint sapiente asperiores sequi est fugiat quo quo culpa.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -597,7 +597,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5d7ec840-0e85-4aac-a09c-ac68a7052e00"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(5524),
-                            JobId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
+                            ProjectTaskId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
                             Text = "Minima et fugiat omnis itaque.",
                             UserId = new Guid("5850dc7c-9818-4d6e-a334-36561aec0149")
                         },
@@ -605,7 +605,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0b507b6e-68c7-4726-9686-401e95919f35"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(5773),
-                            JobId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
+                            ProjectTaskId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
                             Text = "Ab in nulla sit facilis totam.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -613,7 +613,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("acf6a131-dcbf-42b0-9599-034083f9bf3a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(6058),
-                            JobId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
+                            ProjectTaskId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
                             Text = "Doloribus omnis et voluptatem voluptates facere.",
                             UserId = new Guid("1bfd69d5-46f6-489f-883e-5a5755c63970")
                         },
@@ -621,7 +621,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("92d07274-067f-48f7-97f4-da4586778ca2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(6342),
-                            JobId = new Guid("642b2c5f-cc57-4b7d-8635-9cff7835dc2b"),
+                            ProjectTaskId = new Guid("642b2c5f-cc57-4b7d-8635-9cff7835dc2b"),
                             Text = "Dolorum eum vitae aperiam et.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -629,7 +629,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("79cde4db-8523-4c41-9473-8624e78beeda"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(6591),
-                            JobId = new Guid("642b2c5f-cc57-4b7d-8635-9cff7835dc2b"),
+                            ProjectTaskId = new Guid("642b2c5f-cc57-4b7d-8635-9cff7835dc2b"),
                             Text = "Ipsa eos neque nostrum et nihil quis.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -637,7 +637,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("cc242fb5-bade-4c68-9baa-66467df4a0a2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(6944),
-                            JobId = new Guid("c9e3a639-110c-424e-8b1f-00dba4255e68"),
+                            ProjectTaskId = new Guid("c9e3a639-110c-424e-8b1f-00dba4255e68"),
                             Text = "Et facilis commodi ea consequatur nihil illum nam praesentium repudiandae.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -645,7 +645,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("eede64bd-ff20-49d2-a244-ade959b60c7d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(7446),
-                            JobId = new Guid("c9e3a639-110c-424e-8b1f-00dba4255e68"),
+                            ProjectTaskId = new Guid("c9e3a639-110c-424e-8b1f-00dba4255e68"),
                             Text = "Recusandae sint et ea et doloremque rerum.",
                             UserId = new Guid("8a360533-65da-4c55-ac4e-1399787bc9bb")
                         },
@@ -653,7 +653,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8896cc14-7628-44b5-b301-d460b2aaaafd"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(7954),
-                            JobId = new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"),
+                            ProjectTaskId = new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"),
                             Text = "Aut aut totam iusto iusto fugit repellat pariatur incidunt asperiores.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -661,7 +661,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0ef5dede-0cca-43bf-b31b-80ee51352d74"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(8624),
-                            JobId = new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"),
+                            ProjectTaskId = new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"),
                             Text = "Non asperiores similique quis in quo sequi.",
                             UserId = new Guid("1bfd69d5-46f6-489f-883e-5a5755c63970")
                         },
@@ -669,7 +669,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a3f806cd-2067-496c-9907-f42347a27c74"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(8999),
-                            JobId = new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"),
+                            ProjectTaskId = new Guid("6c20e8a1-7981-4cb1-9d11-30b1784f28bc"),
                             Text = "Illum dolores ipsum enim saepe placeat sint.",
                             UserId = new Guid("1bfd69d5-46f6-489f-883e-5a5755c63970")
                         },
@@ -677,7 +677,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("810556d2-01fe-4619-aa34-96c14c462c6f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(9364),
-                            JobId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
+                            ProjectTaskId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
                             Text = "Delectus qui doloremque aut eveniet eius enim occaecati delectus necessitatibus sed.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -685,7 +685,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a5878e04-78e1-41f3-8609-bf0a0332f4b8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 176, DateTimeKind.Utc).AddTicks(9854),
-                            JobId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
+                            ProjectTaskId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
                             Text = "Magni alias eos quo laborum qui.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -693,7 +693,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b1824d8c-dbd3-46e4-9779-b8cc946e8802"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(114),
-                            JobId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
+                            ProjectTaskId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
                             Text = "Numquam pariatur in et nihil voluptas.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -701,7 +701,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f1fbef86-d973-4c0f-a13d-ed5e32e490cc"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(368),
-                            JobId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
+                            ProjectTaskId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
                             Text = "Nemo facilis sint ex et est ut nam itaque dolorum.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -709,7 +709,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("67282dd2-7243-499f-a6f8-64c9516d43a8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(816),
-                            JobId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
+                            ProjectTaskId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
                             Text = "Ut quo soluta optio ratione aut nam dolores natus ut autem.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -717,7 +717,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9b3be9e5-efa4-4c97-86d0-9b11173acea3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(1296),
-                            JobId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
+                            ProjectTaskId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
                             Text = "Nam consequatur eaque tempora tenetur velit voluptatum.",
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
@@ -725,7 +725,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("34fdbd98-c6f8-40f7-acf1-d75d2422a2ab"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(1611),
-                            JobId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
+                            ProjectTaskId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
                             Text = "Debitis quae neque molestias distinctio fuga sit praesentium et.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -733,7 +733,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("39781f6c-015b-4403-b598-8b690ec3e6d6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(2025),
-                            JobId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
+                            ProjectTaskId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
                             Text = "Cum est non quasi delectus sit omnis.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -741,7 +741,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4ea3307f-259e-4298-b07a-033fdab65158"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(2313),
-                            JobId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
+                            ProjectTaskId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
                             Text = "Repellendus amet non voluptatem sint voluptatem.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -749,7 +749,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a7de6bf6-809a-476c-87d0-ed1ff29f6a2f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(2593),
-                            JobId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
+                            ProjectTaskId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
                             Text = "Veritatis dolor laborum iusto molestiae eum dolores aut.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -757,7 +757,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0433aa91-c9f9-4c5f-a0c8-3b72b4d99221"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(2941),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             Text = "Eius aut commodi culpa enim.",
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
@@ -765,7 +765,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("449fe414-8e67-43b3-8060-5628ffdb1f70"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(3241),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             Text = "Odit delectus id necessitatibus eius consequatur nostrum qui aut enim est.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -773,7 +773,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("1787029a-bf09-4556-8cc6-5b4409f40e4d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(3745),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             Text = "Et et ea eos qui explicabo.",
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
@@ -781,7 +781,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("73328a1a-8b98-421c-807f-0ca4881bc6fa"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(4007),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             Text = "Esse non exercitationem sapiente illum repudiandae nisi velit eaque.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -789,7 +789,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("52e52235-c810-4556-af34-e618574befbf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(4416),
-                            JobId = new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"),
+                            ProjectTaskId = new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"),
                             Text = "Exercitationem sit quo non iusto id quis sint.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -797,7 +797,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("85b475f2-290d-4e97-baf4-7c15643efea9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(4769),
-                            JobId = new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"),
+                            ProjectTaskId = new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"),
                             Text = "At nihil in voluptatibus reprehenderit ex blanditiis.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -805,7 +805,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3950e788-5eb0-4bb9-8c28-aba250c281c0"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(5142),
-                            JobId = new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"),
+                            ProjectTaskId = new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"),
                             Text = "Saepe omnis asperiores reiciendis laboriosam ipsa in mollitia.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -813,7 +813,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3f6443f7-7d15-4e11-81a2-209719279d80"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(5500),
-                            JobId = new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"),
+                            ProjectTaskId = new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"),
                             Text = "Cumque qui ipsum ipsam distinctio consectetur.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -821,7 +821,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3098e67b-24d4-4a70-b731-011ce20dfcc3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(5768),
-                            JobId = new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"),
+                            ProjectTaskId = new Guid("acdbee83-e81e-4e98-8b11-eebe459e2c9c"),
                             Text = "Quia veritatis nihil dolor soluta illum exercitationem tenetur sapiente.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -829,7 +829,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("1ecbf2ed-85d6-460f-9f74-99831aa1462f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(6181),
-                            JobId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
+                            ProjectTaskId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
                             Text = "Vel ipsa in dolorem doloribus illum laudantium ullam et.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -837,7 +837,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e64f31a4-635c-4088-afd0-db3130e6ad8f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(6601),
-                            JobId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
+                            ProjectTaskId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
                             Text = "Totam et dolorum et laboriosam porro.",
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
@@ -845,7 +845,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("51dc85b7-2793-47ce-a919-a19fbbfcd4f8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(6917),
-                            JobId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
+                            ProjectTaskId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
                             Text = "Praesentium omnis aperiam sed maiores debitis exercitationem quasi.",
                             UserId = new Guid("80252af2-71a8-4b36-9581-f450605f71ff")
                         },
@@ -853,7 +853,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("08bdef3a-1174-45f8-8811-de577d6209d5"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(7534),
-                            JobId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
+                            ProjectTaskId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
                             Text = "Nulla aut recusandae fugiat fugit quasi hic nesciunt eos voluptas qui.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -861,7 +861,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b26b9f55-571f-4f04-b521-3bc61848054f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(8037),
-                            JobId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
+                            ProjectTaskId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
                             Text = "Quasi voluptas aut sint qui.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -869,7 +869,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("39886bdc-0c2c-4023-9012-448ccd784baa"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(8284),
-                            JobId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
+                            ProjectTaskId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
                             Text = "Mollitia rerum molestias magnam similique aperiam.",
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
@@ -877,7 +877,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ce73f539-9dac-4e38-b435-f31d16d14201"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(8577),
-                            JobId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
+                            ProjectTaskId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
                             Text = "Minima voluptatem reiciendis voluptates nam commodi cum et qui.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -885,7 +885,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4cabf4e5-9c3c-47a9-9ed6-b0bb3fe903c6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(8991),
-                            JobId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
+                            ProjectTaskId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
                             Text = "Sapiente eos sequi accusamus nisi id quaerat minima aliquid ad.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -893,7 +893,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7fa6b1ed-7a06-4614-9d82-b5ddf15f6a7a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(9503),
-                            JobId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
+                            ProjectTaskId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
                             Text = "Est modi est ipsa deleniti.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -901,7 +901,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("cc76a705-4bc1-4d66-99a3-e4479b9cb4e2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(9735),
-                            JobId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
+                            ProjectTaskId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
                             Text = "Nihil et vero tempore laborum.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -909,7 +909,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f709b96b-6dc3-4b5d-947c-4acce75e3627"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 177, DateTimeKind.Utc).AddTicks(9956),
-                            JobId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
+                            ProjectTaskId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
                             Text = "Modi laudantium est quod itaque provident.",
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
@@ -917,7 +917,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5133f855-ccdb-4f7a-b959-794cde67c78c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(218),
-                            JobId = new Guid("694aaf4e-7aa9-4ab3-8342-3510027457d4"),
+                            ProjectTaskId = new Guid("694aaf4e-7aa9-4ab3-8342-3510027457d4"),
                             Text = "Ut libero unde maxime at temporibus sint veritatis numquam quibusdam animi.",
                             UserId = new Guid("80252af2-71a8-4b36-9581-f450605f71ff")
                         },
@@ -925,7 +925,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("924a687b-ab69-4263-be63-07ccf9ada990"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(783),
-                            JobId = new Guid("694aaf4e-7aa9-4ab3-8342-3510027457d4"),
+                            ProjectTaskId = new Guid("694aaf4e-7aa9-4ab3-8342-3510027457d4"),
                             Text = "Unde aut veritatis totam impedit laborum id.",
                             UserId = new Guid("1c5f4cf0-7b01-4c8a-bfc8-441b2cc1d3ba")
                         },
@@ -933,7 +933,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a1211ca8-b335-4683-801f-9943ca360ac1"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(1107),
-                            JobId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
+                            ProjectTaskId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
                             Text = "Dolore quis a ea ipsum.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -941,7 +941,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("15dd7830-3ab4-4a74-b8eb-e4b46adc7ab9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(1334),
-                            JobId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
+                            ProjectTaskId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
                             Text = "Et eum ullam soluta at ut impedit voluptatum.",
                             UserId = new Guid("42752958-296a-49b2-8e53-859ccf1720d3")
                         },
@@ -949,7 +949,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("69620f57-d5c9-4d75-82fe-a70b5d63a3bb"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(1714),
-                            JobId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
+                            ProjectTaskId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
                             Text = "Similique rerum praesentium facere qui nobis ducimus iste facere molestiae.",
                             UserId = new Guid("eb0b5e12-47ae-41e5-b40c-d7eae8857c40")
                         },
@@ -957,7 +957,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("39d5bb19-afa7-4c98-9fe9-a307f3b3f98f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(2166),
-                            JobId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
+                            ProjectTaskId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
                             Text = "Ab adipisci assumenda eveniet atque.",
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
@@ -965,7 +965,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("08f6e88c-4046-477d-ad95-3a46d11179ca"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(2394),
-                            JobId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
+                            ProjectTaskId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
                             Text = "Dolores laudantium deleniti suscipit magni quia qui laudantium.",
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
@@ -973,7 +973,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("27747c40-fa3c-42c0-be04-bd3dbdd82a8e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(2782),
-                            JobId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
+                            ProjectTaskId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
                             Text = "Deserunt asperiores ut mollitia quos enim ducimus sequi illo.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -981,7 +981,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0103fc12-9b42-427b-9a52-2f8d2d2ebe19"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(3163),
-                            JobId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
+                            ProjectTaskId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
                             Text = "Libero nihil sit non non veniam voluptatem.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -989,7 +989,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("1f14719b-e686-4f24-931e-3df1bda98159"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(3486),
-                            JobId = new Guid("6a2c586f-753c-4bef-99ae-a7d4208b7d66"),
+                            ProjectTaskId = new Guid("6a2c586f-753c-4bef-99ae-a7d4208b7d66"),
                             Text = "Totam necessitatibus reprehenderit nostrum qui est sed sint exercitationem error corrupti.",
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
@@ -997,7 +997,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("53c05ac3-5389-45d4-8d5c-c870451ac9f4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(3955),
-                            JobId = new Guid("6a2c586f-753c-4bef-99ae-a7d4208b7d66"),
+                            ProjectTaskId = new Guid("6a2c586f-753c-4bef-99ae-a7d4208b7d66"),
                             Text = "Repellat iusto adipisci dolores et omnis sed dolores aperiam.",
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
@@ -1005,7 +1005,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b5cedaff-74ab-4a07-b92e-679e6bc922a7"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(4370),
-                            JobId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
+                            ProjectTaskId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
                             Text = "Nulla cum ut deleniti unde.",
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
@@ -1013,7 +1013,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d11b451a-835a-4763-bd43-d24ae7affa3b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(4597),
-                            JobId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
+                            ProjectTaskId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
                             Text = "Nulla velit veritatis debitis quidem libero esse.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -1021,7 +1021,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0b88f299-bd74-46d5-b8a4-74ffa6dcf02e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(4994),
-                            JobId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
+                            ProjectTaskId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
                             Text = "Beatae est aliquid voluptas sunt eos doloribus consequatur.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -1029,7 +1029,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5fe0f222-8b3a-4829-bfdd-4d336fd8ca9e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(5377),
-                            JobId = new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"),
+                            ProjectTaskId = new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"),
                             Text = "Non aspernatur ratione et consequuntur hic et.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -1037,7 +1037,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ad4484cd-3d88-4da2-b2d1-c5d28d4226a7"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(5738),
-                            JobId = new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"),
+                            ProjectTaskId = new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"),
                             Text = "Harum eveniet est ipsa est inventore.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -1045,7 +1045,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a8b3fdba-e948-463a-bdf3-03fdd2b78b84"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(6193),
-                            JobId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
+                            ProjectTaskId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
                             Text = "Voluptas dolorem doloremque ut commodi expedita similique facere.",
                             UserId = new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b")
                         },
@@ -1053,7 +1053,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("bab3020f-f936-43b7-852c-5902b2fc7872"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(6555),
-                            JobId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
+                            ProjectTaskId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
                             Text = "Et sit ut sed repudiandae facere aut.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -1061,7 +1061,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("bf738a81-31cb-47da-9667-68a59025c6e5"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(6884),
-                            JobId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
+                            ProjectTaskId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
                             Text = "Beatae officiis voluptatem architecto iure molestias reprehenderit.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -1069,7 +1069,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f2491e2a-d368-44d3-ba69-8da8f6f3c696"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(7308),
-                            JobId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
+                            ProjectTaskId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
                             Text = "Ut aut asperiores neque provident quod.",
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
@@ -1077,7 +1077,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("396979ea-c419-48ee-8c2d-708a933b0a8a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(7592),
-                            JobId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
+                            ProjectTaskId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
                             Text = "Repudiandae maiores tempora aut quas dolorum at.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -1085,7 +1085,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("00092bc4-b906-4c9c-a841-ba50fe693bfd"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(7899),
-                            JobId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
+                            ProjectTaskId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
                             Text = "Debitis eos et officia consequatur quibusdam laudantium.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -1093,7 +1093,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7f74eef0-6f1e-4606-b955-6a1ee77d1731"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(8209),
-                            JobId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
+                            ProjectTaskId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
                             Text = "Rem quos enim sit omnis.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -1101,7 +1101,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a6765833-842b-4373-b5e6-520194c18535"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(8431),
-                            JobId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
+                            ProjectTaskId = new Guid("3ef69913-7090-4045-b920-db77b99deca7"),
                             Text = "Rerum excepturi et esse sunt nostrum eius accusantium delectus vero voluptatem.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -1109,7 +1109,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c5c5f11d-877e-4d50-9c32-c6750295939e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(8921),
-                            JobId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
+                            ProjectTaskId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
                             Text = "Et quis maxime cupiditate dolorum labore omnis qui aliquid.",
                             UserId = new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b")
                         },
@@ -1117,7 +1117,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d31ee522-741e-4aa8-b9e9-8d2342008edf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(9505),
-                            JobId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
+                            ProjectTaskId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
                             Text = "A ad sint sint sed fuga iusto earum.",
                             UserId = new Guid("5850dc7c-9818-4d6e-a334-36561aec0149")
                         },
@@ -1125,7 +1125,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6930138e-b69c-4b7d-b6ec-be83c3d1acdb"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 178, DateTimeKind.Utc).AddTicks(9857),
-                            JobId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
+                            ProjectTaskId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
                             Text = "Eos ut eaque ullam dolore iusto officia.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -1133,7 +1133,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("30714596-3c11-4cf1-89ec-bd34ab1c0f5d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(179),
-                            JobId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
+                            ProjectTaskId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
                             Text = "Ut sequi fuga dolor soluta consequatur.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -1141,7 +1141,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("eee9db3a-b902-4fe3-b10c-198d3458f9f4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(442),
-                            JobId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
+                            ProjectTaskId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
                             Text = "Mollitia adipisci iste veniam minima a in dolore aut magnam dolores.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -1149,7 +1149,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("436db9ab-790f-4af4-a2f4-3970d19502ce"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(920),
-                            JobId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
+                            ProjectTaskId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
                             Text = "Quos pariatur inventore a sequi deserunt debitis quisquam occaecati et facilis.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -1157,7 +1157,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6fbd6dc7-9c36-4a19-abc2-7dbd2e178ec6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(1412),
-                            JobId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
+                            ProjectTaskId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
                             Text = "Dolorem sed laborum impedit ut.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -1165,7 +1165,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e8e88deb-ba3f-48ab-969e-90ef17bee157"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(1655),
-                            JobId = new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"),
+                            ProjectTaskId = new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"),
                             Text = "Praesentium qui doloribus voluptas aut molestiae sequi.",
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
@@ -1173,7 +1173,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e889ee8a-f5ad-44b4-979c-c3d3298b8b76"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(1989),
-                            JobId = new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"),
+                            ProjectTaskId = new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"),
                             Text = "Sunt recusandae natus ratione consequatur cupiditate quasi.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -1181,7 +1181,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b3310d2e-9814-41ac-9e2c-8991fcc65889"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(2358),
-                            JobId = new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"),
+                            ProjectTaskId = new Guid("cdabe58a-c23d-4613-8c94-aa2c2c5cfddb"),
                             Text = "Minima ut necessitatibus ad rerum eum libero.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -1189,7 +1189,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3b545e7c-a0f6-4b3b-86fa-8468ac7c2d9d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(2654),
-                            JobId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
+                            ProjectTaskId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
                             Text = "Ut placeat laudantium natus quo cupiditate consequuntur.",
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
@@ -1197,7 +1197,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a7cd6141-5cb8-4f37-87c5-55fd895a1cec"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(2972),
-                            JobId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
+                            ProjectTaskId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
                             Text = "Dignissimos quo et maxime facilis ipsa inventore nulla possimus.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -1205,7 +1205,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f346f412-f119-4794-9d64-80f912682852"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(3415),
-                            JobId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
+                            ProjectTaskId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
                             Text = "Reprehenderit rem qui et sint itaque aut.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -1213,7 +1213,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("cefdc186-cb45-4a67-939a-f3bab8d1810e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(3733),
-                            JobId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
+                            ProjectTaskId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
                             Text = "Quo et velit alias quo pariatur qui.",
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
@@ -1221,7 +1221,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2e97a866-4259-4006-89c3-4b4fa783d28d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(4087),
-                            JobId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
+                            ProjectTaskId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
                             Text = "Nihil ipsum similique praesentium dicta iste omnis pariatur qui omnis.",
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
@@ -1229,7 +1229,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ebda81b1-2e65-4411-a497-894158071891"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(4575),
-                            JobId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
+                            ProjectTaskId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
                             Text = "Qui sunt enim dolore totam aut molestiae quia accusamus a.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -1237,7 +1237,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4b4d2453-8aa3-48ab-8c21-6bc000df0da7"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(5048),
-                            JobId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
+                            ProjectTaskId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
                             Text = "Vel nobis illum dolorem voluptatem magnam.",
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
@@ -1245,7 +1245,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("916a0fc1-23aa-4687-8311-8895da3f1538"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(5382),
-                            JobId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
+                            ProjectTaskId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
                             Text = "Quisquam ut voluptatum fugiat est molestias doloribus.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -1253,7 +1253,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b9dd9a36-f6a3-4ec0-a9e3-92254d6f939c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(5984),
-                            JobId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
+                            ProjectTaskId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
                             Text = "Assumenda perspiciatis repellendus nobis consectetur sint quae modi veniam accusantium.",
                             UserId = new Guid("1c5f4cf0-7b01-4c8a-bfc8-441b2cc1d3ba")
                         },
@@ -1261,7 +1261,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("50d633e7-3c78-4c86-8b62-1af68326b241"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(6628),
-                            JobId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
+                            ProjectTaskId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
                             Text = "Aut recusandae fugiat ut tenetur illo sed sit minima earum.",
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
@@ -1269,7 +1269,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c9a1e41b-cef0-4717-884f-db6946a4d2fd"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(7478),
-                            JobId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
+                            ProjectTaskId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
                             Text = "Ratione animi iste fugit in corrupti.",
                             UserId = new Guid("63ee60d0-2eff-41e4-82a5-6aa71af0f1ba")
                         },
@@ -1277,7 +1277,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b8bb839f-47d5-42de-9057-226acac60b96"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(8970),
-                            JobId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
+                            ProjectTaskId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
                             Text = "Odit aut totam necessitatibus repudiandae animi modi quae.",
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         },
@@ -1285,7 +1285,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c3e7a861-0981-4989-9e6a-134ff612f623"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 179, DateTimeKind.Utc).AddTicks(9707),
-                            JobId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
+                            ProjectTaskId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
                             Text = "Nobis ea exercitationem est id dicta illo quia maxime doloribus sit.",
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
@@ -1293,7 +1293,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e2639716-7f3e-43e7-b381-32f12bdf3bcc"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(477),
-                            JobId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
+                            ProjectTaskId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
                             Text = "Non dolorum consequuntur animi minima sunt ea.",
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         },
@@ -1301,7 +1301,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("26c6e2e1-1bc5-4550-830b-ca62208f41a7"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(831),
-                            JobId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
+                            ProjectTaskId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
                             Text = "Tempore reprehenderit ut repellendus iste repellat omnis.",
                             UserId = new Guid("3c9f30f0-c5ac-4479-a74f-8267befb14e2")
                         },
@@ -1309,7 +1309,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ca460824-b467-4e10-903b-47aef523e89b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(1187),
-                            JobId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
+                            ProjectTaskId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
                             Text = "Aut rerum nisi hic omnis maiores.",
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
@@ -1317,7 +1317,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("201b41d8-e436-47cf-b0d9-f017d2f4a735"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(1550),
-                            JobId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
+                            ProjectTaskId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
                             Text = "Omnis libero rem quibusdam vel praesentium quo tenetur facere quia.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -1325,7 +1325,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8c3257ad-00be-401a-9e02-a745ef3eea0d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(2018),
-                            JobId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
+                            ProjectTaskId = new Guid("b3a372a7-e713-4862-a888-7326fe442864"),
                             Text = "Ut dolores magnam sapiente quia et ad.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -1333,7 +1333,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("346e260f-518b-4be2-8dea-c27b79866c74"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(2350),
-                            JobId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
+                            ProjectTaskId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
                             Text = "Ducimus error ea quos labore tempore veniam minus unde ipsa corporis.",
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
@@ -1341,7 +1341,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4d5703c6-6571-454f-ac1a-f97501af1dda"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(3178),
-                            JobId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
+                            ProjectTaskId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
                             Text = "A est hic et similique hic facilis alias sapiente et id.",
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
@@ -1349,7 +1349,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c7244e0d-ad09-4a05-9aaf-9fdccab44c81"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(3750),
-                            JobId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
+                            ProjectTaskId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
                             Text = "Vel quaerat sequi rerum molestiae est enim sit quo architecto.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -1357,7 +1357,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("27636417-d32f-433d-b97c-7ce0d1002c43"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(4258),
-                            JobId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
+                            ProjectTaskId = new Guid("50c1deee-3a94-4c40-801e-ae211b0168b4"),
                             Text = "Occaecati voluptatem exercitationem facere nemo vel consequuntur aspernatur voluptas qui.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -1365,7 +1365,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f3e598d8-ec27-489d-8431-f33ad642a146"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(4836),
-                            JobId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
+                            ProjectTaskId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
                             Text = "Reprehenderit sapiente eos ut tempore maiores.",
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
@@ -1373,7 +1373,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("028a2f8e-950b-432d-b69a-9c67a98fc30c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(5175),
-                            JobId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
+                            ProjectTaskId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
                             Text = "Quia dolore eos non voluptas voluptas nihil reprehenderit.",
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
@@ -1381,7 +1381,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("bdb26f7e-ffcf-430a-9e9f-be3c6b652108"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(5555),
-                            JobId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
+                            ProjectTaskId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
                             Text = "Rerum et dolorem dolores unde eos quo vero iure similique placeat.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -1389,7 +1389,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("feb7f1f0-a43e-463a-9bdc-123a4374dc44"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(6085),
-                            JobId = new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"),
+                            ProjectTaskId = new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"),
                             Text = "Quibusdam doloremque commodi fuga ut facere.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -1397,7 +1397,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2cc8c038-975c-490a-ba92-a5f12db7ecc3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(6423),
-                            JobId = new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"),
+                            ProjectTaskId = new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"),
                             Text = "Eos quaerat veritatis quae impedit et ipsa illum quod.",
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         },
@@ -1405,7 +1405,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d151f5f1-3bea-497c-a26a-7cee763a2c51"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(6996),
-                            JobId = new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"),
+                            ProjectTaskId = new Guid("1df96ff0-8144-4cb9-9647-7d6d9efaa57c"),
                             Text = "Tempora necessitatibus dicta nihil omnis et reiciendis est at officiis soluta.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -1413,7 +1413,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("dfa0c15c-0bec-49e5-88ce-b0966b89221f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(7549),
-                            JobId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
+                            ProjectTaskId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
                             Text = "Est aut qui omnis consectetur perferendis ea tempora fugit.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -1421,7 +1421,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6e3775db-cc28-485c-8c44-da4b7566953e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(7968),
-                            JobId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
+                            ProjectTaskId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
                             Text = "Omnis quis iste architecto soluta ea itaque voluptatum eos.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -1429,7 +1429,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6abf3789-12cf-4347-9666-990cd9716377"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 180, DateTimeKind.Utc).AddTicks(8414),
-                            JobId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
+                            ProjectTaskId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
                             Text = "Numquam voluptatem aut labore dolore a quam pariatur exercitationem harum.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -1437,7 +1437,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d8f35f47-6ed2-47fa-a69a-32a1f84ca86d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(259),
-                            JobId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
+                            ProjectTaskId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
                             Text = "Vel atque iusto et ipsum.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -1445,7 +1445,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ecc86481-1df9-4806-be6c-1f95dd64c216"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(508),
-                            JobId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
+                            ProjectTaskId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
                             Text = "Aliquam id sit sunt et qui.",
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
@@ -1453,7 +1453,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5d633841-329a-47d7-b910-986a53b269d8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(813),
-                            JobId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
+                            ProjectTaskId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
                             Text = "Nemo adipisci laboriosam dolores at qui atque velit.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -1461,7 +1461,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4392a45e-f948-4c09-9e0a-1e4131cdc8cf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(1175),
-                            JobId = new Guid("c62c4969-4be5-4957-aa1d-fceb7016372c"),
+                            ProjectTaskId = new Guid("c62c4969-4be5-4957-aa1d-fceb7016372c"),
                             Text = "Non tempore qui maxime aut sint est aperiam.",
                             UserId = new Guid("450981d2-4d92-44ba-9a21-fa1d00f689fe")
                         },
@@ -1469,7 +1469,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("85a3fe2e-6876-4e53-bac4-d9ed07d4f612"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(1537),
-                            JobId = new Guid("c62c4969-4be5-4957-aa1d-fceb7016372c"),
+                            ProjectTaskId = new Guid("c62c4969-4be5-4957-aa1d-fceb7016372c"),
                             Text = "Rerum et ad sed sint voluptates.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -1477,7 +1477,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7e6aa1f2-e1b6-4044-80c6-0f25a6717ac9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(1804),
-                            JobId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
+                            ProjectTaskId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
                             Text = "Aut ex natus qui fuga.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -1485,7 +1485,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ceee6083-d568-42c2-b912-53f02dcbb01e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(2038),
-                            JobId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
+                            ProjectTaskId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
                             Text = "Id reprehenderit commodi impedit iusto.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -1493,7 +1493,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("52d4b12a-68a8-4afc-88f3-676f9eb329f9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(2280),
-                            JobId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
+                            ProjectTaskId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
                             Text = "Libero eum maxime omnis libero nemo temporibus et quis.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -1501,7 +1501,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2213a3f5-e788-4cb3-b2d9-5466e05f0d71"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(2798),
-                            JobId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
+                            ProjectTaskId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
                             Text = "Eaque dolor qui similique odio non ea fugit ut voluptatem accusamus.",
                             UserId = new Guid("9ae212b9-54d8-4bdc-b13a-feba18b7b094")
                         },
@@ -1509,7 +1509,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d51b9015-ad10-402b-9a14-f80577749f56"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(3336),
-                            JobId = new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"),
+                            ProjectTaskId = new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"),
                             Text = "Dolorum est et molestiae illum rerum architecto qui architecto.",
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
@@ -1517,7 +1517,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("1bf8ae71-2fb7-4052-9b34-650d1018ae57"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(3745),
-                            JobId = new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"),
+                            ProjectTaskId = new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"),
                             Text = "Temporibus perferendis ratione quidem voluptatem ad voluptate.",
                             UserId = new Guid("e886031d-c2d1-48b9-8b70-fddf68832b0d")
                         },
@@ -1525,7 +1525,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c5779e0e-2c23-4114-afb6-811ce60e24bd"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(4079),
-                            JobId = new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"),
+                            ProjectTaskId = new Guid("58c43090-7eed-4cc7-ad1e-79ad17049dd9"),
                             Text = "Consequatur autem accusamus enim minus consequatur sunt modi quo.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -1533,7 +1533,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b1ee3a1b-3ddb-4ac8-af0e-ddc3ca3d34d4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(4480),
-                            JobId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
+                            ProjectTaskId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
                             Text = "Omnis temporibus laboriosam cupiditate quis fugiat.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -1541,7 +1541,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d99603a3-44a9-46ae-8f02-a2966ba2731c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(4775),
-                            JobId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
+                            ProjectTaskId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
                             Text = "Reprehenderit quam delectus nostrum id molestiae consequatur molestiae similique labore ab.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -1549,7 +1549,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6a547081-e92f-487b-b239-da2a506161cd"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(5267),
-                            JobId = new Guid("6051c954-41cd-4a35-8564-f6f63a560624"),
+                            ProjectTaskId = new Guid("6051c954-41cd-4a35-8564-f6f63a560624"),
                             Text = "Recusandae laborum dicta voluptatem soluta aut qui consequatur non doloremque ipsa.",
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
@@ -1557,7 +1557,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("41fc231f-c4c8-4040-8598-cba509e2c33a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(5761),
-                            JobId = new Guid("6051c954-41cd-4a35-8564-f6f63a560624"),
+                            ProjectTaskId = new Guid("6051c954-41cd-4a35-8564-f6f63a560624"),
                             Text = "Ab harum similique eos cupiditate voluptas id.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -1565,7 +1565,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("30039998-8c61-4248-9aa1-9f3b05defad8"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(6157),
-                            JobId = new Guid("6051c954-41cd-4a35-8564-f6f63a560624"),
+                            ProjectTaskId = new Guid("6051c954-41cd-4a35-8564-f6f63a560624"),
                             Text = "Et sapiente incidunt vel aut autem est aut vel aperiam.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -1573,7 +1573,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b1a0cbf3-e72e-4797-9378-187bdd61f9e4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(6647),
-                            JobId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
+                            ProjectTaskId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
                             Text = "Quaerat mollitia amet ex doloribus.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -1581,7 +1581,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2281a7f8-ef18-4678-b36b-c0cf26fa33cf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(6893),
-                            JobId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
+                            ProjectTaskId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
                             Text = "Magnam reiciendis praesentium laborum tenetur voluptatum aut cupiditate.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -1589,7 +1589,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9563fa88-bc11-460f-9ad9-1305444e9230"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(7318),
-                            JobId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
+                            ProjectTaskId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
                             Text = "Vel quod magnam eius consequatur hic incidunt.",
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
@@ -1597,7 +1597,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("aa79d681-1148-409e-8e52-f740cfeb1ed2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(7709),
-                            JobId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
+                            ProjectTaskId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
                             Text = "Quis repellendus occaecati ipsum eos facilis et accusamus.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -1605,7 +1605,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("08409c95-43fe-400e-9a8c-aeffeb96d7e2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(8114),
-                            JobId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
+                            ProjectTaskId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
                             Text = "Et repellendus dignissimos aperiam distinctio.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -1613,7 +1613,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("07bb8529-560f-4069-96fd-eec45dc1ba63"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(8350),
-                            JobId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
+                            ProjectTaskId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
                             Text = "Accusantium sit repellendus neque fugiat repellat asperiores debitis corrupti beatae.",
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
@@ -1621,7 +1621,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7354e309-186c-4e1d-8d88-a887ca5641e2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(8884),
-                            JobId = new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"),
+                            ProjectTaskId = new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"),
                             Text = "Et enim officiis nesciunt officiis.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -1629,7 +1629,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c274de5f-e2f1-48f8-9950-615f8b2f8f90"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(9137),
-                            JobId = new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"),
+                            ProjectTaskId = new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"),
                             Text = "Sunt architecto sint similique voluptas.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -1637,7 +1637,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("1b2d6cba-8237-4a66-94c2-46db5708d1b5"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(9362),
-                            JobId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
+                            ProjectTaskId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
                             Text = "In suscipit dolor temporibus ullam eos at accusantium tenetur aliquid aliquid.",
                             UserId = new Guid("1c5f4cf0-7b01-4c8a-bfc8-441b2cc1d3ba")
                         },
@@ -1645,7 +1645,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("55876b80-7bc0-40e9-a994-a0b5f3c72a2e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 181, DateTimeKind.Utc).AddTicks(9886),
-                            JobId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
+                            ProjectTaskId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
                             Text = "Et quisquam eius impedit accusamus dolorem nobis magnam placeat perspiciatis.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -1653,7 +1653,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b94642dc-b11e-426f-bf0f-dc58dbb353c5"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(365),
-                            JobId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
+                            ProjectTaskId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
                             Text = "Eveniet et delectus est quibusdam a eligendi omnis.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -1661,7 +1661,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("1efd4e32-d395-4d83-89d0-f7762836951a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(760),
-                            JobId = new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"),
+                            ProjectTaskId = new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"),
                             Text = "Dolores nobis consequuntur sint quaerat voluptatibus.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -1669,7 +1669,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f2dd7e4c-17a6-478d-aa10-2c3e39387d92"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(1087),
-                            JobId = new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"),
+                            ProjectTaskId = new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"),
                             Text = "Et asperiores est et possimus est velit in saepe error animi.",
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
@@ -1677,7 +1677,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("99d1e55e-93f9-43fb-add8-35b80d07cc28"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(1621),
-                            JobId = new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"),
+                            ProjectTaskId = new Guid("7afe6ac0-ffd8-46b1-b652-02a970fca53c"),
                             Text = "Numquam illo iure debitis sint temporibus expedita magnam alias voluptatibus.",
                             UserId = new Guid("42752958-296a-49b2-8e53-859ccf1720d3")
                         },
@@ -1685,7 +1685,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9d60f9ca-1280-4d1e-a2ec-a16f6daeda2f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(2110),
-                            JobId = new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"),
+                            ProjectTaskId = new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"),
                             Text = "Vero odio et neque aut exercitationem omnis aut et quod porro.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -1693,7 +1693,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f0e88b12-6b9b-42ba-a801-15ff4f31cf9d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(2728),
-                            JobId = new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"),
+                            ProjectTaskId = new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"),
                             Text = "Illo officiis deserunt sed ratione animi qui quia qui sit.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -1701,7 +1701,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b4ed75e6-a91f-436a-9ffa-fe4363123acb"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(3201),
-                            JobId = new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"),
+                            ProjectTaskId = new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"),
                             Text = "Aut quae porro rerum voluptates quo ratione dolor est voluptatibus.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -1709,7 +1709,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f44d2fb3-3168-4ac5-b464-a137fe0b5262"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(3861),
-                            JobId = new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"),
+                            ProjectTaskId = new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"),
                             Text = "Expedita error facere accusantium in sequi dolorem beatae enim molestias.",
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
@@ -1717,7 +1717,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("935d94d7-3165-4d6d-a27c-173e6ccf1e18"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(4462),
-                            JobId = new Guid("d0fec011-9763-458b-b0b4-acab3562c246"),
+                            ProjectTaskId = new Guid("d0fec011-9763-458b-b0b4-acab3562c246"),
                             Text = "Consectetur harum ut totam eos.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -1725,7 +1725,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("17457466-eee6-4961-aa53-f36b5304464c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(4689),
-                            JobId = new Guid("d0fec011-9763-458b-b0b4-acab3562c246"),
+                            ProjectTaskId = new Guid("d0fec011-9763-458b-b0b4-acab3562c246"),
                             Text = "Facere unde accusamus est vitae optio nesciunt.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -1733,7 +1733,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3ed2c76d-6d4d-4d06-9943-be19a1206fb6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(5020),
-                            JobId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
+                            ProjectTaskId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
                             Text = "Nihil qui soluta qui voluptatum voluptas expedita.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -1741,7 +1741,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d8d675d4-98f3-49a1-b145-891ddd779d76"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(5472),
-                            JobId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
+                            ProjectTaskId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
                             Text = "Illum sed unde aut atque dolores corrupti.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -1749,7 +1749,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0cc90b72-d186-46ed-9fe1-960c5a7acedc"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(5802),
-                            JobId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
+                            ProjectTaskId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
                             Text = "Esse quam illo autem animi omnis nobis.",
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
@@ -1757,7 +1757,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4305f64d-1670-4afa-aa08-a649ad5bcb6f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(6139),
-                            JobId = new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"),
+                            ProjectTaskId = new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"),
                             Text = "Sapiente est aut sed ad.",
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
@@ -1765,7 +1765,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2c13354b-bd6f-40d6-9e72-53d2de3931fd"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(6373),
-                            JobId = new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"),
+                            ProjectTaskId = new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"),
                             Text = "Deserunt aut dolorum ut voluptatum necessitatibus impedit quo mollitia.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -1773,7 +1773,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7022b2d5-459a-483d-bbec-ce1a4273fa66"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(6795),
-                            JobId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
+                            ProjectTaskId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
                             Text = "Molestiae ducimus sed iste ex quia illo velit.",
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
@@ -1781,7 +1781,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("cd8c7257-cbc3-4797-a45e-6cfeb847ca67"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(7206),
-                            JobId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
+                            ProjectTaskId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
                             Text = "Aut consequatur omnis repudiandae sapiente quos et aut aliquam eum.",
                             UserId = new Guid("8a360533-65da-4c55-ac4e-1399787bc9bb")
                         },
@@ -1789,7 +1789,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("7aff97dd-10fa-4731-a851-0b868a6009c0"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(7674),
-                            JobId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
+                            ProjectTaskId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
                             Text = "Harum corporis qui commodi laborum soluta et qui.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -1797,7 +1797,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("94c81038-b703-4799-89ba-b142d0d84644"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(8039),
-                            JobId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
+                            ProjectTaskId = new Guid("84d40c5e-9685-4e5a-91d3-961c6873b8a1"),
                             Text = "Consequatur unde placeat voluptas doloribus porro.",
                             UserId = new Guid("3c9f30f0-c5ac-4479-a74f-8267befb14e2")
                         },
@@ -1805,7 +1805,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6c7f5bfb-d135-41f9-ac9c-175ecceb828f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(8309),
-                            JobId = new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"),
+                            ProjectTaskId = new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"),
                             Text = "Provident aliquam odio et quo et sed eveniet odio.",
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
@@ -1813,7 +1813,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2ffae3ae-8998-47d1-878c-7a7cf5d9f4bf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(8737),
-                            JobId = new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"),
+                            ProjectTaskId = new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"),
                             Text = "Et ea fuga vero alias id est atque ut.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -1821,7 +1821,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("11c1bbf6-eef1-4e39-8a59-17b8a27b2cd2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(9262),
-                            JobId = new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"),
+                            ProjectTaskId = new Guid("c6173cce-81ed-4d76-a83b-6c540b5a9a20"),
                             Text = "Fuga reprehenderit sequi molestiae molestiae repellendus.",
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
@@ -1829,7 +1829,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("714d4f78-af55-4610-8ac9-df388747c008"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 182, DateTimeKind.Utc).AddTicks(9620),
-                            JobId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
+                            ProjectTaskId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
                             Text = "Saepe esse rerum sed et est accusamus cum ipsum laboriosam.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -1837,7 +1837,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("666c2a22-d979-4b2f-a024-45a8e3c54661"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(121),
-                            JobId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
+                            ProjectTaskId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
                             Text = "Quia repellat modi deleniti quos.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -1845,7 +1845,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("593ddea4-423b-4c14-b466-8c71f5e0b903"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(355),
-                            JobId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
+                            ProjectTaskId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
                             Text = "Qui eveniet corporis consequatur sint totam qui iste dolores fuga.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -1853,7 +1853,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4d2c7825-809b-4ee7-bbde-5eca0de32526"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(844),
-                            JobId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
+                            ProjectTaskId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
                             Text = "Quae voluptas doloremque voluptatem dignissimos sit facere iusto laboriosam.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -1861,7 +1861,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c3bf99cb-594a-4997-af6e-8de3a65df8fe"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(1280),
-                            JobId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
+                            ProjectTaskId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
                             Text = "Odit nisi molestias aut et omnis.",
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
@@ -1869,7 +1869,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("67b0fcbc-6a63-4360-84b7-ca81db169eff"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(1573),
-                            JobId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
+                            ProjectTaskId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
                             Text = "Veniam numquam qui voluptas enim soluta occaecati aut tempore corrupti.",
                             UserId = new Guid("5850dc7c-9818-4d6e-a334-36561aec0149")
                         },
@@ -1877,7 +1877,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("685e2c32-d8ac-4b7a-8f9d-e3f0cd3bf0bf"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(2124),
-                            JobId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
+                            ProjectTaskId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
                             Text = "Repellendus sit veritatis et fuga non cupiditate tempore quae.",
                             UserId = new Guid("5850dc7c-9818-4d6e-a334-36561aec0149")
                         },
@@ -1885,7 +1885,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3802ca01-b1fd-4b7d-87cb-bac5bddee00c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(2557),
-                            JobId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
+                            ProjectTaskId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
                             Text = "Occaecati amet excepturi ipsum debitis asperiores molestias nisi.",
                             UserId = new Guid("9ae212b9-54d8-4bdc-b13a-feba18b7b094")
                         },
@@ -1893,7 +1893,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0a226b99-9334-4f27-9f88-859fc8c96c41"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(2916),
-                            JobId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
+                            ProjectTaskId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
                             Text = "Est reprehenderit nam eum est architecto aut repellat id et.",
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
@@ -1901,7 +1901,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("09bf5a47-cd09-4ab9-bfdb-015c1cfd229e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(3405),
-                            JobId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
+                            ProjectTaskId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
                             Text = "Nihil explicabo repudiandae aut asperiores aut quae quia distinctio.",
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
@@ -1909,7 +1909,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f159b2b4-d64d-4d78-afee-8482a950bb37"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(3851),
-                            JobId = new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"),
+                            ProjectTaskId = new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"),
                             Text = "Enim sint ut doloribus error voluptas.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -1917,7 +1917,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("314f9211-d60e-4394-b860-2263cdb5739d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(4169),
-                            JobId = new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"),
+                            ProjectTaskId = new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"),
                             Text = "Ratione quia incidunt deserunt nostrum repellendus atque explicabo ullam illo provident.",
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
@@ -1925,7 +1925,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5696ded0-9919-4cb2-af4d-797c30a91924"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(4679),
-                            JobId = new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"),
+                            ProjectTaskId = new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"),
                             Text = "Perspiciatis velit deleniti in aliquam.",
                             UserId = new Guid("eb0b5e12-47ae-41e5-b40c-d7eae8857c40")
                         },
@@ -1933,7 +1933,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("81250a65-89a1-477b-ba46-9bbd3aa40d7e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(4909),
-                            JobId = new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"),
+                            ProjectTaskId = new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"),
                             Text = "Sapiente omnis perferendis enim in aliquid natus odit sunt.",
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
@@ -1941,7 +1941,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0f708411-9e39-42cd-a3cc-e05462cb7b7d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(5340),
-                            JobId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
+                            ProjectTaskId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
                             Text = "Vero excepturi odit aliquam laboriosam autem cumque magnam est.",
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
@@ -1949,7 +1949,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3ec7dea9-be97-4308-b228-8b54cf5f4fbb"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(5767),
-                            JobId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
+                            ProjectTaskId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
                             Text = "Nulla dolorem officia consequatur asperiores natus hic voluptas consectetur.",
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
@@ -1957,7 +1957,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e9eddf76-7d55-4f48-aca9-400eac49a2fc"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(6170),
-                            JobId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
+                            ProjectTaskId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
                             Text = "Dignissimos iste delectus molestiae earum reprehenderit dolorum quas voluptas.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -1965,7 +1965,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("996a1389-ec2f-4aeb-a08e-89b3da9d4bb3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(6596),
-                            JobId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
+                            ProjectTaskId = new Guid("a2dcdfed-f413-4c8d-bde2-f09378645b8a"),
                             Text = "Laborum sequi et laudantium quae explicabo magnam excepturi architecto.",
                             UserId = new Guid("450981d2-4d92-44ba-9a21-fa1d00f689fe")
                         },
@@ -1973,7 +1973,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("31389bc8-7173-4a02-b3d3-7312080cd0a4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(6995),
-                            JobId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
+                            ProjectTaskId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
                             Text = "Architecto non est necessitatibus sint dignissimos consequatur natus.",
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
@@ -1981,7 +1981,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6b24859c-12e9-4ae7-9afd-551d4d669bb6"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(8168),
-                            JobId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
+                            ProjectTaskId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
                             Text = "Ducimus iure quis nobis et.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -1989,7 +1989,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("969d739e-9a5a-423e-9ab9-3d534284ed23"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(8447),
-                            JobId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
+                            ProjectTaskId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
                             Text = "Totam illo expedita quia nesciunt exercitationem.",
                             UserId = new Guid("e886031d-c2d1-48b9-8b70-fddf68832b0d")
                         },
@@ -1997,7 +1997,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d99bfd24-0ac4-412e-a2a2-0771b59ba427"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(8826),
-                            JobId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
+                            ProjectTaskId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
                             Text = "Debitis non ullam magnam quia quo.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -2005,7 +2005,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("bac9289a-a858-416f-8648-bb7d5a64c745"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(9163),
-                            JobId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
+                            ProjectTaskId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
                             Text = "Est voluptatum architecto minima soluta facere odio dicta sed distinctio soluta.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -2013,7 +2013,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8dac226a-e9b9-4c66-85b8-c3a8d54f6e0c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 183, DateTimeKind.Utc).AddTicks(9693),
-                            JobId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
+                            ProjectTaskId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
                             Text = "Quia neque expedita fuga vitae et eligendi quos corporis temporibus.",
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
@@ -2021,7 +2021,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("75ef0ca3-86a0-4bd6-8431-8eeaaeeea1cc"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(157),
-                            JobId = new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"),
+                            ProjectTaskId = new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"),
                             Text = "Laborum omnis atque atque ea corrupti et cupiditate possimus eum.",
                             UserId = new Guid("e886031d-c2d1-48b9-8b70-fddf68832b0d")
                         },
@@ -2029,7 +2029,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8419cf25-aa2a-41d7-a9db-42ea3e4f00b3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(656),
-                            JobId = new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"),
+                            ProjectTaskId = new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"),
                             Text = "Enim repellat molestias ea dolorum tenetur quibusdam.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -2037,7 +2037,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("584c766e-eb45-4f86-baaa-f0f5d22f85ef"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(958),
-                            JobId = new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"),
+                            ProjectTaskId = new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"),
                             Text = "Quidem voluptas provident dolores sed.",
                             UserId = new Guid("729078f5-9ae5-4969-9173-3067e41761d7")
                         },
@@ -2045,7 +2045,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a51f5f94-81ad-48b9-8b73-d705f912ba67"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(1187),
-                            JobId = new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"),
+                            ProjectTaskId = new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"),
                             Text = "Ullam aliquid ducimus veritatis dolorem enim omnis quae.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -2053,7 +2053,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("de30e3c3-1320-46f5-9121-95c5c47dd501"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(1552),
-                            JobId = new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"),
+                            ProjectTaskId = new Guid("b45bfb8e-045d-4d25-81a7-120b6e467c8c"),
                             Text = "Rerum iusto facere nesciunt et quasi consequuntur.",
                             UserId = new Guid("63ee60d0-2eff-41e4-82a5-6aa71af0f1ba")
                         },
@@ -2061,7 +2061,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f263c0f8-4e8e-4dd7-ab03-323ca1b29065"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(1877),
-                            JobId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
+                            ProjectTaskId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
                             Text = "Consequatur dolores dignissimos laboriosam facere sed laborum.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -2069,7 +2069,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("42d4d79b-9b4e-44f3-ad6a-f3b7ff88d98d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(2204),
-                            JobId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
+                            ProjectTaskId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
                             Text = "Et et exercitationem in dolores dolor autem unde.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -2077,7 +2077,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("d4595179-3b2f-4ee5-bc6f-0c3af518001c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(2569),
-                            JobId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
+                            ProjectTaskId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
                             Text = "Nihil omnis voluptas atque eius eveniet.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -2085,7 +2085,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3bda4b14-8acb-4f5a-af9e-d71cf29485fe"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(2837),
-                            JobId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
+                            ProjectTaskId = new Guid("f27830c2-cf66-4a8f-b4ba-e25d3b15eeea"),
                             Text = "Et quo quod quidem dolorem repellat adipisci deleniti.",
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
@@ -2093,7 +2093,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("73bba657-26f7-495a-bc69-6b61fd1ace92"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(3238),
-                            JobId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
+                            ProjectTaskId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
                             Text = "Labore commodi et rem reprehenderit culpa autem in magni.",
                             UserId = new Guid("1bfd69d5-46f6-489f-883e-5a5755c63970")
                         },
@@ -2101,7 +2101,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6ccad4ea-899f-4812-833e-3e2dc4315fd2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(3663),
-                            JobId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
+                            ProjectTaskId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
                             Text = "Vel fuga voluptate id minima quae est provident et inventore.",
                             UserId = new Guid("80252af2-71a8-4b36-9581-f450605f71ff")
                         },
@@ -2109,7 +2109,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b7cccd77-3ef8-4ec2-b0e9-7874d23de07a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(4099),
-                            JobId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
+                            ProjectTaskId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
                             Text = "Ipsa eius enim laboriosam voluptates quasi culpa sit facere.",
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         },
@@ -2117,7 +2117,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("22572146-5889-4dc0-9980-124153a64382"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(4513),
-                            JobId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
+                            ProjectTaskId = new Guid("57fa5e80-d00e-4397-9820-6c5fb5630a0e"),
                             Text = "Quis adipisci sit vero eveniet dicta tempora veritatis sapiente ex dolorem.",
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
@@ -2125,7 +2125,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("5769b54f-f5ee-4c56-8b69-b2668f799483"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(5066),
-                            JobId = new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"),
+                            ProjectTaskId = new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"),
                             Text = "Debitis alias doloribus placeat placeat nihil doloremque minima excepturi.",
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
@@ -2133,7 +2133,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e595f27b-76c5-48fb-89be-8dbfbc3e5597"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(5474),
-                            JobId = new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"),
+                            ProjectTaskId = new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"),
                             Text = "Iste quis et dolore distinctio sequi voluptatem possimus.",
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
@@ -2141,7 +2141,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8675872a-928f-46d2-a83d-c8968183ab1b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(5858),
-                            JobId = new Guid("16c90236-0556-4f83-a836-57d88764f88c"),
+                            ProjectTaskId = new Guid("16c90236-0556-4f83-a836-57d88764f88c"),
                             Text = "Nihil voluptas hic quae et tempore non est saepe.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -2149,7 +2149,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8280f22f-d85c-458e-8a7c-0c7c946402f4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(6263),
-                            JobId = new Guid("16c90236-0556-4f83-a836-57d88764f88c"),
+                            ProjectTaskId = new Guid("16c90236-0556-4f83-a836-57d88764f88c"),
                             Text = "Quia amet quia consequatur autem quas aut doloremque.",
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
@@ -2157,7 +2157,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("02a42e95-7cde-481f-82cc-81a1bfe1c24b"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(6637),
-                            JobId = new Guid("16c90236-0556-4f83-a836-57d88764f88c"),
+                            ProjectTaskId = new Guid("16c90236-0556-4f83-a836-57d88764f88c"),
                             Text = "Expedita molestias ipsam sunt quibusdam reprehenderit.",
                             UserId = new Guid("eb0b5e12-47ae-41e5-b40c-d7eae8857c40")
                         },
@@ -2165,7 +2165,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("0abbbd79-d9af-4833-b1a0-5fb564067064"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(6909),
-                            JobId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
+                            ProjectTaskId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
                             Text = "Libero et dolor deserunt alias.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -2173,7 +2173,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("2838a50b-7032-4d94-8ef3-813296d32d1f"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(7142),
-                            JobId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
+                            ProjectTaskId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
                             Text = "Ad et provident consequatur quidem nemo.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -2181,7 +2181,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("86302949-ad50-4c47-b308-335ace87d39a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(7414),
-                            JobId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
+                            ProjectTaskId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
                             Text = "Tenetur voluptatem veritatis blanditiis non architecto sit in quo nisi.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -2189,7 +2189,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("68841bdc-ae23-4715-95b1-0b799d7df878"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(7880),
-                            JobId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
+                            ProjectTaskId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
                             Text = "In fugit nemo officia nihil vel et voluptas.",
                             UserId = new Guid("42752958-296a-49b2-8e53-859ccf1720d3")
                         },
@@ -2197,7 +2197,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9550f569-766a-46ad-bfe8-ee53641cdc03"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(8252),
-                            JobId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
+                            ProjectTaskId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
                             Text = "Et dignissimos atque corporis veritatis enim est autem quod.",
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
@@ -2205,7 +2205,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b30e10b0-a9bb-4dc5-815c-f87943fbeea4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(8657),
-                            JobId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
+                            ProjectTaskId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
                             Text = "Qui neque consequatur sit cum et.",
                             UserId = new Guid("729078f5-9ae5-4969-9173-3067e41761d7")
                         },
@@ -2213,7 +2213,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("aef1f834-82a2-4e0a-b28b-21566d5512da"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(8943),
-                            JobId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
+                            ProjectTaskId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
                             Text = "Modi repellat omnis corrupti soluta mollitia quo asperiores quis vitae.",
                             UserId = new Guid("1c5f4cf0-7b01-4c8a-bfc8-441b2cc1d3ba")
                         },
@@ -2221,7 +2221,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b1597c4b-ee6d-41ce-a111-2fb74279a49d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(9398),
-                            JobId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
+                            ProjectTaskId = new Guid("18c53473-ded0-4c56-981c-268bb575521c"),
                             Text = "Pariatur aliquid odio voluptatem quibusdam eos voluptatibus quis ut quasi in.",
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
@@ -2229,7 +2229,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("68029d50-a5ff-4372-af32-34bd9c7d4dc1"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 184, DateTimeKind.Utc).AddTicks(9943),
-                            JobId = new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"),
+                            ProjectTaskId = new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"),
                             Text = "Saepe ipsa laborum totam harum necessitatibus accusamus repellendus officiis.",
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
@@ -2237,7 +2237,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("c9b95b97-3c85-47a4-b7ff-b5f2b3476a76"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(339),
-                            JobId = new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"),
+                            ProjectTaskId = new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"),
                             Text = "Dolor repudiandae natus optio exercitationem qui.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -2245,7 +2245,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6149b299-1e59-4822-813e-b19a2570a9fa"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(696),
-                            JobId = new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"),
+                            ProjectTaskId = new Guid("4d4e684e-2d33-49d2-8aa7-e6466462a153"),
                             Text = "Distinctio et quod consequatur in cum et deleniti enim.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -2253,7 +2253,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b21155ce-8213-4340-951c-029e8a2929d0"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(1093),
-                            JobId = new Guid("fc1e9849-af7d-4bcf-94cb-3ae5a79c32f0"),
+                            ProjectTaskId = new Guid("fc1e9849-af7d-4bcf-94cb-3ae5a79c32f0"),
                             Text = "Corrupti incidunt suscipit molestiae odio excepturi consequatur rerum illo nobis perferendis.",
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
@@ -2261,7 +2261,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9123eb77-5fa6-42ef-8e33-83207ee09b68"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(1589),
-                            JobId = new Guid("fc1e9849-af7d-4bcf-94cb-3ae5a79c32f0"),
+                            ProjectTaskId = new Guid("fc1e9849-af7d-4bcf-94cb-3ae5a79c32f0"),
                             Text = "Dolor est id sit sed at in consectetur.",
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
@@ -2269,7 +2269,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("f6781b92-98d8-41e3-86d0-a3c29fa044a5"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(1955),
-                            JobId = new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"),
+                            ProjectTaskId = new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"),
                             Text = "Magnam aut id voluptatem et.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -2277,7 +2277,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("8e4704a6-c8d6-4419-bafd-d094ce922b89"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(2190),
-                            JobId = new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"),
+                            ProjectTaskId = new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"),
                             Text = "Voluptates et quia nam sed consequatur explicabo.",
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
@@ -2285,7 +2285,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("766d5fc8-ee7a-4301-b507-4da426a1274a"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(2521),
-                            JobId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
+                            ProjectTaskId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
                             Text = "Officia dolorum provident blanditiis provident soluta eaque tempora non id.",
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
@@ -2293,7 +2293,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("90020bd8-32df-479f-a193-eba6c133e9a9"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(2980),
-                            JobId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
+                            ProjectTaskId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
                             Text = "Dolorem nam quia dolores at dolorem nobis.",
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
@@ -2301,7 +2301,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("9808faec-ab73-417c-835b-432b40697503"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(3313),
-                            JobId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
+                            ProjectTaskId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
                             Text = "Dolores aperiam non sint quod rerum et vitae cupiditate voluptates.",
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
@@ -2309,7 +2309,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b0d83c7c-d499-45d5-a575-c9a06426c833"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(3750),
-                            JobId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
+                            ProjectTaskId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
                             Text = "Sit voluptatum at qui eius sit.",
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
@@ -2317,7 +2317,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ca33a22b-30a2-4d9f-9c70-19ef808bb6e2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(4041),
-                            JobId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
+                            ProjectTaskId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
                             Text = "Dolorem non eligendi ea et eum atque corrupti.",
                             UserId = new Guid("8a360533-65da-4c55-ac4e-1399787bc9bb")
                         },
@@ -2325,7 +2325,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a19a3c87-02c8-4a4f-8070-1bf32d41f77e"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(4409),
-                            JobId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
+                            ProjectTaskId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
                             Text = "Perferendis nulla minus maxime deleniti.",
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
@@ -2333,7 +2333,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6af95887-05aa-441e-9349-816d67ccc8e4"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(4643),
-                            JobId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
+                            ProjectTaskId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
                             Text = "Non sed ut aspernatur quo necessitatibus error dolorum placeat.",
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
@@ -2341,7 +2341,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("55f90db5-c4ce-4486-93cc-0f12c6a13365"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(5050),
-                            JobId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
+                            ProjectTaskId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
                             Text = "Omnis harum adipisci odio vero dolorem ullam omnis aut animi rerum.",
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
@@ -2349,7 +2349,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b9d6b5e9-34ae-4864-a506-d2fbbf790bd3"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(5561),
-                            JobId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
+                            ProjectTaskId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
                             Text = "Est maxime dolores fuga tenetur consequatur rerum repellendus.",
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
@@ -2357,7 +2357,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("09d4f010-07fb-4f18-b40b-b1de831ce320"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(5923),
-                            JobId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
+                            ProjectTaskId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
                             Text = "Distinctio aut necessitatibus vel nam repudiandae.",
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
@@ -2365,7 +2365,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("141a3e06-359e-4f72-a004-7d8633cb1a7c"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(6219),
-                            JobId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
+                            ProjectTaskId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
                             Text = "Debitis numquam doloribus dicta praesentium non.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -2373,7 +2373,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("029060be-4f2c-489c-b75c-a731779ec622"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(6486),
-                            JobId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
+                            ProjectTaskId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
                             Text = "Voluptates voluptas ut dolorem et.",
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
@@ -2381,7 +2381,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a82a9d3d-83d4-433d-935a-3c75261da347"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(6779),
-                            JobId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
+                            ProjectTaskId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
                             Text = "Soluta error iste quae est sit quo omnis.",
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
@@ -2389,7 +2389,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("273f809b-c904-4de0-a909-08c1fcb16b9d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(7152),
-                            JobId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
+                            ProjectTaskId = new Guid("304bcd67-0bef-49d1-bde7-92a185269842"),
                             Text = "Et nemo dolorem ut repellendus at aut.",
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
@@ -2397,7 +2397,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("fdd20d51-3108-4e3a-a186-a36299796944"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(7582),
-                            JobId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
+                            ProjectTaskId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
                             Text = "Illum fuga nihil deserunt neque earum et nisi ipsum asperiores nostrum.",
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
@@ -2405,7 +2405,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("a4849e32-bbc2-450f-a6ed-7ddc2b6ef7d0"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(8103),
-                            JobId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
+                            ProjectTaskId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
                             Text = "Quibusdam qui in aut quis quia itaque.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -2413,7 +2413,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("e38e608e-3405-4cb9-81eb-b935f0769429"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(8521),
-                            JobId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
+                            ProjectTaskId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
                             Text = "Hic eum iste adipisci laboriosam voluptates cumque dolor.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -2421,7 +2421,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3d0d0222-7442-461d-9d9a-275273382a8d"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(8928),
-                            JobId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
+                            ProjectTaskId = new Guid("f9416549-9d17-4865-a8d1-c44e5f946de7"),
                             Text = "Ea earum omnis soluta iusto illum.",
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
@@ -2429,7 +2429,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("4ddb7d5c-a88f-4136-b955-8a6a1cef67e1"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(9200),
-                            JobId = new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"),
+                            ProjectTaskId = new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"),
                             Text = "In earum ex eius voluptatem atque harum velit.",
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
@@ -2437,7 +2437,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("ab4a1a5d-a352-4d23-aff0-db622d073bdb"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(9561),
-                            JobId = new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"),
+                            ProjectTaskId = new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"),
                             Text = "Quo quam molestias ut voluptatibus minus omnis omnis.",
                             UserId = new Guid("729078f5-9ae5-4969-9173-3067e41761d7")
                         },
@@ -2445,7 +2445,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("6f8c18c3-c889-45ce-8b17-5f4e03d7cfb7"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 185, DateTimeKind.Utc).AddTicks(9943),
-                            JobId = new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"),
+                            ProjectTaskId = new Guid("9a6b70f7-d059-466d-9937-31bd552304a8"),
                             Text = "Omnis optio esse omnis et et est molestiae in.",
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
@@ -2453,7 +2453,7 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("b344b6de-0057-44fd-bff5-85b0fb0c8a16"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 186, DateTimeKind.Utc).AddTicks(372),
-                            JobId = new Guid("0e3e241b-6b85-4726-bb7f-0d5dd78f374a"),
+                            ProjectTaskId = new Guid("0e3e241b-6b85-4726-bb7f-0d5dd78f374a"),
                             Text = "Soluta cum rerum sapiente error illo.",
                             UserId = new Guid("450981d2-4d92-44ba-9a21-fa1d00f689fe")
                         },
@@ -2461,13 +2461,13 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("82a627a2-6784-405d-9de2-12e6e40abec2"),
                             CreatedAt = new DateTime(2024, 2, 22, 11, 31, 51, 186, DateTimeKind.Utc).AddTicks(647),
-                            JobId = new Guid("0e3e241b-6b85-4726-bb7f-0d5dd78f374a"),
+                            ProjectTaskId = new Guid("0e3e241b-6b85-4726-bb7f-0d5dd78f374a"),
                             Text = "Perspiciatis ea qui pariatur et sapiente illum enim sed aliquid.",
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         });
                 });
 
-            modelBuilder.Entity("JIRA.Shared.Entity.Job", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.ProjectTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2495,7 +2495,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("ProjectTasks");
 
                     b.HasData(
                         new
@@ -3500,7 +3500,7 @@ namespace JIRA.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("JobId")
+                    b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
@@ -3508,7 +3508,7 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.HasIndex("UserId");
 
@@ -3518,445 +3518,445 @@ namespace JIRA.Server.Migrations
                         new
                         {
                             Id = new Guid("a06a5702-aaec-448b-920c-3f706abd62c3"),
-                            JobId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
+                            ProjectTaskId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
                         new
                         {
                             Id = new Guid("dba21683-dad7-4258-8eb0-edad0002d340"),
-                            JobId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
+                            ProjectTaskId = new Guid("819fb850-d846-4c40-b8bc-e547a60af603"),
                             UserId = new Guid("ec9ed369-2570-445a-9432-24288745a2fa")
                         },
                         new
                         {
                             Id = new Guid("688183a7-d334-4abe-8849-da5c8ee3ced1"),
-                            JobId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
+                            ProjectTaskId = new Guid("619489e1-9dc0-444a-a08d-916ef60c0617"),
                             UserId = new Guid("3c9f30f0-c5ac-4479-a74f-8267befb14e2")
                         },
                         new
                         {
                             Id = new Guid("3d73e55d-f22a-4ea3-80cf-007097de8ff3"),
-                            JobId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
+                            ProjectTaskId = new Guid("3a39bf14-a065-46df-887a-7c021786af3c"),
                             UserId = new Guid("3c9f30f0-c5ac-4479-a74f-8267befb14e2")
                         },
                         new
                         {
                             Id = new Guid("7f998f62-01ee-4b38-9c08-ee5ec9e9e890"),
-                            JobId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
+                            ProjectTaskId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
                             UserId = new Guid("918acd1f-6aa1-4fed-8d12-d8cd305c98e9")
                         },
                         new
                         {
                             Id = new Guid("64dd2324-dc89-4128-96de-8af4b8028786"),
-                            JobId = new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"),
+                            ProjectTaskId = new Guid("b4e69459-9144-4e8d-9c92-03692ea960e9"),
                             UserId = new Guid("e14186c7-8f76-41af-8b68-30255846e247")
                         },
                         new
                         {
                             Id = new Guid("9dc9ece6-dc0c-4c64-a5dc-8aea58a25bb9"),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
                         new
                         {
                             Id = new Guid("fabaf527-fb1c-4f28-a705-09204c092357"),
-                            JobId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
+                            ProjectTaskId = new Guid("036781e6-b005-4172-b0a0-4572adb6b1cd"),
                             UserId = new Guid("25654ad0-6aaf-417b-ab7d-d0e221d5ac1d")
                         },
                         new
                         {
                             Id = new Guid("9e5e28cb-3d21-4068-a7e1-5638c4db3e03"),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
                         new
                         {
                             Id = new Guid("7e9dd5dd-929c-4ed5-bba9-fde0fde489fc"),
-                            JobId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
+                            ProjectTaskId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
                             UserId = new Guid("d3430cfb-a60a-448c-9bbb-4b7d2c7bdac8")
                         },
                         new
                         {
                             Id = new Guid("69bc4188-bcb6-4b42-8cf6-21a55243804d"),
-                            JobId = new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"),
+                            ProjectTaskId = new Guid("f2d61e34-cff0-4b6c-9e2b-a9578465d402"),
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
                         new
                         {
                             Id = new Guid("48f21f75-c044-4263-bd77-b108901d7e34"),
-                            JobId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
+                            ProjectTaskId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
                             UserId = new Guid("17db2a51-84f0-4b9a-a945-e20c364106ea")
                         },
                         new
                         {
                             Id = new Guid("7dc85dd6-0f6f-48b6-89af-0c5f6b7b8c07"),
-                            JobId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
+                            ProjectTaskId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
                             UserId = new Guid("80252af2-71a8-4b36-9581-f450605f71ff")
                         },
                         new
                         {
                             Id = new Guid("fbead244-e0b5-4a29-be0b-5609541aa8a9"),
-                            JobId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
+                            ProjectTaskId = new Guid("312672fa-2d8e-4e4c-a6a3-75514500bf18"),
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
                         new
                         {
                             Id = new Guid("26d8217e-d95b-4984-8565-6ebd47c5d6e2"),
-                            JobId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
+                            ProjectTaskId = new Guid("a821f012-128c-4d45-af02-cece9b7e81e0"),
                             UserId = new Guid("0f26481c-4b23-4e22-99ad-53e76f310860")
                         },
                         new
                         {
                             Id = new Guid("280231f4-c55c-473c-a3d3-322be084c0b4"),
-                            JobId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
+                            ProjectTaskId = new Guid("9dcdc626-9f77-473b-a670-c2275aa8ba84"),
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
                         new
                         {
                             Id = new Guid("ee73676f-ffb3-4097-8971-bb88807f904c"),
-                            JobId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
+                            ProjectTaskId = new Guid("f32a0105-f1bd-44a6-8986-7e33891e9b15"),
                             UserId = new Guid("c45b092b-c4ba-4b13-91a0-99edc9c96c9e")
                         },
                         new
                         {
                             Id = new Guid("22fab69b-e88b-4886-b2f4-0eef12d5bdfb"),
-                            JobId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
+                            ProjectTaskId = new Guid("374c14b6-c46c-4279-af5e-18080b07d4ad"),
                             UserId = new Guid("450981d2-4d92-44ba-9a21-fa1d00f689fe")
                         },
                         new
                         {
                             Id = new Guid("82ce85f3-08b7-4926-8365-794ab302a296"),
-                            JobId = new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"),
+                            ProjectTaskId = new Guid("105e7dd1-fc93-4f71-aed2-897dfb34fec2"),
                             UserId = new Guid("450981d2-4d92-44ba-9a21-fa1d00f689fe")
                         },
                         new
                         {
                             Id = new Guid("51c543c2-26ae-41ad-a4f8-144057cfedc3"),
-                            JobId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
+                            ProjectTaskId = new Guid("af118bf1-dc67-4ca5-a150-fdc0a409a84d"),
                             UserId = new Guid("efe62f9c-1161-4f98-b064-bf1ffc47eff2")
                         },
                         new
                         {
                             Id = new Guid("b4ea3aee-43f6-4d82-ad40-e0aae3ed320e"),
-                            JobId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
+                            ProjectTaskId = new Guid("4a4838e0-eb8a-4ec2-881e-92988b405c8c"),
                             UserId = new Guid("7b197f23-7359-41be-a43e-b374685381c2")
                         },
                         new
                         {
                             Id = new Guid("79e93cbb-99f7-4da5-af25-a83dc0ac14b2"),
-                            JobId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
+                            ProjectTaskId = new Guid("6b2907d3-832d-45aa-bd58-66c74d57913c"),
                             UserId = new Guid("a6e48cdc-9659-4981-b38e-e46a9ff54618")
                         },
                         new
                         {
                             Id = new Guid("0d853c67-3e34-4294-a791-37588624298a"),
-                            JobId = new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"),
+                            ProjectTaskId = new Guid("1a195dd9-7ce7-4983-9462-177a20242ca1"),
                             UserId = new Guid("42752958-296a-49b2-8e53-859ccf1720d3")
                         },
                         new
                         {
                             Id = new Guid("b94427b5-1e18-4dbb-95b2-3d89e5ed34cf"),
-                            JobId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
+                            ProjectTaskId = new Guid("387866bd-5d9d-4e9c-92cf-46f53153e597"),
                             UserId = new Guid("729078f5-9ae5-4969-9173-3067e41761d7")
                         },
                         new
                         {
                             Id = new Guid("b9d0ca16-1069-4b6a-97b5-2d0cf6bc267e"),
-                            JobId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
+                            ProjectTaskId = new Guid("da86bffe-dc55-42bd-a2b3-14a2238050da"),
                             UserId = new Guid("c9f3e11b-4e4e-4657-86de-0c313c89912b")
                         },
                         new
                         {
                             Id = new Guid("90a85f83-5923-4796-b832-4ad997c39a2e"),
-                            JobId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
+                            ProjectTaskId = new Guid("8372e9d4-9f09-48f9-8a0f-2f2728e2c199"),
                             UserId = new Guid("63ee60d0-2eff-41e4-82a5-6aa71af0f1ba")
                         },
                         new
                         {
                             Id = new Guid("d7f1d1db-daed-4c1e-b858-4090864c7c36"),
-                            JobId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
+                            ProjectTaskId = new Guid("530d1d8a-a48e-43a0-a10d-1d09b57c6dd7"),
                             UserId = new Guid("63ee60d0-2eff-41e4-82a5-6aa71af0f1ba")
                         },
                         new
                         {
                             Id = new Guid("3fdd7f64-3913-4ff2-b85b-bca68a3ea62c"),
-                            JobId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
+                            ProjectTaskId = new Guid("9962b954-f456-40d8-a77e-abe1ed28c2af"),
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         },
                         new
                         {
                             Id = new Guid("2b6a72ba-60fc-4332-aa26-3ac8769f1620"),
-                            JobId = new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"),
+                            ProjectTaskId = new Guid("db5a5fb3-bc7c-425b-9188-9a2ba681e385"),
                             UserId = new Guid("ee0171c3-42c5-416f-80db-31c9b3307dd4")
                         },
                         new
                         {
                             Id = new Guid("a6415a20-83ba-432d-9a2e-7bcb9bd9adbc"),
-                            JobId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
+                            ProjectTaskId = new Guid("b65cc41c-dd7d-4fb6-8803-62b7e7142a83"),
                             UserId = new Guid("9ae212b9-54d8-4bdc-b13a-feba18b7b094")
                         },
                         new
                         {
                             Id = new Guid("e09fd42a-423d-430f-8b9e-8e515282a965"),
-                            JobId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
+                            ProjectTaskId = new Guid("6c4954cf-08d6-448a-92a1-37ed07bf1bc1"),
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
                         new
                         {
                             Id = new Guid("a9a79ac3-5ecd-44f7-acac-337f5976833f"),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             UserId = new Guid("a2853daf-c8c1-45a4-8515-edbeee751d63")
                         },
                         new
                         {
                             Id = new Guid("8a76f454-ac85-44cc-b548-90d81d1b1232"),
-                            JobId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
+                            ProjectTaskId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
                             UserId = new Guid("4af42ec5-884f-44af-b679-53ab8e2354ec")
                         },
                         new
                         {
                             Id = new Guid("a2d2df14-0f32-421a-bfd1-fd24a0b3bf69"),
-                            JobId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
+                            ProjectTaskId = new Guid("8352db6f-c655-4ee6-a0eb-4ea0a4759c4d"),
                             UserId = new Guid("d510e590-d16a-4f82-b63b-80a825771fa7")
                         },
                         new
                         {
                             Id = new Guid("6634363e-e831-430b-be95-fa417b04ff5b"),
-                            JobId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
+                            ProjectTaskId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
                         new
                         {
                             Id = new Guid("bef22104-ae95-46ab-bd6f-765083087c23"),
-                            JobId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
+                            ProjectTaskId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
                             UserId = new Guid("910daf71-e14b-408c-93df-a3f293f17f89")
                         },
                         new
                         {
                             Id = new Guid("c24fab37-cd23-41fe-bd99-9e00dd5a03fe"),
-                            JobId = new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"),
+                            ProjectTaskId = new Guid("a996bac9-0d7d-445a-8524-4af086d5fc18"),
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
                         new
                         {
                             Id = new Guid("39230c44-76b4-42bd-9348-1526173ff9df"),
-                            JobId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
+                            ProjectTaskId = new Guid("abfc14af-00f8-4e8f-b380-e1c66cb18460"),
                             UserId = new Guid("34630264-2976-47f4-b399-23564d15f4d6")
                         },
                         new
                         {
                             Id = new Guid("22a75778-c494-46c3-91bf-034a80e4b3a0"),
-                            JobId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
+                            ProjectTaskId = new Guid("3e7ca895-5d28-4900-9488-704117a50cc6"),
                             UserId = new Guid("cc5b0437-af9b-44a3-8bc5-eb793c00e3c9")
                         },
                         new
                         {
                             Id = new Guid("537317ae-fbc6-491e-85d1-61d0c6955bc1"),
-                            JobId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
+                            ProjectTaskId = new Guid("9077bbd5-371c-425e-b2d4-4d446f5c258c"),
                             UserId = new Guid("c38c9e52-3c4a-43f5-80cb-bf37b0d1aa2e")
                         },
                         new
                         {
                             Id = new Guid("58371fb6-a955-4a41-9c14-10a38800e5af"),
-                            JobId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
+                            ProjectTaskId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
                             UserId = new Guid("5850dc7c-9818-4d6e-a334-36561aec0149")
                         },
                         new
                         {
                             Id = new Guid("55a69689-5930-4c0e-bbbf-63e538a71181"),
-                            JobId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
+                            ProjectTaskId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
                             UserId = new Guid("0a584f69-47aa-418b-aaf0-d7b6b0b6c264")
                         },
                         new
                         {
                             Id = new Guid("0f7c11a1-fd1f-47fd-bece-80a7d76b2d22"),
-                            JobId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
+                            ProjectTaskId = new Guid("d10ca18c-c674-4c21-9ab6-f96b27063473"),
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
                         new
                         {
                             Id = new Guid("e291150f-2f2b-47dd-92b7-47f447c0c498"),
-                            JobId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
+                            ProjectTaskId = new Guid("a0ab31bd-053d-47af-875f-3c6371354046"),
                             UserId = new Guid("e3a7b44f-2281-44a0-83b6-d6b71b56e93b")
                         },
                         new
                         {
                             Id = new Guid("fe619eae-58b6-4751-87a0-d738b0690b40"),
-                            JobId = new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"),
+                            ProjectTaskId = new Guid("eec12fd9-3f8e-4ea9-ac90-0c7f3c5cbb80"),
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
                         new
                         {
                             Id = new Guid("d0a55ce2-a8ac-4497-842e-6bc613f8c388"),
-                            JobId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
+                            ProjectTaskId = new Guid("d2f221f9-16b1-401d-8d0c-320b98caa5ae"),
                             UserId = new Guid("e2ad0a79-656e-4bee-a5d0-4ca1f31ea043")
                         },
                         new
                         {
                             Id = new Guid("b43bb93c-39a4-4c43-abad-aa22dd94ae53"),
-                            JobId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
+                            ProjectTaskId = new Guid("7767a1da-b024-4c87-a613-3c703d2ddcae"),
                             UserId = new Guid("1c5f4cf0-7b01-4c8a-bfc8-441b2cc1d3ba")
                         },
                         new
                         {
                             Id = new Guid("8240d337-bf99-4bfc-9acc-17eecedc8572"),
-                            JobId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
+                            ProjectTaskId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
                             UserId = new Guid("d0938672-275f-461f-acf5-ee7187049ff6")
                         },
                         new
                         {
                             Id = new Guid("478deeec-b692-4e50-bd49-677495bbf315"),
-                            JobId = new Guid("d0fec011-9763-458b-b0b4-acab3562c246"),
+                            ProjectTaskId = new Guid("d0fec011-9763-458b-b0b4-acab3562c246"),
                             UserId = new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b")
                         },
                         new
                         {
                             Id = new Guid("09e0f46a-a042-45a5-a010-d302db4f2125"),
-                            JobId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
+                            ProjectTaskId = new Guid("f42b22e4-bd58-437e-8743-dbd5ee7bcf5a"),
                             UserId = new Guid("70b3bb3f-3822-424a-831e-4dc6e712791b")
                         },
                         new
                         {
                             Id = new Guid("f4bc62c2-9898-4e6d-9d24-ebd6356ed302"),
-                            JobId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
+                            ProjectTaskId = new Guid("d6327803-30e9-473b-a70e-51604a032e1b"),
                             UserId = new Guid("7cd439ee-359c-42f7-b496-5494df353940")
                         },
                         new
                         {
                             Id = new Guid("e9c86fc7-0946-4d4a-9dd6-0e983f5ac370"),
-                            JobId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
+                            ProjectTaskId = new Guid("35912039-370c-4ae4-96b5-2b61213a3350"),
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
                         new
                         {
                             Id = new Guid("21cbc127-c5f4-493f-92e8-1867d5fe7055"),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             UserId = new Guid("dde6e436-d994-43e0-9343-3e692ec649f3")
                         },
                         new
                         {
                             Id = new Guid("38682114-8f88-4269-a184-9ccc04b5eaff"),
-                            JobId = new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"),
+                            ProjectTaskId = new Guid("827d9e70-8b67-4d4b-b403-48f15d91dc7e"),
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
                         new
                         {
                             Id = new Guid("1feef431-fce9-4a6c-9c75-a2b4a7bc8709"),
-                            JobId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
+                            ProjectTaskId = new Guid("7a326cd8-7924-49db-a49a-c26ee51fab47"),
                             UserId = new Guid("b40d7e96-7c89-4195-828f-517e4a4126af")
                         },
                         new
                         {
                             Id = new Guid("c4dd6e46-f655-4264-a952-62ed737e1f53"),
-                            JobId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
+                            ProjectTaskId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
                             UserId = new Guid("eb0b5e12-47ae-41e5-b40c-d7eae8857c40")
                         },
                         new
                         {
                             Id = new Guid("8dbe8a5e-9552-43b4-b620-0108adb9c5e9"),
-                            JobId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
+                            ProjectTaskId = new Guid("1b9fa4fb-dea9-4281-a9f6-f29d91491cc3"),
                             UserId = new Guid("c58967b9-bd27-406e-baeb-33c250c5b918")
                         },
                         new
                         {
                             Id = new Guid("d85c4c42-99c6-4611-bb0a-2b569b43d4ee"),
-                            JobId = new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"),
+                            ProjectTaskId = new Guid("70671f06-abd2-420c-bdc9-e3c942743b0c"),
                             UserId = new Guid("8cf3b703-4e38-4263-af4f-57c595bfc222")
                         },
                         new
                         {
                             Id = new Guid("ef7baa07-ccdf-42b6-9f61-e89014902e12"),
-                            JobId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
+                            ProjectTaskId = new Guid("5974a6ed-78ee-4520-90a6-4cf8e28fb8c8"),
                             UserId = new Guid("e886031d-c2d1-48b9-8b70-fddf68832b0d")
                         },
                         new
                         {
                             Id = new Guid("772c13d5-e275-4f76-84fd-5d12dcb16217"),
-                            JobId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
+                            ProjectTaskId = new Guid("97229606-9c9b-4766-8e97-f285447326b4"),
                             UserId = new Guid("e886031d-c2d1-48b9-8b70-fddf68832b0d")
                         },
                         new
                         {
                             Id = new Guid("d64b5870-a17c-47d0-a2a3-c7ec4345f5da"),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
                         new
                         {
                             Id = new Guid("94d097b8-8218-4fcd-aa2f-45e809b8a0c7"),
-                            JobId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
+                            ProjectTaskId = new Guid("e9ec2748-a11d-43e9-93a4-48ca121c738e"),
                             UserId = new Guid("1d8262e6-ed42-41f6-b6ec-5485ee692256")
                         },
                         new
                         {
                             Id = new Guid("64fadaa7-6b65-469c-95c8-60c0babe0ca7"),
-                            JobId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
+                            ProjectTaskId = new Guid("bf3cb690-04f6-4a28-95a1-9d155896c8d9"),
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
                         new
                         {
                             Id = new Guid("79401729-cecc-4e40-beb2-3f6a1d498ca0"),
-                            JobId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
+                            ProjectTaskId = new Guid("fcad4510-bd9f-47b2-94ab-231017ffdd56"),
                             UserId = new Guid("b5a1cb0f-23a3-477d-b770-338915b1c7a4")
                         },
                         new
                         {
                             Id = new Guid("8920271c-efb9-412a-8031-f37605cac768"),
-                            JobId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
+                            ProjectTaskId = new Guid("8ec9d858-b76c-4a19-8029-bb6cf4e06806"),
                             UserId = new Guid("55827d7b-8f72-485c-ae02-9041221f06f2")
                         },
                         new
                         {
                             Id = new Guid("95804780-91f7-4688-a534-9f895d8ea038"),
-                            JobId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
+                            ProjectTaskId = new Guid("274f081f-a5e7-4f6c-84ba-4c3d46cd359c"),
                             UserId = new Guid("8a360533-65da-4c55-ac4e-1399787bc9bb")
                         },
                         new
                         {
                             Id = new Guid("14dc5e69-11e4-4a78-8347-52ba7d69052a"),
-                            JobId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
+                            ProjectTaskId = new Guid("5579ea78-28ef-48b6-9252-20f5a241a1db"),
                             UserId = new Guid("8a360533-65da-4c55-ac4e-1399787bc9bb")
                         },
                         new
                         {
                             Id = new Guid("d7086442-155c-4902-b167-26243df8272b"),
-                            JobId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
+                            ProjectTaskId = new Guid("f7094702-03fb-4ac6-93ca-413ef3ca5054"),
                             UserId = new Guid("920901d2-c294-4fb7-b4c4-4eb88709e7c5")
                         },
                         new
                         {
                             Id = new Guid("fe455b14-ebee-4810-a38c-6ba9419fa189"),
-                            JobId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
+                            ProjectTaskId = new Guid("3d13fa2b-8646-41c4-aa8d-6c7b78abac21"),
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
                         new
                         {
                             Id = new Guid("86512b00-c9bc-4021-a1de-6495122ac300"),
-                            JobId = new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"),
+                            ProjectTaskId = new Guid("11b6d29d-ed8e-47f1-8414-2443db76bc3b"),
                             UserId = new Guid("035afb4a-6146-42db-867a-11a4894547d8")
                         },
                         new
                         {
                             Id = new Guid("7df6d8e7-5afa-4b4c-8dde-0d5adce60c77"),
-                            JobId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
+                            ProjectTaskId = new Guid("0b2f60f6-7224-49b7-a2e7-6caf31a16ded"),
                             UserId = new Guid("1bfd69d5-46f6-489f-883e-5a5755c63970")
                         },
                         new
                         {
                             Id = new Guid("2d419caf-e026-453b-95ea-3ee6faad71a2"),
-                            JobId = new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"),
+                            ProjectTaskId = new Guid("9e276b49-b9a1-4226-b228-7f40daf370b9"),
                             UserId = new Guid("eabfb7f3-df01-4b3f-952a-bcca1d42e5e3")
                         },
                         new
                         {
                             Id = new Guid("fb3c9fcb-1316-44c9-83bb-0bc29760a204"),
-                            JobId = new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"),
+                            ProjectTaskId = new Guid("c61a6fe2-3a4a-49fa-b4c7-bf7c40382f27"),
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         },
                         new
                         {
                             Id = new Guid("c3b27ac2-57e8-48e1-b657-148feeea0210"),
-                            JobId = new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"),
+                            ProjectTaskId = new Guid("9241673b-3c3e-457a-9f08-c45735d4ee1e"),
                             UserId = new Guid("17c50b4a-10e9-4302-ac46-dbf08fe0c61b")
                         });
                 });
@@ -5160,20 +5160,20 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("JIRA.Shared.Entity.Attachment", b =>
                 {
-                    b.HasOne("JIRA.Shared.Entity.Job", "Job")
+                    b.HasOne("JIRA.Shared.Entity.ProjectTask", "ProjectTask")
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("ProjectTask");
                 });
 
             modelBuilder.Entity("JIRA.Shared.Entity.Comment", b =>
                 {
-                    b.HasOne("JIRA.Shared.Entity.Job", "Job")
+                    b.HasOne("JIRA.Shared.Entity.ProjectTask", "ProjectTask")
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -5183,15 +5183,15 @@ namespace JIRA.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("ProjectTask");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JIRA.Shared.Entity.Job", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.ProjectTask", b =>
                 {
                     b.HasOne("JIRA.Shared.Entity.Project", "Project")
-                        .WithMany("Jobs")
+                        .WithMany("ProjectTasks")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -5201,9 +5201,9 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("JIRA.Shared.Entity.TaskAssignee", b =>
                 {
-                    b.HasOne("JIRA.Shared.Entity.Job", "Job")
+                    b.HasOne("JIRA.Shared.Entity.ProjectTask", "ProjectTask")
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -5213,7 +5213,7 @@ namespace JIRA.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("ProjectTask");
 
                     b.Navigation("User");
                 });
@@ -5271,7 +5271,7 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("JIRA.Shared.Entity.Project", b =>
                 {
-                    b.Navigation("Jobs");
+                    b.Navigation("ProjectTasks");
                 });
 
             modelBuilder.Entity("JIRA.Shared.Entity.User", b =>

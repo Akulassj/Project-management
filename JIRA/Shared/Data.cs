@@ -129,9 +129,7 @@ namespace JIRA.Shared
             "BinaryBard27",
             "NetNinjaX",
             "GeekGuru76",
-            "DataDynamo",
             "JavaJunkie92",
-            "HTMLHero",
             "CSSSorcerer",
             "PythonPro123",
             "RubyRuler",
@@ -151,24 +149,17 @@ namespace JIRA.Shared
             "WebWanderer",
             "PixelPioneer",
             "ByteBandit",
-            "BinaryBard",
-            "TechTinkerer",
             "CyberNinja",
             "CodeCrusader",
-            "WebWizard",
             "PixelPirate",
-            "NetNinja",
-            "GeekGuru",
             "TechTinkerer",
             "DigitalDiva",
             "WebWizard",
             "BinaryBard",
             "NetNinja",
             "GeekGuru",
-            "DataDynamo",
             "JavaJunkie",
             "HTMLHero",
-            "CSSSorcerer",
             "PythonPro"
         };
         public static List<List<string>> projects = new List<List<string>>
@@ -195,7 +186,7 @@ namespace JIRA.Shared
             new List<string> { "Аудит безопасности", "Проведение аудита безопасности приложения для выявления уязвимостей и устранения возможных угроз безопасности." },
             new List<string> { "Оптимизация работы базы данных", "Оптимизация структуры и индексов базы данных для ускорения запросов и повышения производительности приложения." }
         };
-        public static List<List<string>> jobs = new List<List<string>>()
+        public static List<List<string>> projectTasks = new List<List<string>>()
             {
             new List<string> { "Разработка интерфейса", "Создание пользовательского интерфейса с учетом требований дизайна и удобства использования" },
             new List<string> { "Оптимизация производительности", "Повышение скорости и эффективности работы системы путем оптимизации запросов к базе данных и улучшения алгоритмов" },

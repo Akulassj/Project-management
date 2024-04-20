@@ -28,10 +28,10 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.TaskAssignees.AddRange(taskAsignees);
             context.SaveChanges();
         }
-        public List<User> GetTaskAssigneeUsers(Guid jobId)
+        public List<User> GetTaskAssigneeUsers(Guid projectTaskId)
         {
             return context.TaskAssignees
-                          .Where(t => t.JobId == jobId)
+                          .Where(t => t.ProjectTaskId == projectTaskId)
                           .Select(t => t.UserId)
                           .SelectMany(u => context.Users.Where(user => user.Id == u))
                           .ToList();
