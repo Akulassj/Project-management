@@ -176,5 +176,20 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpGet]
+        public IActionResult GetProjectAsigneeByProjectId(Guid projectId)
+        {
+            try
+            {
+                // Получаем информацию о создателе проекта по его идентификатору
+                var projectAsignee = dataManager.ProjectAsigneeRepository.GetProjectAsigneeByProjectId(projectId);
+                return Ok(projectAsignee);
+            }
+            catch (Exception ex)
+            {
+                // Обработка ошибок, например, возврат статуса ошибки
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Ошибка при получении информации о создателе проекта: {ex.Message}");
+            }
+        }
     }
 }

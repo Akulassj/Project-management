@@ -116,53 +116,60 @@
 
     </TabBlazor.Tab>
     <TabBlazor.Tab Title="Список задач" Icon="other-icon">
-        <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
-        <Blazorise.Modal @ref="modalRef">
-            <Blazorise.ModalContent Centered>
-                <Blazorise.ModalHeader>
-                    <ModalTitle>Create Task</ModalTitle>
-                    <CloseButton />
-                </Blazorise.ModalHeader>
-                <Blazorise.ModalBody>
-                    <Blazorise.Field>
-                        <FieldLabel>Name</FieldLabel>
-                        <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
-                    </Blazorise.Field>
-                    <Blazorise.Field>
-                        <FieldLabel>Description</FieldLabel>
-                        <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
-                    </Blazorise.Field>
+     
+        @if (ProjectAsignees.IsCreator)
+        {
+            <Blazorise.Button Color
+            ="Blazorise.Color.Success" Clicked
+            ="@ShowModal">Create task</Blazorise.Button>
+            <Blazorise.Modal @ref="modalRef">
+                <Blazorise.ModalContent   
+            Centered
+                 >
+                     <Blazorise.ModalHeader>
+                         <ModalTitle>Create Task</ModalTitle>
+                         <CloseButton />
+                     </Blazorise.ModalHeader>
+                     <Blazorise.ModalBody>
+                         <Blazorise.Field>
+                             <FieldLabel>Name</FieldLabel>
+                             <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
+                         </Blazorise.Field>
+                         <Blazorise.Field>
+                             <FieldLabel>Description</FieldLabel>
+                             <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
+                         </Blazorise.Field>
 
-                    <Blazorise.Field>
-                        <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                        <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
-                    </Blazorise.Field>
+                         <Blazorise.Field>
+                             <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
+                             <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
+                         </Blazorise.Field>
 
-                    @if (users != null)
-                    {
-                        <div class="search-results">
-                            @foreach (var user in users)
-                            {
-                                <div class="search-result" @onclick="() => AddUser(user)">
-                                    @user.UserName
-                                </div>
-                            }
-                        </div>
-                    }
+                         @if (users != null)
+                        {
+                            <div class="search-results">
+                                @foreach (var user in users)
+                                {
+                                    <div class="search-result" @onclick="() => AddUser(user)">
+                                        @user.UserName
+                                    </div>
+                                }
+                            </div>
+                        }
 
-                    @if (selectedUsers.Any())
-                    {
-                        <div>
-                            <h4>Selected Users:</h4>
-                            @foreach (var user in selectedUsers)
-                            {
-                                <div>
-                                    <p>@user.UserName</p>
-                                    <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
-                                </div>
-                            }
-                        </div>
-                    }
+                        @if (selectedUsers.Any())
+                        {
+                            <div>
+                                <h4>Selected Users:</h4>
+                                @foreach (var user in selectedUsers)
+                                {
+                                    <div>
+                                        <p>@user.UserName</p>
+                                        <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
+                                    </div>
+                                }
+                            </div>
+                        }
 
 
                 </Blazorise.ModalBody>
@@ -172,7 +179,8 @@
                 </ModalFooter>
             </Blazorise.ModalContent>
         </Blazorise.Modal>
-
+        }
+     
         <div class="container">
             <h3>Список задач</h3>
             @if (CurrentProject.ProjectTaskUsers.Any())
@@ -251,6 +259,7 @@
 
     private ApexChart<ProjectTask> chart = default!;
 
+    private ProjectAsignee ProjectAsignees = new ProjectAsignee();
     public string userName { get; set; }
     private List<User> users;
     private List<User> selectedUsers = new List<User>();
@@ -270,6 +279,7 @@
     {
         CurrentProject = await client.GetFromJsonAsync<ProjectInfoViewModel>($"api/project/GetProjectInfoViewModel?projectId={projectId}");
         await UpdateTasksForSelectedDate();
+        await LoadProjectAsignee();
         StateHasChanged();
     }
 
@@ -328,6 +338,18 @@
         }
     }
 
+    private async Task LoadProjectAsignee()
+    {
+        try
+        {
+            // Получаем информацию о создателе проекта с помощью вызова API
+            ProjectAsignees = await client.GetFromJsonAsync<ProjectAsignee>($"api/project/GetProjectAsigneeByProjectId?projectId={projectId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при получении информации о создателе проекта: {ex.Message}");
+        }
+    }
 
 
     private async Task CreateProjectTask()
