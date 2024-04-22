@@ -1,6 +1,7 @@
 ﻿using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Shared.Domain;
 using JIRA.Shared.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -28,6 +29,10 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                                 (pa, u) => u)
                           .Where(u => u.UserName.ToLower().Contains(username.ToLower()))
                           .ToList();
+        }
+        public ProjectAsignee GetProjectAsigneeByProjectId(Guid projectId)
+        {
+            return context.ProjectAsignees.FirstOrDefault(pa => pa.ProjectId == projectId && pa.IsCreator);
         }
     }
 }

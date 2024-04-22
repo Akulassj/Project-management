@@ -7,5 +7,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
     {
         public List<User> SearchUsersByUsernameInProject(Guid projectId, string username);
         public void Add(List<ProjectAsignee> projectAsignees);
+        public ProjectAsignee GetProjectAsigneeByProjectId(Guid projectId);
     }
 }
