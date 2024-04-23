@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using JIRA.Shared.Entity;
+using JIRA.Server.Domain.Repositories.Abstract;
+using JIRA.Server.Domain.Repositories.EntityFramework;
 
 namespace Authorization.Server.Controllers
 {
@@ -17,11 +19,13 @@ namespace Authorization.Server.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager)
+        private readonly IUserRepository _userRepository;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IUserRepository userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _userRepository = userRepository;
         }
 
         [HttpPost]
@@ -126,8 +130,13 @@ namespace Authorization.Server.Controllers
             
             return Ok(_userManager.Users.ToList());
         }
+
+        [HttpGet]
+        public IActionResult SearchUsers(string username)
+        {
+            var users = _userRepository.SearchUsersByUsername(username);
+            return Ok(users);
+        }
         
-
-
     }
 }

@@ -73,25 +73,25 @@
                                     <ApexChart @ref=chart TItem="ProjectTask"
                                                Title="ProjectTask Status Distribution" Debug>
 
-                                        <ApexPointSeries TItem="ProjectTask"
-                                                         Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
-                                                         Name="ProjectTask Status"
-                                                         SeriesType="SeriesType.Pie"
-                                                         XValue="@(e => e.Status)"
-                                                         YAggregate="@(e => e.Count())"
-                                                         OrderByDescending="@(e=>e.Y)"
-                                                         PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
-                                    </ApexChart>
+                                     <ApexPointSeries TItem="ProjectTask"
+                                                      Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
+                                                      Name="ProjectTask Status"
+                                                      SeriesType="SeriesType.Pie"
+                                                      XValue="@(e => e.Status)"
+                                                      YAggregate="@(e => e.Count())"
+                                                      OrderByDescending="@(e=>e.Y)"
+                                                      PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
+                                     </ApexChart>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Список участников заданий -->
-                            <h3>Участники заданий</h3>
-                            <ul>
-                                @* <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div> *@
-                                @if (CurrentProject.AssignedUsers.Any())
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-6">
+                             <!-- Список участников заданий -->
+                             <h3>Участники заданий</h3>
+                             <ul>
+                                 @* <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div> *@
+                                 @if (CurrentProject.AssignedUsers.Any())
                                 {
                                     <h3>Участники проекта:</h3>
                                     <ul>
@@ -101,10 +101,58 @@
                                         }
                                     </ul>
                                 }
+                               
                                 else
                                 {
                                     <p>Участников проекта не найдено.</p>
                                 }
+                                @if (ProjectAsignees.IsCreator)
+                                {
+                                    <div class="btn btn-primary" @onclick="ShowEditModal">Редактировать участников</div>
+                                }
+                                <Blazorise.Modal @ref="editModalRef">
+                                    <Blazorise.ModalContent Centered>
+                                     <Blazorise.ModalHeader>
+                                         <ModalTitle>Редактировать участников</ModalTitle>
+                                         <CloseButton />
+                                     </Blazorise.ModalHeader>
+                                     <Blazorise.ModalBody>
+                                         <div class="form-group">
+                                             <label>Участники проекта:</label>
+                                             <ul class="list-group">
+                                                 @foreach (var user in projectUsers)
+                                                    {
+                                                        <li class="list-group-item">
+                                                            @user.UserName
+                                                            <button class="btn btn-danger btn-sm float-right" @onclick="() => RemoveProjectUser(user.Id)">Удалить</button>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <hr />
+                                            <div class="form-group">
+                                                <label>Добавить новых участников:</label>
+                                                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="SearchByUsername" />
+                                                @if (users != null)
+                                                {
+                                                    <ul class="list-group">
+                                                        @foreach (var user in users)
+                                                        {
+                                                            <li class="list-group-item">
+                                                                @user.UserName
+                                                                <button class="btn btn-primary btn-sm float-right" @onclick="() => AddProjectUser(user.Id)">Добавить</button>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        </Blazorise.ModalBody>
+                                        <ModalFooter>
+                                            <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideEditModal">Отмена</Blazorise.Button>
+                                            <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
+                                        </ModalFooter>
+                                    </Blazorise.ModalContent>
+                                </Blazorise.Modal>
 
                             </ul>
                         </div>
@@ -116,36 +164,32 @@
 
     </TabBlazor.Tab>
     <TabBlazor.Tab Title="Список задач" Icon="other-icon">
-     
+
         @if (ProjectAsignees.IsCreator)
         {
-            <Blazorise.Button Color
-            ="Blazorise.Color.Success" Clicked
-            ="@ShowModal">Create task</Blazorise.Button>
+            <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
             <Blazorise.Modal @ref="modalRef">
-                <Blazorise.ModalContent   
-            Centered
-                 >
-                     <Blazorise.ModalHeader>
-                         <ModalTitle>Create Task</ModalTitle>
-                         <CloseButton />
-                     </Blazorise.ModalHeader>
-                     <Blazorise.ModalBody>
-                         <Blazorise.Field>
-                             <FieldLabel>Name</FieldLabel>
-                             <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
-                         </Blazorise.Field>
-                         <Blazorise.Field>
-                             <FieldLabel>Description</FieldLabel>
-                             <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
-                         </Blazorise.Field>
+                <Blazorise.ModalContent Centered>
+                 <Blazorise.ModalHeader>
+                     <ModalTitle>Create Task</ModalTitle>
+                     <CloseButton />
+                 </Blazorise.ModalHeader>
+                 <Blazorise.ModalBody>
+                     <Blazorise.Field>
+                         <FieldLabel>Name</FieldLabel>
+                         <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
+                     </Blazorise.Field>
+                     <Blazorise.Field>
+                         <FieldLabel>Description</FieldLabel>
+                         <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
+                     </Blazorise.Field>
 
-                         <Blazorise.Field>
-                             <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                             <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
-                         </Blazorise.Field>
+                     <Blazorise.Field>
+                         <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
+                         <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
+                     </Blazorise.Field>
 
-                         @if (users != null)
+                     @if (users != null)
                         {
                             <div class="search-results">
                                 @foreach (var user in users)
@@ -172,15 +216,15 @@
                         }
 
 
-                </Blazorise.ModalBody>
-                <ModalFooter>
-                    <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
-                    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
-                </ModalFooter>
-            </Blazorise.ModalContent>
-        </Blazorise.Modal>
+                    </Blazorise.ModalBody>
+                    <ModalFooter>
+                        <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+                        <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
+                    </ModalFooter>
+                </Blazorise.ModalContent>
+            </Blazorise.Modal>
         }
-     
+
         <div class="container">
             <h3>Список задач</h3>
             @if (CurrentProject.ProjectTaskUsers.Any())
@@ -260,6 +304,8 @@
     private ApexChart<ProjectTask> chart = default!;
 
     private ProjectAsignee ProjectAsignees = new ProjectAsignee();
+
+    private List<User> projectUsers = new List<User>();
     public string userName { get; set; }
     private List<User> users;
     private List<User> selectedUsers = new List<User>();
@@ -342,7 +388,7 @@
     {
         try
         {
-            // Получаем информацию о создателе проекта с помощью вызова API
+
             ProjectAsignees = await client.GetFromJsonAsync<ProjectAsignee>($"api/project/GetProjectAsigneeByProjectId?projectId={projectId}");
         }
         catch (Exception ex)
@@ -351,7 +397,11 @@
         }
     }
 
-
+    private void ClearFields()
+    {
+        newProjectTask.Name = string.Empty;
+        newProjectTask.Description = string.Empty;
+    }
     private async Task CreateProjectTask()
     {
         var newProjectTask = new ProjectTask()
@@ -391,6 +441,7 @@
                 users.Clear();
                 await Refresh();
                 await HideModal();
+                ClearFields();
             }
             else
             {
@@ -434,8 +485,153 @@
         selectedUsers.Remove(user);
     }
 
+    private Blazorise.Modal editModalRef;
+
+    /// <summary>
+    /// Показывает модальное окно редактирования участников проекта.
+    /// </summary>
+    private async Task ShowEditModal()
+    {
+        try
+        {
+            // Загружаем список участников проекта перед открытием модального окна
+            await LoadProjectAsignees();
+
+            // Показываем модальное окно
+            await editModalRef.Show();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при открытии модального окна: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Скрывает модальное окно редактирования участников проекта.
+    /// </summary>
+    private async Task HideEditModal()
+    {
+        try
+        {
+            // Очищаем выбранных пользователей и строку поиска
+            selectedUsers.Clear();
+            searchText = string.Empty;
+
+            // Скрываем модальное окно
+            await editModalRef.Hide();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при закрытии модального окна: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Сохраняет изменения в участниках проекта и обновляет список участников.
+    /// </summary>
+    private async Task SaveParticipantsChanges()
+    {
+        // Обновляем список участников проекта
+        await Refresh();
+
+        // Скрываем модальное окно
+        await HideEditModal();
+    }
+
+    /// <summary>
+    /// Загружает список участников проекта.
+    /// </summary>
+    private async Task LoadProjectAsignees()
+    {
+        try
+        {
+            // Получаем список участников проекта с сервера
+            projectUsers = await client.GetFromJsonAsync<List<User>>($"api/project/GetProjectAsigneeUsers?projectId={projectId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при получении информации о назначенных участниках проекта: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Добавляет пользователя в проект.
+    /// </summary>
+    /// <param name="userId">Идентификатор пользователя.</param>
+    private async Task AddProjectUser(Guid userId)
+    {
+        try
+        {
+            // Отправляем запрос на добавление пользователя в проект
+            var response = await client.PostAsync($"api/project/AddProjectUser?projectId={projectId}&userId={userId}", null);
+            response.EnsureSuccessStatusCode();
+
+            // После добавления пользователя обновляем список участников проекта
+            await LoadProjectAsignees();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при добавлении пользователя в проект: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Удаляет пользователя из проекта.
+    /// </summary>
+    /// <param name="userId">Идентификатор пользователя.</param>
+    private async Task RemoveProjectUser(Guid userId)
+    {
+        try
+        {
+            // Отправляем запрос на удаление пользователя из проекта
+            var response = await client.PostAsync($"api/project/RemoveProjectUser?projectId={projectId}&userId={userId}", null);
+            response.EnsureSuccessStatusCode();
+
+            // После удаления пользователя обновляем список участников проекта
+            await LoadProjectAsignees();
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при удалении пользователя из проекта: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Выполняет поиск пользователей по имени или фамилии.
+    /// </summary>
+    /// <param name="value">Строка для поиска.</param>
+    private async Task SearchByUsername(string value)
+    {
+        searchText = value;
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            try
+            {
+                // Получаем список пользователей с сервера по заданному имени или фамилии
+                users = await client.GetFromJsonAsync<List<User>>($"api/account/SearchUsers?username={searchText}");
+
+                // Фильтруем список пользователей, исключая тех, кто уже состоит в проекте
+                if (projectUsers != null && projectUsers.Any())
+                {
+                    users = users.Where(u => !projectUsers.Any(pu => pu.Id == u.Id)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при поиске пользователей: {ex.Message}");
+            }
+        }
+        else
+        {
+            // Если строка поиска пуста, очищаем список пользователей и выбранных пользователей
+            users = null;
+            selectedUsers = new List<User>();
+        }
+    }
 
 
+   
     private void ProjectTaskClick(Guid id)
     {
         navigate.NavigateTo($"/projectTaskInfo/{id}");

@@ -114,12 +114,7 @@ namespace JIRA.Server.Controllers
             return Ok(projectTasks);
         }
 
-        [HttpGet]
-        public IActionResult GetProjectAsigneeUsers(Guid projectId)
-        {
-            var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectId);
-            return Ok(users);
-        }
+      
 
         [HttpPost]
         public IActionResult AddProject(ProjectsAsigneeViewModel projectAsignees)
@@ -191,5 +186,27 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Ошибка при получении информации о создателе проекта: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        public IActionResult GetProjectAsigneeUsers(Guid projectId)
+        {
+            var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectId);
+            return Ok(users);
+        }
+        [HttpPost]
+        public IActionResult AddProjectUser(Guid projectId, Guid userId)
+        {
+            dataManager.ProjectAsigneeRepository.AddProjectUser(projectId, userId);
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult RemoveProjectUser(Guid projectId, Guid userId)
+        {
+            dataManager.ProjectAsigneeRepository.RemoveProjectUser(projectId, userId);
+            return Ok();
+        }
+
+
     }
 }

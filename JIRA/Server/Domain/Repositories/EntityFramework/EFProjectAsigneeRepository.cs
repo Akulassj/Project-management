@@ -34,5 +34,28 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.ProjectAsignees.FirstOrDefault(pa => pa.ProjectId == projectId && pa.IsCreator);
         }
+        public void AddProjectUser(Guid projectId, Guid userId)
+        {
+            
+            if (!context.ProjectAsignees.Any(pa => pa.ProjectId == projectId && pa.UserId == userId))
+            {
+                context.ProjectAsignees.Add(new ProjectAsignee { ProjectId = projectId, UserId = userId });
+                context.SaveChanges();
+            }
+        }
+
+        public void RemoveProjectUser(Guid projectId, Guid userId)
+        {
+            var projectAsignee = context.ProjectAsignees
+                .FirstOrDefault(pa => pa.ProjectId == projectId && pa.UserId == userId);
+
+            if (projectAsignee != null)
+            {
+                context.ProjectAsignees.Remove(projectAsignee);
+                context.SaveChanges();
+            }
+        }
+        
+
     }
 }
