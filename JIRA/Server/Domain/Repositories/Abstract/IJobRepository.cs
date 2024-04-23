@@ -18,6 +18,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public List<ProjectTask> GetProjectTasksByUserName(string userName);
         public void Add(ProjectTask projectTask);
         public void Update(ProjectTask projectTask);
-        
+        public List<ProjectTask> GetUncompletedTasksForUserAndProject(Guid userId, Guid projectId);
     }
 }

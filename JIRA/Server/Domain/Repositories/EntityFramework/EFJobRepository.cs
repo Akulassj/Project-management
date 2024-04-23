@@ -66,7 +66,13 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.ProjectTasks.Entry(projectTask).State = EntityState.Modified;
             context.SaveChanges();
         }
-      
+        public List<ProjectTask> GetUncompletedTasksForUserAndProject(Guid userId, Guid projectId)
+        {
+            return context.ProjectTasks
+                .Where(task => task.ProjectId == projectId && task.Status != "Completed")
+                .ToList();
+        }
+
 
 
     }

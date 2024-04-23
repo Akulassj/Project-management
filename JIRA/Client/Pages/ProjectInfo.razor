@@ -583,19 +583,35 @@
     {
         try
         {
+            // Проверяем наличие невыполненных задач для указанного пользователя и проекта
+            var uncompletedTasks = await GetUncompletedTasksForUserAndProject(userId);
+
+            // Если у пользователя есть невыполненные задачи в проекте, не позволяем его удаление
+            if (uncompletedTasks.Any())
+            {
+                Console.WriteLine("Нельзя удалить пользователя, у которого есть невыполненные задачи в этом проекте.");
+                return;
+            }
+
             // Отправляем запрос на удаление пользователя из проекта
             var response = await client.PostAsync($"api/project/RemoveProjectUser?projectId={projectId}&userId={userId}", null);
             response.EnsureSuccessStatusCode();
 
-            // После удаления пользователя обновляем список участников проекта
+            // После успешного удаления пользователя обновляем список участников проекта
             await LoadProjectAsignees();
-
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при удалении пользователя из проекта: {ex.Message}");
         }
     }
+    private async Task<List<ProjectTask>> GetUncompletedTasksForUserAndProject(Guid userId)
+    {
+        // Получаем список невыполненных задач для указанного пользователя и проекта
+        return await client.GetFromJsonAsync<List<ProjectTask>>($"api/projecttask/GetUncompletedTasksForUserAndProject?userId={userId}&projectId={projectId}");
+    }
+
+
 
     /// <summary>
     /// Выполняет поиск пользователей по имени или фамилии.
@@ -629,7 +645,6 @@
             selectedUsers = new List<User>();
         }
     }
-
 
    
     private void ProjectTaskClick(Guid id)

@@ -91,7 +91,13 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
+        [HttpGet]
+        
+        public IActionResult GetUncompletedTasksForUserAndProject(Guid userId, Guid projectId)
+        {
+            var tasks = dataManager.ProjectTaskRepository.GetUncompletedTasksForUserAndProject(userId, projectId);
+            return Ok(tasks);
+        }
 
 
     }
