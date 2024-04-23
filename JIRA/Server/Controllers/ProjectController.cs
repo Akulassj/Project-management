@@ -50,6 +50,7 @@ namespace JIRA.Server.Controllers
             var project = dataManager.ProjectRepository.GetProjectById(projectId);
             var projectTasks = dataManager.ProjectTaskRepository.GetProjectTasksByProjectId(projectId);
             var assignedUsers = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectId);
+            var username = dataManager.ProjectAsigneeRepository.GetProjectCreator(projectId);
             var projectTaskUsers = new List<ProjectTaskUsersModel>();
 
             foreach (var task in projectTasks)
@@ -65,10 +66,19 @@ namespace JIRA.Server.Controllers
             {
                 Project = project,
                 AssignedUsers = assignedUsers,
-                ProjectTaskUsers = projectTaskUsers
+                ProjectTaskUsers = projectTaskUsers,
+                Creatorname = username
             };
 
             return Ok(projectInfoViewModel);
+        }
+
+        [HttpPut]
+        public IActionResult UpdateProjectInfo(ProjectInfoViewModel projectInfo)
+        {
+            dataManager.ProjectAsigneeRepository.UpdateProjectAsignees(projectInfo.Project.Id, projectInfo.AssignedUsers);
+
+            return Ok();
         }
 
         [HttpGet]

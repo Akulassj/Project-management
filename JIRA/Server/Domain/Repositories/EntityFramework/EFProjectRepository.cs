@@ -21,7 +21,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 Random rnd = new Random();
                 List<Project> projects = new List<Project>();
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 17; i++)
                 {
                     int c = rnd.Next(Data.projects.Count);
                     var project = new Project();
@@ -69,23 +69,24 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
                 List<ProjectAsignee> projectAsignees = new List<ProjectAsignee>();
 
-                foreach (var user in users)
+                foreach(var project in projects)
                 {
-                    var userProjects = new List<Project>();
-                    for (int i = 0; i < Random.Shared.Next(1, 4); i++)
-                    {                    
-                        var project = projects[Random.Shared.Next(projects.Count)];
-                        if (!userProjects.Contains(project))
+                    var us = new List<User>();
+                    for (int i = 0; i < Random.Shared.Next(1, 7); i++)
+                    {
+                        var user = users[Random.Shared.Next(users.Count)];
+                        if (!us.Contains(user))
                         {
-                            userProjects.Add(project);
+                            us.Add(user);
                             var projectAsignee = new ProjectAsignee
                             {
                                 ProjectId = project.Id,
-                                UserId = user.Id
+                                UserId = user.Id,
                             };
                             projectAsignees.Add(projectAsignee);
                         }
                     }
+                    projectAsignees.Last().IsCreator = true;
                 }
 
                 List<TaskAssignee> taskAssignees = new List<TaskAssignee>();

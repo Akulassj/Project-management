@@ -12,5 +12,6 @@ namespace JIRA.Shared
         public Project Project {  get; set; }
         public List<User> AssignedUsers { get; set; }
         public List<ProjectTaskUsersModel> ProjectTaskUsers { get; set; }
+        public string Creatorname {  get; set; }
     }
 }
