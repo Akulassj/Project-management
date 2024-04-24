@@ -123,21 +123,21 @@
         searchText = value;
         if (!string.IsNullOrWhiteSpace(searchText))
         {
-
             var response = await client.GetFromJsonAsync<List<User>>($"api/project/SearchUsers?username={searchText}");
             if (response != null && response.Any())
             {
                 // Исключаем текущего пользователя из результатов поиска
                 var currentUser = await client.GetFromJsonAsync<User>("api/account/CurrentUserInfo");
-                users = response.Where(u => u.UserName != currentUser.UserName).ToList();
+                var currentUserId = currentUser.Id;
+                users = response.Where(u => u.Id != currentUserId).ToList();
             }
-
         }
         else
         {
             users.Clear();
         }
     }
+
 
     private void AddUser(User user)
     {
