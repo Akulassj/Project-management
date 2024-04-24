@@ -1,4 +1,5 @@
-﻿using JIRA.Shared.Entity;
+﻿using JIRA.Shared;
+using JIRA.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
 namespace JIRA.Server.Domain.Repositories.Abstract
 {
@@ -8,5 +9,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
       public  List<TaskAssignee> GetTaskAssigneesByUserId(Guid userId);
        public void Add(List<TaskAssignee> taskAsignees);
         public List<User> GetTaskAssigneeUsers(Guid projectTaskId);
+        //public void UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers);
     }
 }

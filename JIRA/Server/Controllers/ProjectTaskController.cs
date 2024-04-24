@@ -99,6 +99,25 @@ namespace JIRA.Server.Controllers
             return Ok(tasks);
         }
 
+        [HttpPut]
+        public IActionResult Update(ProjectTask projectTask)
+        {
+            dataManager.ProjectTaskRepository.Update(projectTask);
+            return Ok();
+        }
+        //[HttpPut]
+        //public IActionResult UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
+        //{
+        //    try
+        //    {
+        //        dataManager.TaskAssigneeRepository.UpdateTaskAssignees(projectId, taskUsers);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Ошибка при обновлении назначенных пользователей по задачам: {ex.Message}");
+        //    }
+        //}
 
     }
 }
