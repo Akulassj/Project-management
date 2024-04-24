@@ -1,7 +1,9 @@
 ﻿using JIRA.Server.Domain.Repositories.Abstract;
+using JIRA.Shared;
 using JIRA.Shared.Domain;
 using JIRA.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
     public class EFTaskAssigneeRepository : ITaskAssigneeRepository
@@ -36,5 +38,28 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                           .SelectMany(u => context.Users.Where(user => user.Id == u))
                           .ToList();
         }
+        //public void UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
+        //{
+            
+        //    var projectTaskIds = taskUsers.Select(tu => tu.ProjectTask.Id).ToList();
+        //    var taskAssignees = context.TaskAssignees.Where(ta => projectTaskIds.Contains(ta.ProjectTaskId)).ToList();
+        //    context.TaskAssignees.RemoveRange(taskAssignees);
+
+         
+        //    foreach (var taskUser in taskUsers)
+        //    {
+        //        var taskAssigneeModels = taskUser.AssignedUsers.Select(user =>
+        //            new TaskAssignee
+        //            {
+        //                ProjectTaskId = taskUser.ProjectTask.Id,
+        //                UserId = user.Id
+        //            }).ToList();
+
+        //        context.TaskAssignees.AddRange(taskAssigneeModels);
+        //    }
+
+        //    context.SaveChanges();
+        //}
+
     }
 }
