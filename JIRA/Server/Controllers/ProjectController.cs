@@ -216,7 +216,12 @@ namespace JIRA.Server.Controllers
             dataManager.ProjectAsigneeRepository.RemoveProjectUser(projectId, userId);
             return Ok();
         }
-
+        [HttpPut]
+        public IActionResult UpdateTaskAssignee(TaskAssignee taskAssignee)
+        {
+            dataManager.TaskAssigneeRepository.Update(taskAssignee);
+            return Ok();
+        }
 
     }
 }

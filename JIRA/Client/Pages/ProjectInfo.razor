@@ -326,7 +326,10 @@
                 <ul>
                     @foreach (var user in selectedUsers)
                     {
-                        <li>@user.UserName - @user.Position</li>
+                        <li>
+                            @user.UserName - @user.Position
+                            <button type="button" class="btn btn-sm btn-danger ml-2" @onclick="() => RemoveUser(user)">Remove</button>
+                        </li>
                     }
                 </ul>
                 <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
@@ -340,16 +343,9 @@
                             </button>
                         }
                     }
-                    <ul>
-                        @foreach (var user in selectedUsers)
-                        {
-                            <li>
-                                @user.UserName - @user.Position
-                                <button type="button" class="btn btn-sm btn-danger ml-2" @onclick="() => RemoveUser(user)">Remove</button>
-                            </li>
-                        }
-                    </ul>
+                   
                 </div> *@
+                
             </Blazorise.ModalBody>
             <Blazorise.ModalFooter>
                 <Blazorise.Button Color="Blazorise.Color.Primary" @onclick="SaveTaskChanges">Save Changes</Blazorise.Button>
@@ -679,7 +675,7 @@
 
         try
         {
-            var response = await client.PutAsJsonAsync("api/ProjectTask/Update", selectedTask);
+            var response = await client.PutAsJsonAsync("api/ProjectTask/UpdateProjectTask", selectedTask);
             var b =selectedTask;
             // await UpdateTaskAssignees(CurrentProject.Project.Id, CurrentProject.ProjectTaskUsers);
             if (response.IsSuccessStatusCode)

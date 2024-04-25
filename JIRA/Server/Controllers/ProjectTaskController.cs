@@ -100,10 +100,16 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update(ProjectTask projectTask)
+        public IActionResult UpdateProjectTask(ProjectTask projectTask)
         {
             dataManager.ProjectTaskRepository.Update(projectTask);
             return Ok();
+        }
+        [HttpGet]
+        public IActionResult GetProjectTaskId(Guid id)
+        {
+            var projects = dataManager.ProjectTaskRepository.GetProjectTaskById(id);
+            return Ok(projects);
         }
         //[HttpPut]
         //public IActionResult UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)

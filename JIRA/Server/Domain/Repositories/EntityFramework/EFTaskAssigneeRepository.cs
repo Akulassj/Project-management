@@ -40,12 +40,12 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         }
         //public void UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
         //{
-            
+
         //    var projectTaskIds = taskUsers.Select(tu => tu.ProjectTask.Id).ToList();
         //    var taskAssignees = context.TaskAssignees.Where(ta => projectTaskIds.Contains(ta.ProjectTaskId)).ToList();
         //    context.TaskAssignees.RemoveRange(taskAssignees);
 
-         
+
         //    foreach (var taskUser in taskUsers)
         //    {
         //        var taskAssigneeModels = taskUser.AssignedUsers.Select(user =>
@@ -60,6 +60,11 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         //    context.SaveChanges();
         //}
+        public void Update(TaskAssignee taskAsignee)
+        {
+            context.TaskAssignees.Entry(taskAsignee).State = EntityState.Modified;
+            context.SaveChanges();
+        }
 
     }
 }
