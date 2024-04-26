@@ -10,6 +10,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
        public void Add(List<TaskAssignee> taskAsignees);
         public List<User> GetTaskAssigneeUsers(Guid projectTaskId);
         //public void UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers);
-        public void Update(TaskAssignee taskAsignee);
+        public void Update(ProjectTaskUsersModel taskAsignee);
     }
 }

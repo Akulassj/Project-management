@@ -10,6 +10,6 @@ namespace JIRA.Shared
     public class ProjectTaskUsersModel
     {
         public ProjectTask ProjectTask { get; set; }
-        public List<User> AssignedUsers { get; set; }
+        public User AssignedUser { get; set; }
     }
 }

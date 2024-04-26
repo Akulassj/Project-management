@@ -1,4 +1,6 @@
-﻿namespace JIRA.Shared.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace JIRA.Shared.Entity
 {
     //public class TaskAssignee
     //{

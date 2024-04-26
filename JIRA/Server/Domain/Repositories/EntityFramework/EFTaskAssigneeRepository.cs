@@ -60,9 +60,15 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         //    context.SaveChanges();
         //}
-        public void Update(TaskAssignee taskAsignee)
+        public void Update(ProjectTaskUsersModel task)
         {
-            context.TaskAssignees.Entry(taskAsignee).State = EntityState.Modified;
+            context.ProjectTasks.Entry(task.ProjectTask).State = EntityState.Modified;
+            //ToDO : Change update method
+            var t = context.TaskAssignees.Where(ta => ta.ProjectTaskId == task.ProjectTask.Id).FirstOrDefault();
+            context.TaskAssignees.Remove(t);
+            context.SaveChanges();
+            t.UserId = task.AssignedUser.Id;
+            context.Add(t);
             context.SaveChanges();
         }
 

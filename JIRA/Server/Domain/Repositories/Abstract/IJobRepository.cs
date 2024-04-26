@@ -1,4 +1,5 @@
-﻿using JIRA.Shared.Domain;
+﻿using JIRA.Shared;
+using JIRA.Shared.Domain;
 using JIRA.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;

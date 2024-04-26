@@ -16,284 +16,284 @@
     <TabBlazor.Tab Title="Главная" Icon="home">
         <div class="container">
             @if (CurrentProject is not null)
-                {
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h3>Информация о проекте</h3>
-                    <p>Название проекта: @CurrentProject.Project.Name</p>
-                    <p>Описание проекта: @CurrentProject.Project.Description</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Информация о заданиях</h3>
-                    <p>Количество заданий: @CurrentProject.ProjectTaskUsers.Count()</p>
-                    @*  <div class="btn btn-primary text-center" @onclick="GetProjectTasks">Получить список Задач</div> *@
-
-                    @if (CurrentProject.ProjectTaskUsers.Any())
-                    {
-                        <h3>Список Задач:</h3>
-                        <ul>
-                            @foreach (var projectTask in CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask))
-                            {
-                                <li @onclick="() => ProjectTaskClick(projectTask.Id)">@projectTask.Name - @projectTask.Description</li>
-                            }
-                        </ul>
-                    }
-                </div>
-                <div class="col-md-6">
-                    <h3>Календарь</h3>
-
-                    <TabBlazor.Datepicker @bind-SelectedDate="SelectedDate" Label="Выберите дату" />
-                    <TabBlazor.Button class="btn-primary" @onclick="OnSelectedDateChanged"></TabBlazor.Button>
-
-                    @if (SelectedDateTasks != null && SelectedDateTasks.Any())
-                    {
-                        <h4>Задания на @SelectedDate.ToString("d"):</h4>
-                        <ul>
-                            @foreach (var task in SelectedDateTasks)
-                            {
-                                <li @onclick="() => ProjectTaskClick(task.Id)">@task.Name</li>
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <p>На @SelectedDate.ToString("d") заданий нет.</p>
-                    }
-                </div>
-            </div>
-            @if (CurrentProject.ProjectTaskUsers is not null)
             {
                 <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>Информация о проекте</h3>
+                        <p>Название проекта: @CurrentProject.Project.Name</p>
+                        <p>Описание проекта: @CurrentProject.Project.Description</p>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
-                        <h3>Графики</h3>
-                        <div class="row">
-                            <div class="col-md-12">
+                        <h3>Информация о заданиях</h3>
+                        <p>Количество заданий: @CurrentProject.ProjectTaskUsers.Count()</p>
+                        @*  <div class="btn btn-primary text-center" @onclick="GetProjectTasks">Получить список Задач</div> *@
 
-                                <ApexChart @ref=chart TItem="ProjectTask"
-                                           Title="ProjectTask Status Distribution" Debug>
+                        @if (CurrentProject.ProjectTaskUsers.Any())
+                        {
+                            <h3>Список Задач:</h3>
+                            <ul>
+                                @foreach (var projectTask in CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask))
+                                {
+                                    <li @onclick="() => ProjectTaskClick(projectTask.Id)">@projectTask.Name - @projectTask.Description</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Календарь</h3>
 
-                                 <ApexPointSeries TItem="ProjectTask"
-                                                  Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
-                                                  Name="ProjectTask Status"
-                                                  SeriesType="SeriesType.Pie"
-                                                  XValue="@(e => e.Status)"
-                                                  YAggregate="@(e => e.Count())"
-                                                  OrderByDescending="@(e=>e.Y)"
-                                                  PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
-                                 </ApexChart>
+                        <TabBlazor.Datepicker @bind-SelectedDate="SelectedDate" Label="Выберите дату" />
+                        <TabBlazor.Button class="btn-primary" @onclick="OnSelectedDateChanged"></TabBlazor.Button>
 
+                        @if (SelectedDateTasks != null && SelectedDateTasks.Any())
+                        {
+                            <h4>Задания на @SelectedDate.ToString("d"):</h4>
+                            <ul>
+                                @foreach (var task in SelectedDateTasks)
+                                {
+                                    <li @onclick="() => ProjectTaskClick(task.Id)">@task.Name</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>На @SelectedDate.ToString("d") заданий нет.</p>
+                        }
+                    </div>
+                </div>
+                @if (CurrentProject.ProjectTaskUsers is not null)
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Графики</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <ApexChart @ref=chart TItem="ProjectTask"
+                                               Title="ProjectTask Status Distribution" Debug>
+
+                                     <ApexPointSeries TItem="ProjectTask"
+                                                      Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
+                                                      Name="ProjectTask Status"
+                                                      SeriesType="SeriesType.Pie"
+                                                      XValue="@(e => e.Status)"
+                                                      YAggregate="@(e => e.Count())"
+                                                      OrderByDescending="@(e=>e.Y)"
+                                                      PointColor="@(e=> GetPointColor(e))" ShowDataLabels />
+                                     </ApexChart>
+
+                                 </div>
                              </div>
                          </div>
-                     </div>
-                     <div class="col-md-6">
-                         <!-- Список участников заданий -->
-                         <h3>Участники заданий</h3>
-                         <ul>
-                             @* <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div> *@
-                             @if (CurrentProject.AssignedUsers.Any())
-                            {
-                                <h3>Участники проекта:</h3>
-                                <ul>
-                                    @foreach (var user in CurrentProject.AssignedUsers)
-                                    {
-                                        <li>@user.UserName - @user.Position</li>
-                                    }
-                                </ul>
-                            }
+                         <div class="col-md-6">
+                             <!-- Список участников заданий -->
+                             <h3>Участники заданий</h3>
+                             <ul>
+                                 @* <div class="btn btn-primary text-center" @onclick="GetAssignedUsers">Получить участников проекта</div> *@
+                                 @if (CurrentProject.AssignedUsers.Any())
+                                {
+                                    <h3>Участники проекта:</h3>
+                                    <ul>
+                                        @foreach (var user in CurrentProject.AssignedUsers)
+                                        {
+                                            <li>@user.UserName - @user.Position</li>
+                                        }
+                                    </ul>
+                                }
 
-                            else
-                            {
-                                <p>Участников проекта не найдено.</p>
-                            }
-                            @if (CurrentProject.Creatorname == userName)
-                            {
-                                <div class="btn btn-primary" @onclick="ShowEditModal">Редактировать участников</div>
-                            }
-                            <Blazorise.Modal @ref="editModalRef" Closing="OnModalClosing">
-                                <Blazorise.ModalContent Centered>
-                                 <Blazorise.ModalHeader>
-                                     <ModalTitle>Редактировать участников</ModalTitle>
-                                     <CloseButton />
-                                 </Blazorise.ModalHeader>
-                                 <Blazorise.ModalBody>
-                                     <div class="form-group">
-                                         <label>Участники проекта:</label>
-                                         <ul class="list-group">
-                                             @foreach (var user in CurrentProject.AssignedUsers)
-                                                {
-                                                    <li class="list-group-item">
-                                                        @user.UserName
-                                                        @if (user.UserName == userName)
-                                                        {
-                                                            <button class="btn btn-secondary btn-sm float-right">Создатель</button>
-                                                        }
-                                                        else
-                                                        {
-                                                            <button class="btn btn-danger btn-sm float-right" @onclick="() => RemoveProjectUser(user)">Удалить</button>
-                                                        }
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                        <hr />
-                                        <div class="form-group">
-                                            <label>Добавить новых участников:</label>
-                                            <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="SearchByUsername" />
-                                            @if (users != null)
-                                            {
-                                                <ul class="list-group">
-                                                    @foreach (var user in users)
+                                else
+                                {
+                                    <p>Участников проекта не найдено.</p>
+                                }
+                                @if (CurrentProject.Creatorname == userName)
+                                {
+                                    <div class="btn btn-primary" @onclick="ShowEditModal">Редактировать участников</div>
+                                }
+                                <Blazorise.Modal @ref="editModalRef" Closing="OnModalClosing">
+                                    <Blazorise.ModalContent Centered>
+                                     <Blazorise.ModalHeader>
+                                         <ModalTitle>Редактировать участников</ModalTitle>
+                                         <CloseButton />
+                                     </Blazorise.ModalHeader>
+                                     <Blazorise.ModalBody>
+                                         <div class="form-group">
+                                             <label>Участники проекта:</label>
+                                             <ul class="list-group">
+                                                 @foreach (var user in CurrentProject.AssignedUsers)
                                                     {
                                                         <li class="list-group-item">
                                                             @user.UserName
-                                                            <button class="btn btn-primary btn-sm float-right" @onclick="() => AddProjectUser(user)">Добавить</button>
+                                                            @if (user.UserName == userName)
+                                                            {
+                                                                <button class="btn btn-secondary btn-sm float-right">Создатель</button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button class="btn btn-danger btn-sm float-right" @onclick="() => RemoveProjectUser(user)">Удалить</button>
+                                                            }
                                                         </li>
                                                     }
                                                 </ul>
-                                            }
-                                        </div>
-                                    </Blazorise.ModalBody>
-                                    <ModalFooter>
-                                        <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideEditModal">Отмена</Blazorise.Button>
-                                        <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
-                                    </ModalFooter>
-                                </Blazorise.ModalContent>
-                            </Blazorise.Modal>
+                                            </div>
+                                            <hr />
+                                            <div class="form-group">
+                                                <label>Добавить новых участников:</label>
+                                                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="SearchByUsernameForProject" />
+                                                @if (users != null)
+                                                {
+                                                    <ul class="list-group">
+                                                        @foreach (var user in users)
+                                                        {
+                                                            <li class="list-group-item">
+                                                                @user.UserName
+                                                                <button class="btn btn-primary btn-sm float-right" @onclick="() => AddProjectUser(user)">Добавить</button>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        </Blazorise.ModalBody>
+                                        <ModalFooter>
+                                            <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideEditModal">Отмена</Blazorise.Button>
+                                            <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
+                                        </ModalFooter>
+                                    </Blazorise.ModalContent>
+                                </Blazorise.Modal>
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-            }
                 }
+            }
         </div>
 
     </TabBlazor.Tab>
     <TabBlazor.Tab Title="Список задач" Icon="other-icon">
 
         @if (CurrentProject.Creatorname == userName)
-                {
-        <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
-        <Blazorise.Modal @ref="modalRef">
-            <Blazorise.ModalContent Centered>
-                <Blazorise.ModalHeader>
-                    <ModalTitle>Create Task</ModalTitle>
-                    <CloseButton />
-                </Blazorise.ModalHeader>
-                <Blazorise.ModalBody>
-                    <Blazorise.Field>
-                        <FieldLabel>Name</FieldLabel>
-                        <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
-                    </Blazorise.Field>
-                    <Blazorise.Field>
-                        <FieldLabel>Description</FieldLabel>
-                        <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
-                    </Blazorise.Field>
+        {
+            <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
+            <Blazorise.Modal @ref="modalRef" Closing="OnModalClosing">
+                <Blazorise.ModalContent Centered>
+                 <Blazorise.ModalHeader>
+                     <ModalTitle>Create Task</ModalTitle>
+                     <CloseButton />
+                 </Blazorise.ModalHeader>
+                 <Blazorise.ModalBody>
+                     <Blazorise.Field>
+                         <FieldLabel>Name</FieldLabel>
+                         <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
+                     </Blazorise.Field>
+                     <Blazorise.Field>
+                         <FieldLabel>Description</FieldLabel>
+                         <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
+                     </Blazorise.Field>
 
-                    <Blazorise.Field>
-                        <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                        <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
-                    </Blazorise.Field>
+                     <Blazorise.Field>
+                         <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
+                         <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
+                     </Blazorise.Field>
 
-                    @if (users != null)
-                    {
-                        <div class="search-results">
-                            @foreach (var user in users)
-                            {
-                                <div class="search-result" @onclick="() => AddUser(user)">
-                                    @user.UserName
-                                </div>
-                            }
-                        </div>
-                    }
+                     @if (users != null)
+                        {
+                            <div class="search-results">
+                                @foreach (var user in users)
+                                {
+                                    <div class="search-result" @onclick="() => AddUser(user)">
+                                        @user.UserName
+                                    </div>
+                                }
+                            </div>
+                        }
 
-                    @if (selectedUsers.Any())
-                    {
-                        <div>
-                            <h4>Selected Users:</h4>
-                            @foreach (var user in selectedUsers)
-                            {
-                                <div>
-                                    <p>@user.UserName</p>
-                                    <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
-                                </div>
-                            }
-                        </div>
-                    }
+                        @if (selectedUsers.Any())
+                        {
+                            <div>
+                                <h4>Selected Users:</h4>
+                                @foreach (var user in selectedUsers)
+                                {
+                                    <div>
+                                        <p>@user.UserName</p>
+                                        <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
+                                    </div>
+                                }
+                            </div>
+                        }
 
 
-                </Blazorise.ModalBody>
-                <ModalFooter>
-                    <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
-                    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
-                </ModalFooter>
-            </Blazorise.ModalContent>
-        </Blazorise.Modal>
-                }
+                    </Blazorise.ModalBody>
+                    <ModalFooter>
+                        <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+                        <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
+                    </ModalFooter>
+                </Blazorise.ModalContent>
+            </Blazorise.Modal>
+        }
 
         <div class="container">
             <h3>Список задач</h3>
             @if (CurrentProject.ProjectTaskUsers.Any())
-                {
-            <div class="table-responsive-sm">
-                <table class="table table-bordered border-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">Название</th>
-                            <th scope="col">Описание</th>
-                            <th scope="col">Статус</th>
-                            <th scope="col">Ответственные</th>
-                            <th scope="col">Дата создания</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var model in CurrentProject.ProjectTaskUsers)
-                        {
+            {
+                <div class="table-responsive-sm">
+                    <table class="table table-bordered border-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Описание</th>
+                                <th scope="col">Статус</th>
+                                <th scope="col">Ответственные</th>
+                                <th scope="col">Дата создания</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var model in CurrentProject.ProjectTaskUsers)
+                            {
 
-                            <tr >
-                                <td @onclick="() => OpenEditTaskModal(model.ProjectTask)" >@model.ProjectTask.Name</td>
-                                <td>@model.ProjectTask.Description</td>
-                                <td>
-                                    <select class="form-select" @onchange="@(e => ChangeProjectTaskStatus(model.ProjectTask, e.Value.ToString()))">
-                                        <option value="Completed" selected="@((model.ProjectTask.Status == "Completed"))">Выполнено</option>
-                                        <option value="Uncompleted" selected="@((model.ProjectTask.Status == "Uncompleted"))">Невыполнено</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    @if (model.AssignedUsers.Any())
+                                <tr>
+                                    @if (CurrentProject.Creatorname == userName)
                                     {
-                                        <ul>
-                                            @foreach (var user in model.AssignedUsers)
-                                            {
-                                                <li>@user.UserName - @user.Position</li>
-                                            }
-                                        </ul>
+                                        <td @onclick="() => OpenEditTaskModal(model)">@model.ProjectTask.Name</td>
                                     }
                                     else
                                     {
-                                        <p>Назначенных пользователей нет.</p>
+                                        <td>@model.ProjectTask.Name</td>
                                     }
-                                </td>
-                                <td>@model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</td>
-                            </tr>
-                        }
+                                    <td>@model.ProjectTask.Description</td>
+                                    <td>
+                                        <select class="form-select" @onchange="@(e => ChangeProjectTaskStatus(model.ProjectTask, e.Value.ToString()))">
+                                            <option value="Completed" selected="@((model.ProjectTask.Status == "Completed"))">Выполнено</option>
+                                            <option value="Uncompleted" selected="@((model.ProjectTask.Status == "Uncompleted"))">Невыполнено</option>
+                                        </select>
+                                    </td>
+                                    <td>
 
-                    </tbody>
-                </table>
-            </div>
-                }
+                                        <ul>
 
-                else
-                {
-            <p>Задачи отсутствуют.</p>
-                }
+                                            <li>@model.AssignedUser.UserName - @model.AssignedUser.Position</li>
+                                        </ul>
+
+                                    </td>
+                                    <td>@model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            else
+            {
+                <p>Задачи отсутствуют.</p>
+            }
         </div>
 
     </TabBlazor.Tab>
-   
-            
+
+
     <Blazorise.Modal @ref="editTaskModalRef">
         <Blazorise.ModalContent>
             <Blazorise.ModalHeader>
@@ -301,59 +301,56 @@
                 <Blazorise.CloseButton @onclick="HideEditTaskModal" />
             </Blazorise.ModalHeader>
             <Blazorise.ModalBody>
-                <!-- Форма для редактирования задачи -->
-                <div class="form-group">
-                    <label for="taskName">Name</label>
-                    <input type="text" class="form-control" id="taskName" @bind="selectedTask.Name" />
-                </div>
-                <div class="form-group">
-                    <label for="taskDescription">Description</label>
-                    <textarea class="form-control" id="taskDescription" @bind="selectedTask.Description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="taskStatus">Status</label>
-                    <select class="form-control" id="taskStatus" @bind="selectedTask.Status">
-                        <option value="Completed">Сompleted</option>
-                        <option value="Uncompleted">Uncompleted</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="taskDueDate">CreatedAt</label>
-                    <input type="date" class="form-control" id="CreatedAt" @bind="selectedTask.CreatedAt" />
-                </div>
-                <!-- Добавьте другие поля для редактирования -->
-                @* <h5>Назначенные пользователи</h5>
-                <ul>
-                    @foreach (var user in selectedUsers)
-                    {
-                        <li>
-                            @user.UserName - @user.Position
-                            <button type="button" class="btn btn-sm btn-danger ml-2" @onclick="() => RemoveUser(user)">Remove</button>
-                        </li>
-                    }
-                </ul>
-                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
-                <div class="list-group">
+                @if (selectedTask is not null)
+                {
+                    <!-- Форма для редактирования задачи -->
+                    <div class="form-group">
+                        <label for="taskName">Name</label>
+                        <input type="text" class="form-control" id="taskName" @bind="selectedTask.ProjectTask.Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea class="form-control" id="taskDescription" @bind="selectedTask.ProjectTask.Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskStatus">Status</label>
+                        <select class="form-control" id="taskStatus" @bind="selectedTask.ProjectTask.Status">
+                            <option value="Completed">Сompleted</option>
+                            <option value="Uncompleted">Uncompleted</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueDate">CreatedAt</label>
+                        <input type="date" class="form-control" id="CreatedAt" @bind="selectedTask.ProjectTask.CreatedAt" />
+                    </div>
+                    <h5>Назначенные пользователи</h5>
+                    <li class="list-group-item">
+                        @selectedTask.AssignedUser.UserName
+
+                    </li>
+                    <label>Изменить отвественного пользователя:</label>
+                    <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="GetUsersSearch" />
                     @if (users != null)
                     {
-                        @foreach (var user in users)
-                        {
-                            <button type="button" class="list-group-item list-group-item-action" @onclick="() => AddUser(user)">
-                                @user.UserName - @user.Position
-                            </button>
-                        }
+                        <ul class="list-group">
+                            @foreach (var user in users)
+                            {
+                                <li class="list-group-item">
+                                    @user.UserName
+                                    <button class="btn btn-primary btn-sm float-right" @onclick="() => ChangeTaskUser(user)">Добавить</button>
+                                </li>
+                            }
+                        </ul>
                     }
-                   
-                </div> *@
-                
+                }
             </Blazorise.ModalBody>
             <Blazorise.ModalFooter>
                 <Blazorise.Button Color="Blazorise.Color.Primary" @onclick="SaveTaskChanges">Save Changes</Blazorise.Button>
-                    <Blazorise.Button Color="Blazorise.Color.Secondary" @onclick="HideEditTaskModal">Close</Blazorise.Button>
+                <Blazorise.Button Color="Blazorise.Color.Secondary" @onclick="HideEditTaskModal">Close</Blazorise.Button>
             </Blazorise.ModalFooter>
         </Blazorise.ModalContent>
     </Blazorise.Modal>
-            
+
 
 
 
@@ -500,7 +497,7 @@
                 newProjectTask = new ProjectTask();
                 searchText = "";
                 selectedUsers.Clear();
-                users.Clear();
+                users = null;
                 await Refresh();
                 await HideModal();
                 ClearFields();
@@ -529,6 +526,7 @@
 
     private Task HideModal()
     {
+        searchText = string.Empty;
         return modalRef.Hide();
     }
 
@@ -635,7 +633,7 @@
     /// Выполняет поиск пользователей по имени или фамилии.
     /// </summary>
     /// <param name="value">Строка для поиска.</param>
-    private async Task SearchByUsername(string value)
+    private async Task SearchByUsernameForProject(string value)
     {
         searchText = value;
         if (!string.IsNullOrWhiteSpace(searchText))
@@ -649,26 +647,34 @@
             users = null;
         }
     }
-    private Modal editTaskModalRef;
-    private ProjectTask selectedTask = new ProjectTask();
 
-    private void OpenEditTaskModal(ProjectTask task)
+   
+
+    private Modal editTaskModalRef;
+    private ProjectTaskUsersModel selectedTask = null;
+
+    private void OpenEditTaskModal(ProjectTaskUsersModel task)
     {
-        if (CurrentProject.Creatorname == userName)
+
+        selectedTask = task;
+        if (selectedTask != null)
         {
-            selectedTask = task;
-            if (selectedTask != null)
-            {
-                editTaskModalRef.Show();
-            }
+            editTaskModalRef.Show();
         }
     }
 
     private void HideEditTaskModal()
     {
+        searchText = string.Empty;
         // selectedTask = null;
         editTaskModalRef.Hide();
     }
+
+    private async void ChangeTaskUser(User user)
+    {
+        selectedTask.AssignedUser = user;
+    }
+    
 
     private async Task SaveTaskChanges()
     {
@@ -676,22 +682,22 @@
         try
         {
             var response = await client.PutAsJsonAsync("api/ProjectTask/UpdateProjectTask", selectedTask);
-            var b =selectedTask;
+            var b = selectedTask;
             // await UpdateTaskAssignees(CurrentProject.Project.Id, CurrentProject.ProjectTaskUsers);
             if (response.IsSuccessStatusCode)
             {
-                
+
                 HideEditTaskModal();
             }
             else
             {
-               
+
                 Console.WriteLine("Ошибка при сохранении изменений по задаче.");
             }
         }
         catch (Exception ex)
         {
-            
+
             Console.WriteLine($"Ошибка при отправке запроса на сервер: {ex.Message}");
         }
     }

@@ -58,7 +58,7 @@ namespace JIRA.Server.Controllers
                 projectTaskUsers.Add(new ProjectTaskUsersModel() 
                 { 
                     ProjectTask = task, 
-                    AssignedUsers = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(task.Id)
+                    AssignedUser = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(task.Id).FirstOrDefault()
                 });
             }
 
@@ -216,10 +216,11 @@ namespace JIRA.Server.Controllers
             dataManager.ProjectAsigneeRepository.RemoveProjectUser(projectId, userId);
             return Ok();
         }
+
         [HttpPut]
-        public IActionResult UpdateTaskAssignee(TaskAssignee taskAssignee)
+        public IActionResult UpdateTaskAssignee(ProjectTaskUsersModel task)
         {
-            dataManager.TaskAssigneeRepository.Update(taskAssignee);
+            dataManager.TaskAssigneeRepository.Update(task);
             return Ok();
         }
 
