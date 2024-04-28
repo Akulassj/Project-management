@@ -2,12 +2,6 @@
 
 namespace JIRA.Shared.Entity
 {
-    //public class TaskAssignee
-    //{
-    //    public Guid Id { get; set; }
-    //    public Guid TaskId { get; set; }
-    //    public Guid DeveloperId { get; set; }
-    //}
     public class TaskAssignee
     {
         public Guid Id { get; set; }

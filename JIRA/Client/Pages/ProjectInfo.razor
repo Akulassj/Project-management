@@ -157,7 +157,9 @@
                                         </Blazorise.ModalBody>
                                         <ModalFooter>
                                             <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideEditModal">Отмена</Blazorise.Button>
+                                            
                                             <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
+                                          
                                         </ModalFooter>
                                     </Blazorise.ModalContent>
                                 </Blazorise.Modal>
@@ -208,25 +210,29 @@
                                 }
                             </div>
                         }
-
-                        @if (selectedUsers.Any())
+                        @foreach (var user in selectedUsers)
                         {
+                         @if (selectedUsers.Any())
+                         {
                             <div>
-                                <h4>Selected Users:</h4>
-                                @foreach (var user in selectedUsers)
-                                {
-                                    <div>
-                                        <p>@user.UserName</p>
-                                        <Blazorise.Button Color="Blazorise.Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
-                                    </div>
-                                }
+                                <h4>Selected User:</h4>
+                                <div>
+                                    <p>@selectedUsers.FirstOrDefault()?.UserName</p>
+                                    <button class="btn btn-danger btn-sm float-right" @onclick="() => ClearSelectedUser(user)">Удалить</button>
+                                </div>
                             </div>
+                         }
                         }
-
 
                     </Blazorise.ModalBody>
                     <ModalFooter>
                         <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+                        @if (!string.IsNullOrWhiteSpace(errorMessage))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @errorMessage
+                            </div>
+                        }
                         <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
                     </ModalFooter>
                 </Blazorise.ModalContent>
@@ -371,6 +377,7 @@
 
     string userName;
 
+
     private List<User> users;
 
     private List<User> selectedUsers = new List<User>();
@@ -460,9 +467,10 @@
         newProjectTask.Name = string.Empty;
         newProjectTask.Description = string.Empty;
     }
-
+    private string errorMessage = string.Empty;
     private async Task CreateProjectTask()
     {
+
         var newProjectTask = new ProjectTask()
             {
                 Name = this.newProjectTask.Name,
@@ -470,6 +478,24 @@
                 Status = "Uncompleted",
                 ProjectId = new Guid(projectId)
             };
+
+        if (string.IsNullOrWhiteSpace(newProjectTask.Name))
+        {
+            errorMessage = "Необходимо заполнить поле 'Name'.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(newProjectTask.Description))
+        {
+            errorMessage = "Необходимо заполнить поле 'Description'.";
+            return;
+        }
+
+        if (!selectedUsers.Any())
+        {
+            errorMessage = "Необходимо выбрать хотя бы одного назначенного пользователя.";
+            return;
+        }
 
         var taskAssignees = new List<TaskAssignee>();
         foreach (var user in selectedUsers)
@@ -532,22 +558,31 @@
 
 
 
+    // private void AddUser(User user)
+    // {
+    //     if (!selectedUsers.Contains(user))
+    //     {
+    //         selectedUsers.Add(user);
+    //         searchText = user.UserName;
+    //     }
+    // }
     private void AddUser(User user)
     {
-        if (!selectedUsers.Contains(user))
-        {
-            selectedUsers.Add(user);
-            searchText = user.UserName;
-        }
-    }
+        selectedUsers.Clear();
+        selectedUsers.Add(user);
 
+    }
 
     private void RemoveUser(User user)
     {
         selectedUsers.Remove(user);
     }
 
-
+    private void ClearSelectedUser(User user)
+    {  
+      selectedUsers.Remove(user);
+      selectedUsers.Clear();
+    }
 
 
 

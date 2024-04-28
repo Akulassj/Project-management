@@ -57,6 +57,12 @@
         </Blazorise.ModalBody>
         <ModalFooter>
             <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+            @if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @errorMessage
+                </div>
+            }
             <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject">Save Changes</Blazorise.Button>
         </ModalFooter>
     </Blazorise.ModalContent>
@@ -91,6 +97,7 @@
     private List<Project> projects = new List<Project>();
 
     List<User> selectedUsers { get; set; } = new List<User>();
+    private string errorMessage = string.Empty;
 
     protected override async void OnInitialized()
     {
@@ -159,6 +166,24 @@
 
     private async Task CreateProject()
     {
+        if (string.IsNullOrWhiteSpace(newProject.Name))
+        {
+            errorMessage = "Необходимо указать название проекта.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(newProject.Description))
+        {
+            errorMessage = "Необходимо указать описание проекта.";
+            return;
+        }
+
+        // Проверка выбора хотя бы одного участника
+        if (!SelectedUsers.Any())
+        {
+            errorMessage = "Необходимо выбрать хотя бы одного участника проекта.";
+            return;
+        }
         var asigneeList = new List<ProjectAsignee>();
         foreach (var user in SelectedUsers)
         {
