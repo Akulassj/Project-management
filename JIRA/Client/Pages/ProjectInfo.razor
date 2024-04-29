@@ -157,9 +157,14 @@
                                         </Blazorise.ModalBody>
                                         <ModalFooter>
                                             <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideEditModal">Отмена</Blazorise.Button>
-                                            
+                                           
                                             <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
-                                          
+                                            @if (!string.IsNullOrWhiteSpace(errorMessageUsersProject))
+                                            {
+                                                <div class="alert alert-danger" role="alert">
+                                                    @errorMessageUsersProject
+                                                </div>
+                                            }
                                         </ModalFooter>
                                     </Blazorise.ModalContent>
                                 </Blazorise.Modal>
@@ -352,6 +357,12 @@
             </Blazorise.ModalBody>
             <Blazorise.ModalFooter>
                 <Blazorise.Button Color="Blazorise.Color.Primary" @onclick="SaveTaskChanges">Save Changes</Blazorise.Button>
+                @if (!string.IsNullOrWhiteSpace(errorMessageEditingTasks))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @errorMessageEditingTasks
+                    </div>
+                }
                 <Blazorise.Button Color="Blazorise.Color.Secondary" @onclick="HideEditTaskModal">Close</Blazorise.Button>
             </Blazorise.ModalFooter>
         </Blazorise.ModalContent>
@@ -468,6 +479,10 @@
         newProjectTask.Description = string.Empty;
     }
     private string errorMessage = string.Empty;
+
+    private string errorMessageUsersProject = string.Empty;
+
+    private string errorMessageEditingTasks = string.Empty;
     private async Task CreateProjectTask()
     {
 
@@ -540,6 +555,7 @@
 
             Console.WriteLine("Ошибка при добавлении задачи: " + ex.Message);
         }
+        errorMessage = string.Empty;
     }
 
 
@@ -580,8 +596,8 @@
 
     private void ClearSelectedUser(User user)
     {  
-      selectedUsers.Remove(user);
-      selectedUsers.Clear();
+        selectedUsers.Remove(user);
+        selectedUsers.Clear();
     }
 
 
@@ -661,7 +677,18 @@
     /// <param name="userId">Идентификатор пользователя.</param>
     private async Task RemoveProjectUser(User user)
     {
-        CurrentProject.AssignedUsers.Remove(user);
+        if (CurrentProject.ProjectTaskUsers.Any(ptu => ptu.AssignedUser.Id == user.Id && ptu.ProjectTask.Status == "Uncompleted"))
+        {
+            // Выведите сообщение пользователю о невозможности удаления пользователя
+            errorMessage = "Нельзя удалить пользователя, у которого есть невыполненные задачи.";
+            return;
+        }
+        else
+        {
+            CurrentProject.AssignedUsers.Remove(user);
+            errorMessageUsersProject = string.Empty;
+        }
+
     }
 
     /// <summary>
@@ -683,7 +710,7 @@
         }
     }
 
-   
+
 
     private Modal editTaskModalRef;
     private ProjectTaskUsersModel selectedTask = null;
@@ -709,31 +736,42 @@
     {
         selectedTask.AssignedUser = user;
     }
-    
+
 
     private async Task SaveTaskChanges()
     {
-
-        try
+        if (string.IsNullOrWhiteSpace(selectedTask.ProjectTask.Name) ||
+        string.IsNullOrWhiteSpace(selectedTask.ProjectTask.Description) ||
+         string.IsNullOrWhiteSpace(selectedTask.ProjectTask.Status) ||
+        string.IsNullOrWhiteSpace(selectedTask.AssignedUser.UserName))
         {
-            var response = await client.PutAsJsonAsync("api/ProjectTask/UpdateProjectTask", selectedTask);
-            var b = selectedTask;
-            // await UpdateTaskAssignees(CurrentProject.Project.Id, CurrentProject.ProjectTaskUsers);
-            if (response.IsSuccessStatusCode)
-            {
-
-                HideEditTaskModal();
-            }
-            else
-            {
-
-                Console.WriteLine("Ошибка при сохранении изменений по задаче.");
-            }
+            errorMessageEditingTasks = "Необходимо заполнить все поля.";
+            return;
         }
-        catch (Exception ex)
+        else
         {
+            try
+            {
+                var response = await client.PutAsJsonAsync("api/ProjectTask/UpdateProjectTask", selectedTask);
+                var b = selectedTask;
+                // await UpdateTaskAssignees(CurrentProject.Project.Id, CurrentProject.ProjectTaskUsers);
+                if (response.IsSuccessStatusCode)
+                {
 
-            Console.WriteLine($"Ошибка при отправке запроса на сервер: {ex.Message}");
+                    HideEditTaskModal();
+                }
+                else
+                {
+
+                    Console.WriteLine("Ошибка при сохранении изменений по задаче.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Ошибка при отправке запроса на сервер: {ex.Message}");
+            }
+            errorMessageEditingTasks = string.Empty;
         }
     }
     // private async Task UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
