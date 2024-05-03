@@ -69,7 +69,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
                 List<ProjectAsignee> projectAsignees = new List<ProjectAsignee>();
 
-                foreach(var project in projects)
+                foreach (var project in projects)
                 {
                     var us = new List<User>();
                     for (int i = 0; i < Random.Shared.Next(1, 7); i++)
@@ -98,8 +98,8 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                                                     .SelectMany(id => users.Where(user => user.Id == id))
                                                     .ToList();
 
-                    var taskAssignee = new TaskAssignee() 
-                    { 
+                    var taskAssignee = new TaskAssignee()
+                    {
                         ProjectTaskId = task.Id,
                         UserId = projectUsers[Random.Shared.Next(projectUsers.Count)].Id
                     };
@@ -135,12 +135,17 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 }
 
                 context.Users.AddRange(users);
-                context.ProjectTasks.AddRange(projectTasks);
+                context.SaveChanges();
+                
 
                 context.TaskAssignees.AddRange(taskAssignees);
+                context.SaveChanges();
 
                 context.Comments.AddRange(comments);
+                context.SaveChanges();
                 context.ProjectAsignees.AddRange(projectAsignees);
+                context.SaveChanges();
+                context.ProjectTasks.AddRange(projectTasks);
                 context.SaveChanges();
             }
         }

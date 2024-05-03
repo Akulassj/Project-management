@@ -59,6 +59,21 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         public void UpdateProjectAsignees(Guid projectId, List<User> users)
         {
+            var oldUsersIds = context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).Select(pa => pa.UserId).SelectMany(id => context.Users.Where(user => user.Id == id)).Select(u=>u.Id).ToList();
+            var tasks = context.ProjectTasks.Where(task => task.ProjectId == projectId).Select(task => task.Id).ToList();
+            foreach (var user in oldUsersIds)
+            {
+                if (!users.Select(u => u.Id).Contains(user))
+                {
+                    var asignees = context.TaskAssignees.Where(ta => ta.UserId == user && tasks.Contains(ta.ProjectTaskId)).ToList();
+                    foreach (var ta in asignees)
+                    {
+                        ta.InActive = true;
+                        context.TaskAssignees.Entry(ta).State = EntityState.Modified;
+                    }
+                }
+            }
+
             var projectAsignees = context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).ToList();
             var creatorUserId = context.ProjectAsignees.Where(pa => pa.IsCreator && pa.ProjectId == projectId).FirstOrDefault().UserId;
             context.ProjectAsignees.RemoveRange(projectAsignees);

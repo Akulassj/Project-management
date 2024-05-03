@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JIRA.Server.Migrations
 {
     [DbContext(typeof(ProjectManagementContext))]
-    [Migration("20240215223839_Initial")]
-    partial class Initial
+    [Migration("20240502103257_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,11 +25,15 @@ namespace JIRA.Server.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Attachment", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.Attachment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<byte[]>("FileData")
+                        .IsRequired()
+                        .HasColumnType("bytea");
 
                     b.Property<string>("FileExtension")
                         .IsRequired()
@@ -51,12 +55,10 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectTaskId");
-
                     b.ToTable("Attachments");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Comment", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.Comment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,14 +79,12 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectTaskId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.ProjectTask", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.Notification", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,29 +93,23 @@ namespace JIRA.Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
+                    b.Property<bool>("IsReaded")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Status")
+                    b.Property<string>("RecieverName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("ProjectTasks");
+                    b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Project", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -137,7 +131,59 @@ namespace JIRA.Server.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.TaskAssignee", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.ProjectAsignee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsCreator")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectAsignees");
+                });
+
+            modelBuilder.Entity("JIRA.Shared.Entity.ProjectTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectTasks");
+                });
+
+            modelBuilder.Entity("JIRA.Shared.Entity.TaskAssignee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,14 +197,10 @@ namespace JIRA.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectTaskId");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("TaskAssignees");
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.User", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -238,14 +280,14 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3b62472e-4f66-49fa-a20f-e7685b9565d8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ba76c492-0d52-4c1d-a51a-7985bd50b4ba",
+                            ConcurrencyStamp = "46e877c0-335b-4a8a-9019-5ce2b8f4e9a8",
                             Email = "leha@mail.ru",
                             EmailConfirmed = true,
                             FirstName = "Aleksei",
                             LastName = "Kulabukhov",
                             LockoutEnabled = false,
                             NormalizedEmail = "LEHA@MAIL.RU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOplja12YrHtec6iGp8JT8lR5qNhvEFleOffaPY4xjwgnP4eHkf8qeKtYV/tqRXkmA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHyej2i7xGMrUaH9ID3zrBZJRvPrBN6jSkUUbN9sZ5c55MPIVfqPtuW1e2MTZOPijQ==",
                             PhoneNumberConfirmed = false,
                             Position = "Moderator",
                             SecurityStamp = "",
@@ -405,62 +447,13 @@ namespace JIRA.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Attachment", b =>
+            modelBuilder.Entity("JIRA.Shared.Entity.Comment", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.ProjectTask", "ProjectTask")
-                        .WithMany()
-                        .HasForeignKey("ProjectTaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProjectTask");
-                });
-
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Comment", b =>
-                {
-                    b.HasOne("JIRA.Server.Domain.Entity.ProjectTask", "ProjectTask")
-                        .WithMany()
-                        .HasForeignKey("ProjectTaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JIRA.Server.Domain.Entity.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProjectTask");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.ProjectTask", b =>
-                {
-                    b.HasOne("JIRA.Server.Domain.Entity.Project", "Project")
-                        .WithMany("ProjectTasks")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.TaskAssignee", b =>
-                {
-                    b.HasOne("JIRA.Server.Domain.Entity.ProjectTask", "ProjectTask")
-                        .WithMany()
-                        .HasForeignKey("ProjectTaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JIRA.Server.Domain.Entity.User", "User")
+                    b.HasOne("JIRA.Shared.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ProjectTask");
 
                     b.Navigation("User");
                 });
@@ -476,7 +469,7 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.User", null)
+                    b.HasOne("JIRA.Shared.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -485,7 +478,7 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.User", null)
+                    b.HasOne("JIRA.Shared.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -500,7 +493,7 @@ namespace JIRA.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JIRA.Server.Domain.Entity.User", null)
+                    b.HasOne("JIRA.Shared.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -509,21 +502,11 @@ namespace JIRA.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("JIRA.Server.Domain.Entity.User", null)
+                    b.HasOne("JIRA.Shared.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.Project", b =>
-                {
-                    b.Navigation("ProjectTasks");
-                });
-
-            modelBuilder.Entity("JIRA.Server.Domain.Entity.User", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

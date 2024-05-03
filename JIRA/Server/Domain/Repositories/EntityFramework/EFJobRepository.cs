@@ -28,8 +28,8 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         public List<ProjectTask> GetProjectProjectTasksByDate(Guid projectID, DateTime date)
         {
-            DateTime startDate = date.Date.ToUniversalTime(); 
-            DateTime endDate = startDate.AddDays(1).AddSeconds(-1); 
+            DateTime startDate = date.Date.ToUniversalTime();
+            DateTime endDate = startDate.AddDays(1).AddSeconds(-1);
 
             return context.ProjectTasks
                 .Where(j => j.CreatedAt >= startDate && j.CreatedAt <= endDate && j.ProjectId == projectID)
@@ -63,8 +63,16 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
         public void Update(ProjectTask projectTask)
         {
-            context.ProjectTasks.Entry(projectTask).State = EntityState.Modified;
-            context.SaveChanges();
+            var task = context.ProjectTasks.Where(j => j.Id == projectTask.Id).FirstOrDefault();
+            if (task != null)
+            {
+                task.Description = projectTask.Description;
+                task.Name = projectTask.Name;
+                task.Status = projectTask.Status;
+
+                context.ProjectTasks.Entry(task).State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
         public List<ProjectTask> GetUncompletedTasksForUserAndProject(Guid userId, Guid projectId)
         {
@@ -73,7 +81,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 .ToList();
         }
 
-        
+
 
 
     }

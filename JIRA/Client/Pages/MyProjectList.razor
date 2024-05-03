@@ -106,7 +106,7 @@
 
     private async Task Refresh()
     {
-        projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects/?userName={userName}");
+        projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects?userName={userName}");
         selectedUsers.Clear();
         searchText = string.Empty;
         users.Clear();

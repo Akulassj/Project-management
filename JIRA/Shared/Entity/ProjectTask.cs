@@ -15,7 +15,7 @@ namespace JIRA.Shared.Entity
 
         public ProjectTask()
         {
-            CreatedAt = DateTime.UtcNow.ToLocalTime();
+            CreatedAt = DateTime.UtcNow;
             Id = Guid.NewGuid();
         }
 

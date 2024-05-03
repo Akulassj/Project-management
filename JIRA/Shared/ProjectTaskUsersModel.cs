@@ -11,5 +11,7 @@ namespace JIRA.Shared
     {
         public ProjectTask ProjectTask { get; set; }
         public User AssignedUser { get; set; }
+        public bool InActive { get; set; }
+        
     }
 }

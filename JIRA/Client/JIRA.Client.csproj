@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Shared\JIRA.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\files\" />
+  </ItemGroup>
+
 </Project>

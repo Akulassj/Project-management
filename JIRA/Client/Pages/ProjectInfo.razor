@@ -157,14 +157,14 @@
                                         </Blazorise.ModalBody>
                                         <ModalFooter>
                                             <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideEditModal">Отмена</Blazorise.Button>
-                                           
-                                            <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
                                             @if (!string.IsNullOrWhiteSpace(errorMessageUsersProject))
                                             {
                                                 <div class="alert alert-danger" role="alert">
                                                     @errorMessageUsersProject
                                                 </div>
                                             }
+                                            <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
+                                          
                                         </ModalFooter>
                                     </Blazorise.ModalContent>
                                 </Blazorise.Modal>
@@ -283,7 +283,7 @@
 
                                         <ul>
 
-                                            <li>@model.AssignedUser.UserName - @model.AssignedUser.Position</li>
+                                            <li><span style=@(model.InActive ? "color:gray" : "color:black")>@model.AssignedUser.UserName - @model.AssignedUser.Position</span></li>
                                         </ul>
 
                                     </td>
@@ -314,7 +314,7 @@
             <Blazorise.ModalBody>
                 @if (selectedTask is not null)
                 {
-                    <!-- Форма для редактирования задачи -->
+                  
                     <div class="form-group">
                         <label for="taskName">Name</label>
                         <input type="text" class="form-control" id="taskName" @bind="selectedTask.ProjectTask.Name" />
@@ -650,6 +650,15 @@
     /// </summary>
     private async Task SaveParticipantsChanges()
     {
+        // if (!CurrentProject.ProjectTaskUsers.Any())
+        // {
+        //     errorMessageUsersProject = "Необходимо выбрать хотя бы одного назначенного пользователя.";
+        //     return;
+        // }
+        // else
+        // {
+        //     errorMessageUsersProject = string.Empty;
+        // }
         var response = await client.PutAsJsonAsync<ProjectInfoViewModel>(@"api/project/UpdateProjectInfo", CurrentProject);
         if (response.IsSuccessStatusCode)
         {
@@ -680,7 +689,7 @@
         if (CurrentProject.ProjectTaskUsers.Any(ptu => ptu.AssignedUser.Id == user.Id && ptu.ProjectTask.Status == "Uncompleted"))
         {
             // Выведите сообщение пользователю о невозможности удаления пользователя
-            errorMessage = "Нельзя удалить пользователя, у которого есть невыполненные задачи.";
+            errorMessageUsersProject = "Нельзя удалить пользователя, у которого есть невыполненные задачи.";
             return;
         }
         else
@@ -738,6 +747,8 @@
     }
 
 
+   
+
     private async Task SaveTaskChanges()
     {
         if (string.IsNullOrWhiteSpace(selectedTask.ProjectTask.Name) ||
@@ -752,6 +763,9 @@
         {
             try
             {
+              
+                selectedTask.ProjectTask.CreatedAt = DateTime.UtcNow;
+
                 var response = await client.PutAsJsonAsync("api/ProjectTask/UpdateProjectTask", selectedTask);
                 var b = selectedTask;
                 // await UpdateTaskAssignees(CurrentProject.Project.Id, CurrentProject.ProjectTaskUsers);
@@ -772,30 +786,13 @@
                 Console.WriteLine($"Ошибка при отправке запроса на сервер: {ex.Message}");
             }
             errorMessageEditingTasks = string.Empty;
+          
         }
     }
-    // private async Task UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
-    // {
-    //     try
-    //     {
-    //         var response = await client.PutAsJsonAsync("api/ProjectTask/UpdateTaskAssignees", (projectId, taskUsers));
-    //         if (response.IsSuccessStatusCode)
-    //         {
-    //             // Обновление выполнено успешно
-    //             // Можно выполнить дополнительные действия при необходимости
-    //         }
-    //         else
-    //         {
-    //             // Обработка ошибки при обновлении
-    //             Console.WriteLine("Ошибка при обновлении назначенных пользователей по задачам.");
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         // Обработка исключения
-    //         Console.WriteLine($"Ошибка при отправке запроса на сервер: {ex.Message}");
-    //     }
-    // }
+   
+
+
+
 
 
     private void ProjectTaskClick(Guid id)

@@ -1,4 +1,5 @@
-﻿using JIRA.Shared.Entity;
+﻿using JIRA.Shared;
+using JIRA.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace JIRA.Server.Domain.Repositories.Abstract
@@ -7,5 +8,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
     {
        public Attachment GetAttachmentById(Guid id);
        public List<Attachment> GetAttachmentsByProjectTaskId(Guid projectTaskId);
+       
     }
 }

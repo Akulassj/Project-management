@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using JIRA.Shared;
 using JIRA.Shared.Entity;
 using Microsoft.Extensions.Logging;
+using JIRA.Client.Pages;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 namespace JIRA.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -11,18 +15,43 @@ namespace JIRA.Server.Controllers
     public class ProjectTaskController : Controller
     {
         private readonly DataManager dataManager;
-
-        public ProjectTaskController(DataManager dataManager)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public ProjectTaskController(DataManager dataManager, IHttpClientFactory httpClientFactory)
         {
             this.dataManager = dataManager;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpPost]
-        public IActionResult AddProjectTask(TasksAssigneeViewModel tasksAssignees)
-        {
+        public async Task <IActionResult> AddProjectTask(TasksAssigneeViewModel tasksAssignees)
+        { // Получаешь taskassignee и добавлять пользователю, что он назначен на задачу
+            var user = dataManager.UserRepository.GetUserById(tasksAssignees.TaskAssignees.First().UserId);
+
+            var notification = new Notification() { RecieverName = user.UserName, IsReaded = false, Message = $"Вас добавили на задачу {tasksAssignees.ProjectTask.Name}" };
             dataManager.ProjectTaskRepository.Add(tasksAssignees.ProjectTask);
             dataManager.TaskAssigneeRepository.Add(tasksAssignees.TaskAssignees);
-            return Ok();
+            var httpClient = _httpClientFactory.CreateClient("InternalApi");
+
+            // Сериализация списка уведомлений в JSON
+            var jsonNotifications = JsonConvert.SerializeObject(notification);
+
+            // Создание содержимого запроса
+            var content = new StringContent(jsonNotifications, Encoding.UTF8, "application/json");
+
+            // Отправка запроса на сервер
+            var response = await httpClient.PostAsync("api/notification/AddNotification", content);
+
+            // Обработка ответа
+            if (response.IsSuccessStatusCode)
+            {
+                // Действия при успешном запросе
+                return Ok();
+            }
+            else
+            {
+                // Обработка ошибки
+                return StatusCode((int)response.StatusCode);
+            }
         }
 
         [HttpGet]
@@ -100,10 +129,36 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProjectTask(ProjectTaskUsersModel selectedTask)
+        public async Task <IActionResult> UpdateProjectTask(ProjectTaskUsersModel selectedTask)
         {
+            var user = dataManager.UserRepository.GetUserById(selectedTask.AssignedUser.Id);
+
+            var notification = new Notification() { RecieverName = user.UserName, IsReaded = false, Message = $"Вас добавили на задачу {selectedTask.ProjectTask.Name}" };
             dataManager.TaskAssigneeRepository.Update(selectedTask);
-            return Ok();
+            dataManager.ProjectTaskRepository.Update(selectedTask.ProjectTask);
+            //dataManager.AttachmentRepository.Update(selectedTask);
+            var httpClient = _httpClientFactory.CreateClient("InternalApi");
+
+            // Сериализация списка уведомлений в JSON
+            var jsonNotifications = JsonConvert.SerializeObject(notification);
+
+            // Создание содержимого запроса
+            var content = new StringContent(jsonNotifications, Encoding.UTF8, "application/json");
+
+            // Отправка запроса на сервер
+            var response = await httpClient.PostAsync("api/notification/AddNotification", content);
+
+            // Обработка ответа
+            if (response.IsSuccessStatusCode)
+            {
+                // Действия при успешном запросе
+                return Ok();
+            }
+            else
+            {
+                // Обработка ошибки
+                return StatusCode((int)response.StatusCode);
+            }
         }
         [HttpGet]
         public IActionResult GetProjectTaskId(Guid id)
@@ -111,6 +166,18 @@ namespace JIRA.Server.Controllers
             var projects = dataManager.ProjectTaskRepository.GetProjectTaskById(id);
             return Ok(projects);
         }
+
+        //[HttpGet]
+        //public IActionResult GetFilePreview(Guid attachmentId)
+        //{
+        //    var filePreview = dataManager.AttachmentRepository.GetFilePreview(attachmentId);
+        //    if (filePreview == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return File(filePreview, "application/octet-stream"); // Отправляет массив байтов как файл клиенту
+        //}
         //[HttpPut]
         //public IActionResult UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
         //{

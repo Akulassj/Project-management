@@ -97,15 +97,14 @@ namespace Authorization.Server.Controllers
         }
 
         [HttpGet]   
-        public CurrentUser CurrentUserInfo()
+        public async Task<CurrentUser> CurrentUserInfo()
         {
-            var us = _userManager.FindByNameAsync(User.Identity.Name);
-            if (us.IsCompletedSuccessfully)
-            {
-                var roles = _userManager.GetRolesAsync(us.Result).Result;
+            var us = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                var roles = await _userManager.GetRolesAsync(us);
                 var user = new CurrentUser
                 {
-                    Id = us.Result.Id,
+                    Id = us.Id,
                     IsAuthenticated = User.Identity.IsAuthenticated,
                     UserName = User.Identity.Name,
                     Role = roles.Any() ? roles.First() :"",
@@ -113,15 +112,7 @@ namespace Authorization.Server.Controllers
                     .ToDictionary(c => c.Type, c => c.Value)
                 };
                 return user;
-            }
-            return new CurrentUser
-            {
-                IsAuthenticated = User.Identity.IsAuthenticated,
-                UserName = User.Identity.Name,
-                Role = "",
-                Claims = User.Claims
-                    .ToDictionary(c => c.Type, c => c.Value)
-            };
+
         }
 
         [HttpGet]

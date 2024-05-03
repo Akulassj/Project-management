@@ -3,6 +3,7 @@ using JIRA.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
 using JIRA.Shared.Domain;
 using System;
+using JIRA.Shared;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -22,5 +23,6 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.Attachments.Where(a => a.ProjectTaskId == projectTaskId).ToList();
         }
+       
     }
 }

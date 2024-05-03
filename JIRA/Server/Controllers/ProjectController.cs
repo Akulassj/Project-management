@@ -1,8 +1,12 @@
-﻿using JIRA.Server.Domain;
+﻿using JIRA.Client.Services;
+using JIRA.Server.Domain;
 using JIRA.Shared;
 using JIRA.Shared.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace JIRA.Server.Controllers
 {
@@ -12,9 +16,12 @@ namespace JIRA.Server.Controllers
     {
         private readonly DataManager dataManager;
 
-        public ProjectController(DataManager dataManager)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public ProjectController(DataManager dataManager, IHttpClientFactory httpClientFactory)
         {
             this.dataManager = dataManager;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet]
@@ -24,19 +31,13 @@ namespace JIRA.Server.Controllers
             return Ok(projects);
         }
 
-        [HttpPost]
-        public IActionResult CreateNewProject(Project project)
-        {
-            dataManager.ProjectRepository.Add(project);
-            return Ok();
-        }
-
         [HttpGet]
         public IActionResult GetUserProjects(string userName)
         {
             var projects = dataManager.ProjectRepository.GetProjectsByUserName(userName);
             return Ok(projects);
         }
+
         [HttpGet]
         public IActionResult GetProjectTasksByUserName(string userName)
         {
@@ -55,10 +56,11 @@ namespace JIRA.Server.Controllers
 
             foreach (var task in projectTasks)
             {
-                projectTaskUsers.Add(new ProjectTaskUsersModel() 
-                { 
-                    ProjectTask = task, 
-                    AssignedUser = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(task.Id).FirstOrDefault()
+                projectTaskUsers.Add(new ProjectTaskUsersModel()
+                {
+                    ProjectTask = task,
+                    AssignedUser = dataManager.TaskAssigneeRepository.GetTaskAssigneeUsers(task.Id),
+                    InActive = dataManager.TaskAssigneeRepository.GetActiveStatusByTaskId(task.Id)
                 });
             }
 
@@ -74,11 +76,54 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProjectInfo(ProjectInfoViewModel projectInfo)
+        public async Task<IActionResult> UpdateProjectInfo(ProjectInfoViewModel projectInfo)
         {
-            dataManager.ProjectAsigneeRepository.UpdateProjectAsignees(projectInfo.Project.Id, projectInfo.AssignedUsers);
+            var notifications = new List<Notification>();
+            var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectInfo.Project.Id);
+            foreach (var user in users)
+            {
+                if (!projectInfo.AssignedUsers.Contains(user))
+                {
+                    //отправить что он удален
+                    notifications.Add(new Notification() { RecieverName = user.UserName, IsReaded = false, Message = $"Вас удалили с проекта {projectInfo.Project.Name}" });
+                }
+            }
 
-            return Ok();
+            foreach (var user in projectInfo.AssignedUsers)
+            {
+                if (!users.Contains(user))
+                {
+                    //отправить что он Добавлен
+                    notifications.Add(new Notification() { RecieverName = user.UserName, IsReaded = false, Message = $"Вас добавили на проект {projectInfo.Project.Name}" });
+                }
+            }
+
+            dataManager.ProjectAsigneeRepository.UpdateProjectAsignees(projectInfo.Project.Id, projectInfo.AssignedUsers);
+            var httpClient = _httpClientFactory.CreateClient("InternalApi");
+
+            // Сериализация списка уведомлений в JSON
+            var jsonNotifications = JsonConvert.SerializeObject(notifications);
+
+            // Создание содержимого запроса
+            var content = new StringContent(jsonNotifications, Encoding.UTF8, "application/json");
+
+            // Отправка запроса на сервер
+            var response = await httpClient.PostAsync("api/notification/AddNotifications", content);
+
+            // Обработка ответа
+            if (response.IsSuccessStatusCode)
+            {
+                // Действия при успешном запросе
+                return Ok();
+            }
+            else
+            {
+                // Обработка ошибки
+                return StatusCode((int)response.StatusCode);
+            }
+            //var resp = await httpClient.PostAsJsonAsync($"notification/AddNotifications", notifications);
+
+
         }
 
         [HttpGet]
@@ -86,13 +131,6 @@ namespace JIRA.Server.Controllers
         {
             var project = dataManager.ProjectRepository.GetProjectById(projectId);
             return Ok(project);
-        }
-
-        [HttpGet]
-        public IActionResult GetProjectProjectTasks(Guid projectId)
-        {
-            var projects = dataManager.ProjectTaskRepository.GetProjectTasksByProjectId(projectId);
-            return Ok(projects);
         }
 
         [HttpGet]
@@ -117,14 +155,6 @@ namespace JIRA.Server.Controllers
             return Ok(projectTasks);
         }
 
-        [HttpGet]
-        public IActionResult GetUserProjectTasks(Guid userId)
-        {
-            var projectTasks = dataManager.ProjectTaskRepository.GetAllProjectTasks();
-            return Ok(projectTasks);
-        }
-
-      
 
         [HttpPost]
         public IActionResult AddProject(ProjectsAsigneeViewModel projectAsignees)
@@ -140,6 +170,49 @@ namespace JIRA.Server.Controllers
             dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
             return Ok();
         }
+
+
+        //public async Task <IActionResult> AddProject(ProjectsAsigneeViewModel projectAsignees)
+        //{
+        //    var user = dataManager.UserRepository.GetUserByName(projectAsignees.UserName);
+        //    projectAsignees.ProjectAsignees.Add(new ProjectAsignee()
+        //    {
+        //        IsCreator = true,
+        //        UserId = user.Id,
+        //        ProjectId = projectAsignees.Project.Id
+        //    });
+        //    dataManager.ProjectRepository.Add(projectAsignees.Project);
+        //    dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
+
+        //    var notification = new Notification()
+        //    {
+        //        RecieverName = user.UserName,
+        //        IsReaded = false,
+        //        Message = $"Вы были добавлены в проект {projectAsignees.Project.Name}"
+        //    };
+
+        //    // Сериализация уведомления в JSON
+        //    var jsonNotification = JsonConvert.SerializeObject(notification);
+
+        //    // Создание содержимого запроса
+        //    var content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
+
+        //    // Отправка запроса на сервер
+        //    var httpClient = _httpClientFactory.CreateClient("InternalApi");
+        //    var response = await httpClient.PostAsync("api/notification/AddNotification", content);
+
+        //    // Обработка ответа
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        // Действия при успешном запросе
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        // Обработка ошибки
+        //        return StatusCode((int)response.StatusCode);
+        //    }
+        //}
 
         [HttpGet]
         public IActionResult GetProjectTasksByDate(Guid projectID, DateTime date)
@@ -181,40 +254,12 @@ namespace JIRA.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet]
-        public IActionResult GetProjectAsigneeByProjectId(Guid projectId)
-        {
-            try
-            {
-                // Получаем информацию о создателе проекта по его идентификатору
-                var projectAsignee = dataManager.ProjectAsigneeRepository.GetProjectAsigneeByProjectId(projectId);
-                return Ok(projectAsignee);
-            }
-            catch (Exception ex)
-            {
-                // Обработка ошибок, например, возврат статуса ошибки
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Ошибка при получении информации о создателе проекта: {ex.Message}");
-            }
-        }
 
         [HttpGet]
         public IActionResult GetProjectAsigneeUsers(Guid projectId)
         {
             var users = dataManager.ProjectRepository.GetAsigneeProjectUsers(projectId);
             return Ok(users);
-        }
-        [HttpPost]
-        public IActionResult AddProjectUser(Guid projectId, Guid userId)
-        {
-            dataManager.ProjectAsigneeRepository.AddProjectUser(projectId, userId);
-            return Ok();
-        }
-
-        [HttpPost]
-        public IActionResult RemoveProjectUser(Guid projectId, Guid userId)
-        {
-            dataManager.ProjectAsigneeRepository.RemoveProjectUser(projectId, userId);
-            return Ok();
         }
 
         [HttpPut]

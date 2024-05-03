@@ -10,6 +10,9 @@ using JIRA.Server.Domain.Repositories.Abstract;
 using JIRA.Server.Domain.Repositories.EntityFramework;
 using System;
 using Blazorise;
+using JIRA.Client.Services;
+using ApexCharts;
+using Microsoft.AspNetCore.Components;
 
 internal class Program
 {
@@ -18,7 +21,7 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-
+       
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
         var configuration = builder.Configuration;
@@ -29,14 +32,22 @@ internal class Program
         builder.Services.AddTransient<ITaskAssigneeRepository, EFTaskAssigneeRepository>();
         builder.Services.AddTransient<IUserRepository, EFUserRepository>();
         builder.Services.AddTransient<IProjectAsigneeRepository, EFProjectAsigneeRepository>();
+        builder.Services.AddTransient<INotificationRepository, EFNotificationRepository>();
 
         builder.Services.AddTransient<DataManager>();
 
-        builder.Services.AddDbContext<ProjectManagementContext>();
-        //builder.Services.AddDbContext<ProjectManagementContext>(options =>
-        //{
-        //    options.UseNpgsql(configuration.GetConnectionString(nameof(ProjectManagementContext)));
-        //});
+        builder.Services.AddHttpClient("InternalApi", client =>
+        {
+            client.BaseAddress = new Uri(builder.Configuration["AppBaseUrl"]); // Замените "AppBaseUrl" на ключ в вашем файле конфигурации, содержащий базовый URL вашего приложения
+        });
+
+
+        builder.Services.AddDbContext<ProjectManagementContext>(options =>
+        {
+            options.UseNpgsql(configuration.GetConnectionString(nameof(ProjectManagementContext)));
+        });
+
+
         builder.Services.AddAuthorizationCore();
         builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
         {
@@ -66,7 +77,7 @@ internal class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
+        
         app.UseHttpsRedirection();
 
         app.UseBlazorFrameworkFiles();

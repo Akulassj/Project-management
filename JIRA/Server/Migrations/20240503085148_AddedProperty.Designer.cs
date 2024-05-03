@@ -3,6 +3,7 @@ using System;
 using JIRA.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JIRA.Server.Migrations
 {
     [DbContext(typeof(ProjectManagementContext))]
-    partial class ProjectManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240503085148_AddedProperty")]
+    partial class AddedProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,9 +189,6 @@ namespace JIRA.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("InActive")
-                        .HasColumnType("boolean");
-
                     b.Property<Guid>("ProjectTaskId")
                         .HasColumnType("uuid");
 
@@ -280,14 +280,14 @@ namespace JIRA.Server.Migrations
                         {
                             Id = new Guid("3b62472e-4f66-49fa-a20f-e7685b9565d8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7f6ef84f-2f51-49f6-843d-5952f3cc504b",
+                            ConcurrencyStamp = "56bab0b9-0b2c-4990-a313-74186139a506",
                             Email = "leha@mail.ru",
                             EmailConfirmed = true,
                             FirstName = "Aleksei",
                             LastName = "Kulabukhov",
                             LockoutEnabled = false,
                             NormalizedEmail = "LEHA@MAIL.RU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJpYfENOqCbnUb6L8FcB63BmKsI/Ca3eiSQUKQuVHZdVR/2m/7Tut5/RKnpTxJDylg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMt2s6HnGwXRSBlQyvnSZmiEe8+F1bHqkLulnB7bdRkGoJ6Mex1+BhqxCo/G4Am5Rg==",
                             PhoneNumberConfirmed = false,
                             Position = "Moderator",
                             SecurityStamp = "",

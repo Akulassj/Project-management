@@ -11,11 +11,12 @@ namespace JIRA.Server.Domain
         public ITaskAssigneeRepository TaskAssigneeRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IProjectAsigneeRepository ProjectAsigneeRepository { get; set; }
+        public INotificationRepository NotificationRepository { get; set; }
 
 
         public DataManager(IProjectRepository projectRepository, IAttachmentRepository attachmentRepository, ICommentRepository commentRepository, 
             IProjectTaskRepository projectTaskRepository, ITaskAssigneeRepository taskAssigneeRepository, IUserRepository userRepository,
-            IProjectAsigneeRepository projectAsigneeRepository)
+            IProjectAsigneeRepository projectAsigneeRepository, INotificationRepository notificationRepository)
         {
             this.ProjectRepository = projectRepository;
             AttachmentRepository = attachmentRepository;
@@ -24,6 +25,7 @@ namespace JIRA.Server.Domain
             TaskAssigneeRepository = taskAssigneeRepository;
             UserRepository = userRepository;
             ProjectAsigneeRepository = projectAsigneeRepository;
+            NotificationRepository = notificationRepository;
         }
     }
 }

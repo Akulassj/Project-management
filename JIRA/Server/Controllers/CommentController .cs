@@ -26,7 +26,7 @@ namespace JIRA.Server.Controllers
 
         [HttpPost]
         public IActionResult Add(Comment comment)
-        {
+        {//получаем задачу к которой написан коммент и уведомляем юзера назаначенного на задачу
             dataManager.CommentRepository.Add(comment);
             return Ok();
         }

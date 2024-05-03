@@ -21,7 +21,6 @@ namespace JIRA.Shared.Domain
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseInMemoryDatabase("db");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -82,5 +81,6 @@ namespace JIRA.Shared.Domain
         public DbSet<Attachment> Attachments { get; set; }
 
         public DbSet<ProjectAsignee> ProjectAsignees { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
