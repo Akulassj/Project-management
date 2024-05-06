@@ -12,9 +12,9 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             this.context = context;
         }
-        public ProjectTask GetProjectTaskById(Guid id)
+        public ProjectTask GetProjectTaskById(Guid projectId)
         {
-            return context.ProjectTasks.FirstOrDefault(j => j.Id == id);
+            return context.ProjectTasks.FirstOrDefault(j => j.Id == projectId);
         }
 
         public List<ProjectTask> GetProjectTasksByProjectId(Guid projectId)
@@ -81,8 +81,17 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                 .ToList();
         }
 
+   
 
-
+        public void DeleteTask(Guid taskId)
+        {
+            var task = context.ProjectTasks.FirstOrDefault(t => t.Id == taskId);
+            if (task != null)
+            {
+                context.ProjectTasks.Remove(task);
+                context.SaveChanges();
+            }
+        }
 
     }
 }

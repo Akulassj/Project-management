@@ -191,6 +191,24 @@ namespace JIRA.Server.Controllers
         //        return StatusCode(500, $"Ошибка при обновлении назначенных пользователей по задачам: {ex.Message}");
         //    }
         //}
+        [HttpDelete]
+        public IActionResult DeleteTaskAssignees(Guid taskId)
+        {
+            dataManager.TaskAssigneeRepository.DeleteTaskAssignees(taskId);
+            return Ok();
+        }
+        [HttpGet]
 
+        public IActionResult GetProjectTasksByProjectId(Guid projectId)
+        {
+            var projectTasks = dataManager.ProjectTaskRepository.GetProjectTasksByProjectId(projectId);
+            return Ok(projectTasks);
+        }
+        [HttpDelete]
+        public IActionResult DeleteTask(Guid taskId)
+        {
+            dataManager.ProjectTaskRepository.DeleteTask(taskId);
+            return Ok();
+        }
     }
 }

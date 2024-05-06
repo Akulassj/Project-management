@@ -77,5 +77,12 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.TaskAssignees.FirstOrDefault(ta => ta.ProjectTaskId == taskId).InActive;
         }
+
+        public void DeleteTaskAssignees(Guid taskId)
+        {
+            var taskAssignees = context.TaskAssignees.Where(ta => ta.ProjectTaskId == taskId).ToList();
+            context.TaskAssignees.RemoveRange(taskAssignees);
+            context.SaveChanges();
+        }
     }
 }

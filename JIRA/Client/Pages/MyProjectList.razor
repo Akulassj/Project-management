@@ -69,19 +69,29 @@
 </Blazorise.Modal>
 
 <TabBlazor.Card>
-    @foreach (var project in projects)
+    @foreach (var project in projectsDeleted)
     {
-        <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Id)">
-            <TabBlazor.CardTitle>
-                <h3>@project.Name</h3>
-            </TabBlazor.CardTitle>
-            @project.Description
-        </TabBlazor.CardBody>
+        <div class="d-flex mb-3">
+            <TabBlazor.Card class="flex-grow-1">
+                <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Project.Id)">
+                    <TabBlazor.CardTitle>
+                        <h3>@project.Project.Name</h3>
+                    </TabBlazor.CardTitle>
+                    @project.Project.Description
+                </TabBlazor.CardBody>
+            </TabBlazor.Card>
+            <div class="ml-3 d-flex align-items-center">
+                @if (userName == project.CreatorName)
+                {
+                    <Blazorise.Button Color="Color.Danger" Size="Size.Small" Clicked="() => DeleteProject(project.Project.Id)">Delete</Blazorise.Button>
+                }
+            </div>
+        </div>
     }
     </TabBlazor.Card>
 
 @code {
-
+    private List<ProjectDeleteViewModel> projectsDeleted = new List<ProjectDeleteViewModel>();
     private Project newProject = new Project();
 
     private string searchText = string.Empty;
@@ -106,6 +116,13 @@
 
     private async Task Refresh()
     {
+        var projectsWithCreators = await client.GetFromJsonAsync<List<ProjectInfoViewModel>>($"/api/project/GetUserProjectsWithCreators?userName={userName}");
+        projectsDeleted = projectsWithCreators.Select(p => new ProjectDeleteViewModel
+            {
+                Project = p.Project,
+                CreatorName = p.Creatorname
+            }).ToList();
+
         projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects?userName={userName}");
         selectedUsers.Clear();
         searchText = string.Empty;
@@ -204,6 +221,33 @@
         await HideModal();
         Refresh();
         errorMessage = string.Empty;
+    }
+    // private async Task DeleteProject(Guid projectId)
+    // {
+    //     await client.DeleteAsync($"api/project/DeleteProject?projectId={projectId}");
+    //     StateHasChanged();
+    //     await Refresh();
+
+    // }
+    private async Task DeleteProject(Guid projectId)
+    {
+
+        await client.DeleteAsync($"api/project/DeleteProjectAsignees?projectId={projectId}");
+
+
+        var projectTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
+
+
+        foreach (var task in projectTasks)
+        {
+            await client.DeleteAsync($"api/ProjectTask/DeleteTaskAssignees?taskId={task.Id}");
+            await client.DeleteAsync($"api/Comment/DeleteTaskComments?taskId={task.Id}");
+            await client.DeleteAsync($"api/ProjectTask/DeleteTask?taskId={task.Id}");
+        }
+
+
+        await client.DeleteAsync($"api/project/DeleteProject?projectId={projectId}");
+        await Refresh();
     }
 
 }

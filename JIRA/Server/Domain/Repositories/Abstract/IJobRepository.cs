@@ -8,10 +8,9 @@ namespace JIRA.Server.Domain.Repositories.Abstract
 {
     public interface IProjectTaskRepository
     {
-        public ProjectTask GetProjectTaskById(Guid id);
+        public ProjectTask GetProjectTaskById(Guid projectId);
         public List<ProjectTask> GetProjectTasksByProjectId(Guid projectId);
         public List<ProjectTask> GetAllProjectTasks();
-
 
         public List<ProjectTask> GetProjectProjectTasksByDate(Guid projectID, DateTime date);
         public List<ProjectTaskStatus> GetProjectTaskStatuses();
@@ -20,5 +19,7 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public void Add(ProjectTask projectTask);
         public void Update(ProjectTask projectTask);
         public List<ProjectTask> GetUncompletedTasksForUserAndProject(Guid userId, Guid projectId);
+        public void DeleteTask(Guid taskId);
+        
     }
 }

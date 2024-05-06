@@ -31,5 +31,11 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.Comments.Remove(context.Comments.FirstOrDefault(x => x.Id == id));
             context.SaveChanges();
         }
+        public void DeleteTaskComments(Guid taskId)
+        {
+            var comments = context.Comments.Where(c => c.ProjectTaskId == taskId).ToList();
+            context.Comments.RemoveRange(comments);
+            context.SaveChanges();
+        }
     }
 }

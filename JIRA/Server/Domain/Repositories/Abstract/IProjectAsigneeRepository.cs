@@ -12,5 +12,7 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public void AddProjectUser(Guid projectId, Guid userId);
         public void RemoveProjectUser(Guid projectId, Guid userId);
         public string GetProjectCreator(Guid projectId);
+        public void DeleteProjectAsignees(Guid projectId);
+       
     }
 }

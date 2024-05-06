@@ -163,9 +163,9 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public void Delete(Guid projectId)
         {
-            context.Projects.Remove(context.Projects.FirstOrDefault(x => x.Id == id));
+            context.Projects.Remove(context.Projects.FirstOrDefault(x => x.Id == projectId));
             context.SaveChanges();
         }
 

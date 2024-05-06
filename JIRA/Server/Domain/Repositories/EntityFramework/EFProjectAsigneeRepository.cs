@@ -87,5 +87,12 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             var username = context.Users.Where(user => user.Id == creator).FirstOrDefault().UserName;
             return username;
         }
+      
+        public void DeleteProjectAsignees(Guid projectId)
+        {
+            var asignees = context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).ToList();
+            context.ProjectAsignees.RemoveRange(asignees);
+            context.SaveChanges();
+        }
     }
 }

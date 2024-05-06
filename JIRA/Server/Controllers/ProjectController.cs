@@ -125,6 +125,43 @@ namespace JIRA.Server.Controllers
 
 
         }
+        [HttpGet]
+       
+        public IActionResult GetUserProjectsWithCreators(string userName)
+        {
+            try
+            {
+                // Находим пользователя по имени
+                var user = dataManager.UserRepository.GetUserByName(userName);
+                if (user == null)
+                {
+                    return NotFound($"Пользователь с именем {userName} не найден.");
+                }
+
+                // Получаем проекты пользователя
+                var projects = dataManager.ProjectRepository.GetProjectsByUserName(userName);
+
+                // Для каждого проекта находим его создателя
+                var projectViewModels = new List<ProjectDeleteViewModel>();
+                foreach (var project in projects)
+                {
+                    var creatorName = dataManager.ProjectAsigneeRepository.GetProjectCreator(project.Id);
+                    projectViewModels.Add(new ProjectDeleteViewModel
+                    {
+                        Project = project,
+                        CreatorName = creatorName
+                   
+                    });
+                }
+
+                return Ok(projectViewModels);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ошибка при получении проектов пользователя: {ex.Message}");
+            }
+        }
+
 
         [HttpGet]
         public IActionResult GetProject(Guid projectId)
@@ -214,6 +251,13 @@ namespace JIRA.Server.Controllers
         //    }
         //}
 
+        [HttpDelete]
+        public IActionResult DeleteProject(Guid projectId)
+        {
+            dataManager.ProjectRepository.Delete(projectId); 
+            return Ok();   
+        }
+
         [HttpGet]
         public IActionResult GetProjectTasksByDate(Guid projectID, DateTime date)
         {
@@ -268,6 +312,11 @@ namespace JIRA.Server.Controllers
             dataManager.TaskAssigneeRepository.Update(task);
             return Ok();
         }
-
+        [HttpDelete]
+        public IActionResult DeleteProjectAsignees(Guid projectId)
+        {
+            dataManager.ProjectAsigneeRepository.DeleteProjectAsignees(projectId);
+            return Ok();
+        }
     }
 }
