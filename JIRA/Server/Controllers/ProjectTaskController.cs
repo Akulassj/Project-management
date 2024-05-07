@@ -129,24 +129,33 @@ namespace JIRA.Server.Controllers
         }
 
         [HttpPut]
-        public async Task <IActionResult> UpdateProjectTask(ProjectTaskUsersModel selectedTask)
+        public async Task<IActionResult> UpdateProjectTask(ProjectTaskUsersModel selectedTask)
         {
+            var oldUserId = dataManager.TaskAssigneeRepository.GetTaskAssigneeByTaskId(selectedTask.ProjectTask.Id).UserId;
+            var oldUser = dataManager.UserRepository.GetUserById(oldUserId);
+
             var user = dataManager.UserRepository.GetUserById(selectedTask.AssignedUser.Id);
 
-            var notification = new Notification() { RecieverName = user.UserName, IsReaded = false, Message = $"Вас добавили на задачу {selectedTask.ProjectTask.Name}" };
+            var notifications = new List<Notification>()
+            {
+                new Notification() { RecieverName = user.UserName, IsReaded = false, Message = $"Вас добавили на задачу {selectedTask.ProjectTask.Name}" },
+                 new Notification() { RecieverName = oldUser.UserName, IsReaded = false, Message = $"Вас удалили с задачи {selectedTask.ProjectTask.Name}" },
+        };
+
+           
             dataManager.TaskAssigneeRepository.Update(selectedTask);
             dataManager.ProjectTaskRepository.Update(selectedTask.ProjectTask);
             //dataManager.AttachmentRepository.Update(selectedTask);
             var httpClient = _httpClientFactory.CreateClient("InternalApi");
 
             // Сериализация списка уведомлений в JSON
-            var jsonNotifications = JsonConvert.SerializeObject(notification);
+            var jsonNotifications = JsonConvert.SerializeObject(notifications);
 
             // Создание содержимого запроса
             var content = new StringContent(jsonNotifications, Encoding.UTF8, "application/json");
 
             // Отправка запроса на сервер
-            var response = await httpClient.PostAsync("api/notification/AddNotification", content);
+            var response = await httpClient.PostAsync("api/notification/AddNotifications", content);
 
             // Обработка ответа
             if (response.IsSuccessStatusCode)

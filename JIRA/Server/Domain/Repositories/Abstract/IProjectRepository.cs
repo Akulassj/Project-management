@@ -14,7 +14,7 @@ namespace JIRA.Server.Domain.Repositories.Abstract
 
         public void Add(Project project);
 
-        public void Delete(Guid projectId);
+        public void DeleteProject(Guid projectId);
 
         public void Update(Project project);
     }

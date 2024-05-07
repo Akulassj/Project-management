@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Microsoft.AspNetCore.Identity;
 using JIRA.Shared;
 using Blazorise.States;
+using System.Threading.Tasks;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -163,8 +164,39 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
-        public void Delete(Guid projectId)
+    //    await client.DeleteAsync($"api/project/DeleteProjectAsignees?projectId={projectId}");
+
+
+    //    var projectTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
+
+
+    //        foreach (var task in projectTasks)
+    //        {
+    //            await client.DeleteAsync($"api/ProjectTask/DeleteTaskAssignees?taskId={task.Id}");
+    //    await client.DeleteAsync($"api/Comment/DeleteTaskComments?taskId={task.Id}");
+    //    await client.DeleteAsync($"api/ProjectTask/DeleteTask?taskId={task.Id}");
+    //}
+
+
+    public void DeleteProject(Guid projectId)
         {
+            var asignees = context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).ToList();
+            context.ProjectAsignees.RemoveRange(asignees);
+
+            var tasks = context.ProjectTasks.Where(j => j.ProjectId == projectId).ToList();
+
+            foreach (var task in tasks)
+            {
+                 var taskAssignees = context.TaskAssignees.Where(ta => ta.ProjectTaskId == task.Id).ToList();
+            context.TaskAssignees.RemoveRange(taskAssignees);
+
+                var comments = context.Comments.Where(c => c.ProjectTaskId == task.Id).ToList();
+                context.Comments.RemoveRange(comments);
+            }
+           
+
+            context.ProjectTasks.RemoveRange(tasks);
+
             context.Projects.Remove(context.Projects.FirstOrDefault(x => x.Id == projectId));
             context.SaveChanges();
         }

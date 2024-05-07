@@ -77,6 +77,5 @@
         string name = (await authStateProvider.GetAuthenticationStateAsync()).User.Identity.Name;
         if (name is not null)
             notifications = await notificationService.GetNotifications(name);
-        int i = 1;
     }
 }

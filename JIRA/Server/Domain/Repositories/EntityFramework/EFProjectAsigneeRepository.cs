@@ -31,9 +31,9 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
                           .Where(u => u.UserName.ToLower().Contains(username.ToLower()))
                           .ToList();
         }
-        public ProjectAsignee GetProjectAsigneeByProjectId(Guid projectId)
+        public List<ProjectAsignee> GetProjectAsigneesByProjectId(Guid projectId)
         {
-            return context.ProjectAsignees.FirstOrDefault(pa => pa.ProjectId == projectId && pa.IsCreator);
+            return context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).ToList();
         }
         public void AddProjectUser(Guid projectId, Guid userId)
         {
@@ -92,6 +92,11 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             var asignees = context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).ToList();
             context.ProjectAsignees.RemoveRange(asignees);
+
+            
+
+
+
             context.SaveChanges();
         }
     }

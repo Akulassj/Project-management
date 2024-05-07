@@ -84,5 +84,10 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.TaskAssignees.RemoveRange(taskAssignees);
             context.SaveChanges();
         }
+
+        public TaskAssignee GetTaskAssigneeByTaskId(Guid taskId)
+        {
+            return context.TaskAssignees.FirstOrDefault(ta => ta.ProjectTaskId == taskId);
+        }
     }
 }

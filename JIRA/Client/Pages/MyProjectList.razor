@@ -68,7 +68,7 @@
     </Blazorise.ModalContent>
 </Blazorise.Modal>
 
-<TabBlazor.Card>
+
     @foreach (var project in projectsDeleted)
     {
         <div class="d-flex mb-3">
@@ -88,7 +88,7 @@
             </div>
         </div>
     }
-    </TabBlazor.Card>
+    
 
 @code {
     private List<ProjectDeleteViewModel> projectsDeleted = new List<ProjectDeleteViewModel>();
@@ -222,29 +222,11 @@
         Refresh();
         errorMessage = string.Empty;
     }
-    // private async Task DeleteProject(Guid projectId)
-    // {
-    //     await client.DeleteAsync($"api/project/DeleteProject?projectId={projectId}");
-    //     StateHasChanged();
-    //     await Refresh();
 
-    // }
     private async Task DeleteProject(Guid projectId)
     {
 
-        await client.DeleteAsync($"api/project/DeleteProjectAsignees?projectId={projectId}");
-
-
-        var projectTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
-
-
-        foreach (var task in projectTasks)
-        {
-            await client.DeleteAsync($"api/ProjectTask/DeleteTaskAssignees?taskId={task.Id}");
-            await client.DeleteAsync($"api/Comment/DeleteTaskComments?taskId={task.Id}");
-            await client.DeleteAsync($"api/ProjectTask/DeleteTask?taskId={task.Id}");
-        }
-
+       
 
         await client.DeleteAsync($"api/project/DeleteProject?projectId={projectId}");
         await Refresh();

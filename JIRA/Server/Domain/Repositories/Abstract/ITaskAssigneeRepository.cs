@@ -14,5 +14,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
 
         public bool GetActiveStatusByTaskId(Guid taskId);
         public void DeleteTaskAssignees(Guid taskId);
+        public TaskAssignee GetTaskAssigneeByTaskId(Guid taskId);
     }
 }

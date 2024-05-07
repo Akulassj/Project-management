@@ -162,7 +162,44 @@ namespace JIRA.Server.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetUserProjectsWithCreatorsTasks(string userName)
+        {
+            try
+            {
+                // Находим пользователя по имени
+                var user = dataManager.UserRepository.GetUserByName(userName);
+                if (user == null)
+                {
+                    return NotFound($"Пользователь с именем {userName} не найден.");
+                }
 
+                // Получаем проекты пользователя
+                var projects = dataManager.ProjectRepository.GetProjectsByUserName(userName);
+
+                // Получаем задачи пользователя
+                var tasks = dataManager.ProjectTaskRepository.GetProjectTasksByUserName(userName);
+
+                // Для каждого проекта находим его создателя
+                var projectViewModels = new List<ProjectDeleteViewModel>();
+                foreach (var project in projects)
+                {
+                    var creatorName = dataManager.ProjectAsigneeRepository.GetProjectCreator(project.Id);
+                    projectViewModels.Add(new ProjectDeleteViewModel
+                    {
+                        Project = project,
+                        ProjectTask = tasks.FirstOrDefault(t => t.ProjectId == project.Id),
+                        CreatorName = creatorName
+                    });
+                }
+
+                return Ok(projectViewModels);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ошибка при получении проектов пользователя: {ex.Message}");
+            }
+        }
         [HttpGet]
         public IActionResult GetProject(Guid projectId)
         {
@@ -193,23 +230,8 @@ namespace JIRA.Server.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult AddProject(ProjectsAsigneeViewModel projectAsignees)
-        {
-            var user = dataManager.UserRepository.GetUserByName(projectAsignees.UserName);
-            projectAsignees.ProjectAsignees.Add(new ProjectAsignee()
-            {
-                IsCreator = true,
-                UserId = user.Id,
-                ProjectId = projectAsignees.Project.Id
-            });
-            dataManager.ProjectRepository.Add(projectAsignees.Project);
-            dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
-            return Ok();
-        }
-
-
-        //public async Task <IActionResult> AddProject(ProjectsAsigneeViewModel projectAsignees)
+        //[HttpPost]
+        //public IActionResult AddProject(ProjectsAsigneeViewModel projectAsignees)
         //{
         //    var user = dataManager.UserRepository.GetUserByName(projectAsignees.UserName);
         //    projectAsignees.ProjectAsignees.Add(new ProjectAsignee()
@@ -220,42 +242,104 @@ namespace JIRA.Server.Controllers
         //    });
         //    dataManager.ProjectRepository.Add(projectAsignees.Project);
         //    dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
-
-        //    var notification = new Notification()
-        //    {
-        //        RecieverName = user.UserName,
-        //        IsReaded = false,
-        //        Message = $"Вы были добавлены в проект {projectAsignees.Project.Name}"
-        //    };
-
-        //    // Сериализация уведомления в JSON
-        //    var jsonNotification = JsonConvert.SerializeObject(notification);
-
-        //    // Создание содержимого запроса
-        //    var content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
-
-        //    // Отправка запроса на сервер
-        //    var httpClient = _httpClientFactory.CreateClient("InternalApi");
-        //    var response = await httpClient.PostAsync("api/notification/AddNotification", content);
-
-        //    // Обработка ответа
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        // Действия при успешном запросе
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        // Обработка ошибки
-        //        return StatusCode((int)response.StatusCode);
-        //    }
+        //    return Ok();
         //}
 
-        [HttpDelete]
-        public IActionResult DeleteProject(Guid projectId)
+        [HttpPost]
+        public async Task<IActionResult> AddProject(ProjectsAsigneeViewModel projectAsignees)
         {
-            dataManager.ProjectRepository.Delete(projectId); 
-            return Ok();   
+            var user = dataManager.UserRepository.GetUserByName(projectAsignees.UserName);
+            projectAsignees.ProjectAsignees.Add(new ProjectAsignee()
+            {
+                IsCreator = true,
+                UserId = user.Id,
+                ProjectId = projectAsignees.Project.Id
+            });
+            dataManager.ProjectRepository.Add(projectAsignees.Project);
+            dataManager.ProjectAsigneeRepository.Add(projectAsignees.ProjectAsignees);
+
+            var notifications = new List<Notification>();
+
+            foreach(var userId in projectAsignees.ProjectAsignees.Select(pa => pa.UserId))
+            {
+                var name = dataManager.UserRepository.GetUserById(userId).UserName;
+                var notification = new Notification()
+                {
+                    RecieverName = name,
+                    IsReaded = false,
+                    Message = $"Вы были добавлены в проект {projectAsignees.Project.Name}"
+                };
+                notifications.Add(notification);
+            }
+
+         
+
+            // Сериализация уведомления в JSON
+            var jsonNotification = JsonConvert.SerializeObject(notifications);
+
+            // Создание содержимого запроса
+            var content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
+
+            // Отправка запроса на сервер
+            var httpClient = _httpClientFactory.CreateClient("InternalApi");
+            var response = await httpClient.PostAsync("api/notification/AddNotifications", content);
+
+            // Обработка ответа
+            if (response.IsSuccessStatusCode)
+            {
+                // Действия при успешном запросе
+                return Ok();
+            }
+            else
+            {
+                // Обработка ошибки
+                return StatusCode((int)response.StatusCode);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProject(Guid projectId)  
+        {
+            var notifications = new List<Notification>();
+            var project = dataManager.ProjectRepository.GetProjectById(projectId);
+
+            var projectAssignees = dataManager.ProjectAsigneeRepository.GetProjectAsigneesByProjectId(projectId);
+
+            foreach(var userId in projectAssignees.Select(pa => pa.UserId))
+            {
+                var user = dataManager.UserRepository.GetUserById(userId);
+                var notification = new Notification()
+                {
+                    RecieverName = user.UserName,
+                    IsReaded = false,
+                    Message = $"Был удален проект {project.Name}, где Вы были назначены"
+                };
+                notifications.Add(notification);
+            }
+
+            dataManager.ProjectRepository.DeleteProject(projectId);
+
+            // Сериализация уведомления в JSON
+            var jsonNotification = JsonConvert.SerializeObject(notifications);
+
+            // Создание содержимого запроса
+            var content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
+
+            // Отправка запроса на сервер
+            var httpClient = _httpClientFactory.CreateClient("InternalApi");
+            var response = await httpClient.PostAsync("api/notification/AddNotifications", content);
+
+            // Обработка ответа
+            if (response.IsSuccessStatusCode)
+            {
+                // Действия при успешном запросе
+                return Ok();
+            }
+            else
+            {
+                // Обработка ошибки
+                return StatusCode((int)response.StatusCode);
+            }   
         }
 
         [HttpGet]

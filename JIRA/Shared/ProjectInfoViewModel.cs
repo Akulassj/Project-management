@@ -10,6 +10,7 @@ namespace JIRA.Shared
     public class ProjectInfoViewModel
     {
         public Project Project {  get; set; }
+        //public ProjectTask ProjectTask { get; set; }
         public List<User> AssignedUsers { get; set; }
         public List<ProjectTaskUsersModel> ProjectTaskUsers { get; set; }
         public string Creatorname {  get; set; }
