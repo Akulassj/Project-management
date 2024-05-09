@@ -1,0 +1,196 @@
+﻿@page "/admin-panel"
+@using TabBlazor.Services
+@using Blazorise
+@inject HttpClient client
+@inject NavigationManager navigate
+
+<h3>Admin Panel</h3>
+<Blazorise.Modal @bind-IsOpen="ShowErrorModal">
+    <ModalHeader>Error</ModalHeader>
+    <ModalBody>
+        @ErrorMessage
+    </ModalBody>
+    <ModalFooter>
+        <Blazorise.Button Color="Color.Secondary" Clicked="@(() => ShowErrorModal = false)">Close</Blazorise.Button>
+    </ModalFooter>
+</Blazorise.Modal>
+
+<TabBlazor.Tabs>
+    <!-- Вкладка "Список проектов" -->
+    <TabBlazor.Tab Title="Список проектов" Icon="home">
+        <!-- Фильтр для проектов -->
+        <Blazorise.Field>
+            <FieldLabel>Search Projects</FieldLabel>
+            <Blazorise.TextEdit Placeholder="Search projects.." @bind-Value="@projectFilter" TextChanged="FilterProjects" />
+        </Blazorise.Field>
+
+        <!-- Вывод списка проектов -->
+        @foreach (var project in filteredProjects)
+        {
+            <div class="d-flex mb-3">
+                <div class="flex-grow-1">
+                    <h4>@project.Name</h4>
+                    <p>@project.Description</p>
+                </div>
+                <div class="ml-3 d-flex align-items-center">
+                    <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteProject(project.Id))">Delete</Blazorise.Button>
+                </div>
+            </div>
+        }
+
+    </TabBlazor.Tab>
+
+    <!-- Вкладка "Удаление задач" -->
+    <TabBlazor.Tab Title="Удаление задач" Icon="trash">
+        <!-- Выбор проекта -->
+        <Blazorise.Field>
+            <Blazorise.Dropdown Display="Display.InlineBlock">
+                <Blazorise.DropdownToggle Color="Color.Primary">Select Project</Blazorise.DropdownToggle>
+                <Blazorise.DropdownMenu MaxMenuHeight="300px">
+                    @foreach (var project in projects)
+                    {
+                        <Blazorise.DropdownItem Clicked="@(() => ProjectClicked(project.Id))">@project.Name</Blazorise.DropdownItem>
+                    }
+                </Blazorise.DropdownMenu>
+            </Blazorise.Dropdown>
+
+            @if (!string.IsNullOrEmpty(selectedProjectName))
+            {
+                <p>Selected Project: @selectedProjectName</p>
+            }
+        </Blazorise.Field>
+
+
+        <!-- Фильтр для задач -->
+        <Blazorise.Field>
+            <FieldLabel>Search Tasks</FieldLabel>
+            <Blazorise.TextEdit Placeholder="Search tasks.." @bind-Value="@taskFilter" TextChanged="FilterTasks" />
+        </Blazorise.Field>
+
+        <!-- Вывод списка задач -->
+        @foreach (var task in filteredTasks)
+        {
+            <div class="d-flex mb-3">
+                <div class="flex-grow-1">
+                    <h4>@task.Name</h4>
+                    <p>@task.Description</p>
+                </div>
+                <div class="ml-3 d-flex align-items-center">
+                    <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteTask(task.Id))">Delete</Blazorise.Button>
+                </div>
+            </div>
+        }
+    </TabBlazor.Tab>
+</TabBlazor.Tabs>
+
+@code {
+    private List<Project> projects = new List<Project>();
+    private List<Project> filteredProjects = new List<Project>();
+    private string selectedProjectIdString;
+
+    private Guid SelectedProjectId
+    {
+        get => Guid.Parse(selectedProjectIdString);
+        set => selectedProjectIdString = value.ToString();
+    }
+    private List<ProjectTask> tasks = new List<ProjectTask>();
+    private List<ProjectTask> filteredTasks = new List<ProjectTask>();
+    private string projectFilter = string.Empty;
+    private string taskFilter = string.Empty;
+    private string selectedProjectName = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshData();
+    }
+
+    private async Task RefreshData()
+    {
+        projects = await client.GetFromJsonAsync<List<Project>>("/api/project/GetAllProjects");
+        filteredProjects = projects;
+    }
+
+    private async Task LoadTasks(Guid projectId)
+    {
+        projectId = Guid.Parse(selectedProjectIdString);
+        tasks = await client.GetFromJsonAsync<List<ProjectTask>>($"/api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
+        FilterTasks(taskFilter);
+    }
+    
+
+    private async Task ProjectClicked(Guid projectId)
+    {
+        selectedProjectIdString = projectId.ToString(); 
+        selectedProjectName = projects.FirstOrDefault(p => p.Id == projectId)?.Name; 
+        await LoadTasks(projectId); 
+    }
+
+  
+    private void FilterProjects(string searchText)
+    {
+        filteredProjects = projects
+            .Where(p => p.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) || p.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private void FilterTasks(string searchText)
+    {
+        filteredTasks = tasks
+            .Where(t => t.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) || t.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private async Task DeleteProject(Guid projectId)
+    {
+        try
+        {
+            var response = await client.DeleteAsync($"api/project/DeleteProject?projectId={projectId}");
+            if (response.IsSuccessStatusCode)
+            {
+                await RefreshData();
+            }
+            else
+            {
+                // Ошибка при удалении проекта
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                ShowErrorMessage($"Failed to delete project: {errorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Ошибка при выполнении запроса
+            ShowErrorMessage($"An error occurred: {ex.Message}");
+        }
+    }
+
+    private async Task DeleteTask(Guid taskId)
+    {
+        try
+        {
+            var response = await client.DeleteAsync($"api/projectTask/DeleteTask?taskId={taskId}");
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadTasks(SelectedProjectId);
+            }
+            else
+            {
+                // Ошибка при удалении задачи
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                ShowErrorMessage($"Failed to delete task: {errorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Ошибка при выполнении запроса
+            ShowErrorMessage($"An error occurred: {ex.Message}");
+        }
+    }
+
+    private string ErrorMessage { get; set; }
+    private bool ShowErrorModal { get; set; }
+
+    private void ShowErrorMessage(string message)
+    {
+        ErrorMessage = message;
+        ShowErrorModal = true;
+    }
+}

@@ -34,12 +34,21 @@
                 </div>
             </Authorized>
         </AuthorizeView>
+        <AuthorizeView Roles="moderator">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/admin-panel" Match="NavLinkMatch.All">
+                        <span class="oi oi-cog" aria-hidden="true"></span> Admin Panel
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </nav>
 </div>
 
 @code {
     [Parameter]
-    public string userName{ get; set; }
+    public string userName { get; set; }
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
