@@ -23,6 +23,15 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         {
             return context.Attachments.Where(a => a.ProjectTaskId == projectTaskId).ToList();
         }
-       
+        public async Task SaveAttachmentAsync(Attachment attachment)
+        {
+            context.Attachments.Add(attachment);
+            await context.SaveChangesAsync();
+        }
+        public Attachment GetAttachmentByFileName(Guid projectTaskId, string fileName)
+        {
+            return context.Attachments.FirstOrDefault(a => a.ProjectTaskId == projectTaskId && a.FileName == fileName);
+        }
+
     }
 }

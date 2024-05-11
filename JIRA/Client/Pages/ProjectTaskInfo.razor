@@ -2,7 +2,9 @@
 @using JIRA.Client.Services
 @using JIRA.Shared
 @using System.Security.Claims
-
+@using Microsoft.Extensions.FileProviders
+@using System.IO
+@inject IConfiguration config
 @inject HttpClient client
 @inject CustomStateProvider stateProvider
 
@@ -28,6 +30,65 @@
         <input type="text" @bind="NewCommentText" placeholder="Enter your comment" />
         <div class="btn btn-primary text-center" @onclick="AddComment">Добавить комментарий</div>
     </div>
+    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@ShowModal">Добавить вложения</Blazorise.Button>
+    <Blazorise.Modal @ref="modalRef">
+         <Blazorise.ModalContent Centered>
+       
+            <Blazorise.ModalHeader>Upload File</Blazorise.ModalHeader>
+            <Blazorise.ModalBody>
+                <InputFile OnChange="HandleFileSelect" Multiple />
+            </Blazorise.ModalBody>
+            <Blazorise.ModalFooter>
+                <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+             <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@LoadFiles">Add files</Blazorise.Button>
+            </Blazorise.ModalFooter>
+        </Blazorise.ModalContent>
+    </Blazorise.Modal>
+
+    @if (errors.Count > 0)
+    {
+        <h2>Errors</h2>
+        <ul class="text-danger">
+            @foreach (var error in errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    }
+
+<!-- Кнопка для открытия модального окна -->
+    
+
+    
+  @*   @if (projectTaskAttachments.Attachments != null && projectTaskAttachments.Attachments.Any())
+    {
+        @foreach (var attachment in projectTaskAttachments.Attachments)
+        {
+            @if (IsImage(attachment.FileExtension))
+            {
+                <img src="@attachment.FilePath" alt="Attachment" style="max-width: 200px; max-height: 200px;" />
+            }
+            else
+            {
+                <a href="@attachment.FilePath" target="_blank">@attachment.FileName</a>
+            }
+        }
+    }
+    else
+    {
+        <p>No attachments found.</p>
+    } *@
+    @if (projectTaskAttachments.Attachments != null && projectTaskAttachments.Attachments.Any())
+    {
+        @foreach (var attachment in projectTaskAttachments.Attachments)
+        {
+            <div>
+                <a href="@($"api/attachment/GetFilesForTask?projectTaskId={attachment.ProjectTaskId}&fileName={attachment.FileName}")">@attachment.FileName</a>
+            </div>
+        }
+
+
+    }
 }
 
 @code {
@@ -36,12 +97,14 @@
     public string ProjectTaskId { get; set; }
 
     private ProjectTaskComments projectTaskComments;
+    private ProjectTaskAttachments projectTaskAttachments = new ProjectTaskAttachments();
 
     private string NewCommentText = "";
 
     protected override async void OnInitialized()
     {
         await Refresh();
+        await LoadAttachments(Guid.Parse(ProjectTaskId));
     }
 
     private async Task Refresh()
@@ -51,11 +114,12 @@
 
             projectTaskComments = await client.GetFromJsonAsync<ProjectTaskComments>($"/api/project/GetProjectTaskCommentsById?projectTaskId={ProjectTaskId}");
             projectTaskComments.Comments.Sort();
+            await LoadAttachments(Guid.Parse(ProjectTaskId));
             StateHasChanged();
 
         }
     }
-
+    private Blazorise.Modal editModalRef;
     private async Task AddComment()
     {
         if (!string.IsNullOrEmpty(NewCommentText))
@@ -78,4 +142,118 @@
 
         }
     }
+    private async Task LoadAttachments(Guid projectTaskId)
+    {
+        projectTaskAttachments = await client.GetFromJsonAsync<ProjectTaskAttachments>($"/api/attachment/GetAttachmentsByProjectTaskId?projectTaskId={projectTaskId}");
+    }
+    private bool IsImage(string fileExtension)
+    {
+        return fileExtension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".gif", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".docx", StringComparison.OrdinalIgnoreCase);
+    }
+    private bool IsUploadModalOpen = false;
+    private List<IBrowserFile> uploadedFiles = new List<IBrowserFile>();
+
+    private void OpenUploadModal()
+
+    {
+
+        IsUploadModalOpen = true;
+    }
+    private Blazorise.Modal modalRef;
+
+    private Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private Task HideModal()
+    {
+
+        return modalRef.Hide();
+    }
+
+    private async Task ShowEditModal()
+    {
+        try
+        {
+            // Показываем модальное окно
+            await editModalRef.Show();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при открытии модального окна: {ex.Message}");
+        }
+    }
+    private void CloseUploadModal()
+    {
+        IsUploadModalOpen = false;
+    }
+
+    private void HandleFileSelect(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            uploadedFiles.Add(file);
+        }
+    }
+
+    private List<string> errors = new();
+
+    private long maxFileSize = 1024 * 1024 * 1; // represents 3MB
+    private int maxAllowedFiles = 3;
+    private async Task LoadFiles()
+    {
+        errors.Clear();
+
+        foreach (var file in uploadedFiles)
+        {
+            try
+            {
+
+
+
+                // Читаем содержимое файла в байтовый массив
+                byte[] fileData;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    await file.OpenReadStream().CopyToAsync(ms);
+                    fileData = ms.ToArray();
+                }
+
+                // Создаем объект Attachment для сохранения метаданных в базе данных
+                var attachment = new Attachment
+                    {       Id = Guid.NewGuid(),
+                            
+
+                            FileName = file.Name,
+                            FileExtension = Path.GetExtension(file.Name),
+
+                            UploadedAt = DateTime.UtcNow,
+                            ProjectTaskId = Guid.Parse(ProjectTaskId),
+                            FileData = fileData // Если нужно сохранять данные файла
+                        };
+
+                // Отправляем объект Attachment на сервер для сохранения в базе данных
+                var saveResponse = await client.PostAsJsonAsync("/api/attachment/AddAttachment", attachment);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                errors.Add($"File: {file.Name} Error: {ex.Message}");
+            }
+            await modalRef.Hide();
+            await Refresh();
+        }
+    }
+
+    
+
+
+
 }
