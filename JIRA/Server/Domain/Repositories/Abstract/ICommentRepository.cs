@@ -10,6 +10,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
        public List<Comment> GetCommentsByProjectTaskId(Guid projectTaskId);
         public void Add(Comment comment);
         public void Delete(Guid id);
-        public void DeleteTaskComments(Guid taskId);
+        public void DeleteTaskComment(Guid commentId);
     }
 }

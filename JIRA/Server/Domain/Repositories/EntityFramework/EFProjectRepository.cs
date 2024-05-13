@@ -137,7 +137,7 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
                 context.Users.AddRange(users);
                 context.SaveChanges();
-                
+
 
                 context.TaskAssignees.AddRange(taskAssignees);
                 context.SaveChanges();
@@ -164,21 +164,21 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
-    //    await client.DeleteAsync($"api/project/DeleteProjectAsignees?projectId={projectId}");
+        //    await client.DeleteAsync($"api/project/DeleteProjectAsignees?projectId={projectId}");
 
 
-    //    var projectTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
+        //    var projectTasks = await client.GetFromJsonAsync<List<ProjectTask>>($"api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
 
 
-    //        foreach (var task in projectTasks)
-    //        {
-    //            await client.DeleteAsync($"api/ProjectTask/DeleteTaskAssignees?taskId={task.Id}");
-    //    await client.DeleteAsync($"api/Comment/DeleteTaskComments?taskId={task.Id}");
-    //    await client.DeleteAsync($"api/ProjectTask/DeleteTask?taskId={task.Id}");
-    //}
+        //        foreach (var task in projectTasks)
+        //        {
+        //            await client.DeleteAsync($"api/ProjectTask/DeleteTaskAssignees?taskId={task.Id}");
+        //    await client.DeleteAsync($"api/Comment/DeleteTaskComments?taskId={task.Id}");
+        //    await client.DeleteAsync($"api/ProjectTask/DeleteTask?taskId={task.Id}");
+        //}
 
 
-    public void DeleteProject(Guid projectId)
+        public void DeleteProject(Guid projectId)
         {
             var asignees = context.ProjectAsignees.Where(pa => pa.ProjectId == projectId).ToList();
             context.ProjectAsignees.RemoveRange(asignees);
@@ -187,13 +187,15 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
 
             foreach (var task in tasks)
             {
-                 var taskAssignees = context.TaskAssignees.Where(ta => ta.ProjectTaskId == task.Id).ToList();
-            context.TaskAssignees.RemoveRange(taskAssignees);
+                var taskAssignees = context.TaskAssignees.Where(ta => ta.ProjectTaskId == task.Id).ToList();
+                context.TaskAssignees.RemoveRange(taskAssignees);
 
                 var comments = context.Comments.Where(c => c.ProjectTaskId == task.Id).ToList();
                 context.Comments.RemoveRange(comments);
+                var attachments = context.Attachments.Where(a => a.ProjectTaskId == task.Id).ToList();
+                context.Attachments.RemoveRange(attachments);
             }
-           
+
 
             context.ProjectTasks.RemoveRange(tasks);
 

@@ -2,6 +2,7 @@
 using JIRA.Shared.Domain;
 using JIRA.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
     public class EFCommentRepository : ICommentRepository
@@ -31,11 +32,14 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             context.Comments.Remove(context.Comments.FirstOrDefault(x => x.Id == id));
             context.SaveChanges();
         }
-        public void DeleteTaskComments(Guid taskId)
+
+        public void DeleteTaskComment(Guid commentId)
         {
-            var comments = context.Comments.Where(c => c.ProjectTaskId == taskId).ToList();
-            context.Comments.RemoveRange(comments);
+            
+            var comments = context.Comments.FirstOrDefault(c => c.Id == commentId);
+            context.Comments.Remove(comments);
             context.SaveChanges();
         }
+
     }
 }

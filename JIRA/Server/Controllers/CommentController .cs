@@ -30,10 +30,12 @@ namespace JIRA.Server.Controllers
             dataManager.CommentRepository.Add(comment);
             return Ok();
         }
+
         [HttpDelete]
-        public IActionResult DeleteTaskComments(Guid taskId)
+        public IActionResult DeleteComment(Guid commentId)
         {
-            dataManager.CommentRepository.DeleteTaskComments(taskId);
+           
+            dataManager.CommentRepository.DeleteTaskComment(commentId);
             return Ok();
         }
 

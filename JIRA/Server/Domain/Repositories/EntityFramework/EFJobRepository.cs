@@ -82,9 +82,6 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
         }
 
 
-        //await client.DeleteAsync($"api/projectTask/DeleteTaskAssignees?taskId={taskId}");
-        //await client.DeleteAsync($"api/comment/DeleteTaskComments?taskId={taskId}");
-        //await client.DeleteAsync($"api/projectTask/DeleteTask?taskId={taskId}");
         public void DeleteTask(Guid taskId)
         {
             var taskAssignees = context.TaskAssignees.Where(ta => ta.ProjectTaskId == taskId).ToList();
@@ -97,8 +94,11 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             if (task != null)
             {
                 context.ProjectTasks.Remove(task);
-                context.SaveChanges();
+               
             }
+            var attachments = context.Attachments.Where(a => a.ProjectTaskId == taskId).ToList();
+            context.Attachments.RemoveRange(attachments);
+            context.SaveChanges();
         }
 
     }

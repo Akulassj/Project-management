@@ -1,5 +1,4 @@
 ﻿@page "/admin-panel"
-@using TabBlazor.Services
 @using Blazorise
 @inject HttpClient client
 @inject NavigationManager navigate
@@ -15,75 +14,145 @@
     </ModalFooter>
 </Blazorise.Modal>
 
-<TabBlazor.Tabs>
+<Blazorise.Tabs @bind-SelectedTab="selectedTab">
     <!-- Вкладка "Список проектов" -->
-    <TabBlazor.Tab Title="Список проектов" Icon="home">
-        <!-- Фильтр для проектов -->
-        <Blazorise.Field>
-            <FieldLabel>Search Projects</FieldLabel>
-            <Blazorise.TextEdit Placeholder="Search projects.." @bind-Value="@projectFilter" TextChanged="FilterProjects" />
-        </Blazorise.Field>
+    <Items>
+        <Blazorise.Tab Name="projects" @onclick="() => SelectTab()" >Список проектов</Blazorise.Tab>
 
-        <!-- Вывод списка проектов -->
-        @foreach (var project in filteredProjects)
-        {
-            <div class="d-flex mb-3">
-                <div class="flex-grow-1">
-                    <h4>@project.Name</h4>
-                    <p>@project.Description</p>
+        <Blazorise.Tab Name="tasks" Visibility="tasksVisibility ? Visibility.Visible : Visibility.Invisible">Список задач</Blazorise.Tab>
+        <Blazorise.Tab Name="comments" Visibility="commentsVisibility ? Visibility.Visible : Visibility.Invisible">Список комментариев</Blazorise.Tab>
+    </Items>
+    <Content>
+        <TabPanel Name="projects">
+            <!-- Фильтр для проектов -->
+            <Blazorise.Field>
+                <FieldLabel>Search Projects</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Search projects.." @bind-Value="@projectFilter" TextChanged="FilterProjects" />
+            </Blazorise.Field>
+
+            <!-- Вывод списка проектов -->
+            @foreach (var project in filteredProjects)
+            {
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1">
+                        <h4 @onclick="() => ProjectClicked(project.Id)">@project.Name</h4>
+                        <p>@project.Description</p>
+                    </div>
+                    <div class="ml-3 d-flex align-items-center">
+                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteProject(project.Id))">Delete</Blazorise.Button>
+                    </div>
                 </div>
-                <div class="ml-3 d-flex align-items-center">
-                    <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteProject(project.Id))">Delete</Blazorise.Button>
-                </div>
-            </div>
-        }
+            }
 
-    </TabBlazor.Tab>
+        </TabPanel>
 
-    <!-- Вкладка "Удаление задач" -->
-    <TabBlazor.Tab Title="Удаление задач" Icon="trash">
-        <!-- Выбор проекта -->
-        <Blazorise.Field>
-            <Blazorise.Dropdown Display="Display.InlineBlock">
+        <!-- Вкладка "Удаление задач" -->
+        <TabPanel Name="tasks" Icon="trash">
+            <!-- Выбор проекта -->
+            <Blazorise.Field>
+                @*  <Blazorise.Dropdown Display="Display.InlineBlock">
                 <Blazorise.DropdownToggle Color="Color.Primary">Select Project</Blazorise.DropdownToggle>
                 <Blazorise.DropdownMenu MaxMenuHeight="300px">
-                    @foreach (var project in projects)
-                    {
-                        <Blazorise.DropdownItem Clicked="@(() => ProjectClicked(project.Id))">@project.Name</Blazorise.DropdownItem>
-                    }
+                @foreach (var project in projects)
+                {
+                <Blazorise.DropdownItem Clicked="@(() => ProjectClicked(project.Id))">@project.Name</Blazorise.DropdownItem>
+                }
                 </Blazorise.DropdownMenu>
-            </Blazorise.Dropdown>
+                </Blazorise.Dropdown> *@
 
-            @if (!string.IsNullOrEmpty(selectedProjectName))
+                @if (!string.IsNullOrEmpty(selectedProjectName))
+                {
+                    <p>Selected Project: @selectedProjectName</p>
+                }
+            </Blazorise.Field>
+
+
+            <!-- Фильтр для задач -->
+            <Blazorise.Field>
+                <FieldLabel>Search Tasks</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Search tasks.." @bind-Value="@taskFilter" TextChanged="FilterTasks" />
+            </Blazorise.Field>
+
+            <!-- Вывод списка задач -->
+            @foreach (var task in filteredTasks)
             {
-                <p>Selected Project: @selectedProjectName</p>
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1">
+                        <h4 @onclick="() => TaskClicked(task.Id)">@task.Name</h4>
+                        <p>@task.Description</p>
+                    </div>
+                    <div class="ml-3 d-flex align-items-center">
+                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteTask(task.Id))">Delete</Blazorise.Button>
+                    </div>
+                </div>
             }
-        </Blazorise.Field>
+        </TabPanel>
 
+        <TabPanel Name="comments" Icon="message-square">
+            <!-- Выбор задачи -->
+            <Blazorise.Field>
+               @*  <Blazorise.Dropdown Display="Display.InlineBlock">
+                    <Blazorise.DropdownToggle Color="Color.Primary">Select Task</Blazorise.DropdownToggle>
+                    <Blazorise.DropdownMenu MaxMenuHeight="300px">
+                        @foreach (var task in tasks)
+                        {
+                            <Blazorise.DropdownItem Clicked="@(() => TaskClicked(task.Id))">@task.Name</Blazorise.DropdownItem>
+                        }
+                    </Blazorise.DropdownMenu>
+                </Blazorise.Dropdown> *@
 
-        <!-- Фильтр для задач -->
-        <Blazorise.Field>
-            <FieldLabel>Search Tasks</FieldLabel>
-            <Blazorise.TextEdit Placeholder="Search tasks.." @bind-Value="@taskFilter" TextChanged="FilterTasks" />
-        </Blazorise.Field>
+                @if (!string.IsNullOrEmpty(selectedTaskName))
+                {
+                    <p>Selected Task: @selectedTaskName</p>
+                }
+            </Blazorise.Field>
 
-        <!-- Вывод списка задач -->
-        @foreach (var task in filteredTasks)
-        {
-            <div class="d-flex mb-3">
-                <div class="flex-grow-1">
-                    <h4>@task.Name</h4>
-                    <p>@task.Description</p>
+            <!-- Фильтр для комментариев -->
+            <Blazorise.Field>
+                <FieldLabel>Search Comments</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Search comments.." @bind-Value="@commentFilter" TextChanged="FilterComments" />
+            </Blazorise.Field>
+
+            <!-- Вывод списка комментариев -->
+            @foreach (var comment in filteredComments)
+            {
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1">
+                        <p>@comment.Text</p>
+                    </div>
+                    <div class="ml-3 d-flex align-items-center">
+                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteComment(comment.Id))">Delete</Blazorise.Button>
+                    </div>
                 </div>
-                <div class="ml-3 d-flex align-items-center">
-                    <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteTask(task.Id))">Delete</Blazorise.Button>
+            }
+
+            <!-- Фильтр для вложений -->
+            <Blazorise.Field>
+                <FieldLabel>Search Attachments</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Search attachments.." @bind-Value="@attachmentFilter" TextChanged="FilterAttachments" />
+            </Blazorise.Field>
+
+            <!-- Вывод списка вложений -->
+            @foreach (var attachment in filteredAttachments)
+            {
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1">
+                        <p>@attachment.FileName</p>
+                    </div>
+                    <div class="ml-3 d-flex align-items-center">
+                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteAttachment(attachment.Id))">Delete</Blazorise.Button>
+                    </div>
                 </div>
-            </div>
-        }
-    </TabBlazor.Tab>
-</TabBlazor.Tabs>
+            }
+        </TabPanel>
+
+    </Content>
+    
+
+</Blazorise.Tabs>
 
 @code {
+    private string selectedTab = "projects";
     private List<Project> projects = new List<Project>();
     private List<Project> filteredProjects = new List<Project>();
     private string selectedProjectIdString;
@@ -98,16 +167,75 @@
     private string projectFilter = string.Empty;
     private string taskFilter = string.Empty;
     private string selectedProjectName = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         await RefreshData();
     }
 
+    private void SelectTab()
+    {
+        selectedTaskIdString = null ;
+        selectedProjectIdString = null;
+        tasksVisibility = false;
+        commentsVisibility = false;
+    }
+
+    // private void SelectTab(string tab)
+    // {
+    //     if (tab == "tasks")
+    //     {
+    //         if (selectedProjectIdString is not null)
+    //         {
+    //             selectedTab = tab;
+    //             tasksVisibility = true; 
+    //             commentsVisibility = false; 
+    //         }
+    //         else
+    //         {
+    //             selectedTab = "projects";
+    //         }
+    //     }
+    //     else if (tab == "comments")
+    //     {
+    //         if (selectedTaskIdString is not null)
+    //         {
+    //             selectedTab = tab;
+    //             tasksVisibility = false; 
+    //             commentsVisibility = true; 
+    //         }
+    //         else
+    //         {
+    //             selectedTab = "projects";
+    //         }
+    //     }
+
+
+    //     if (!tasksVisibility && !commentsVisibility)
+    //     {
+    //         ShowErrorMessage("Select a project or task first."); 
+    //     }
+    // }
+
+
+
     private async Task RefreshData()
     {
+        var temp = selectedTab;
         projects = await client.GetFromJsonAsync<List<Project>>("/api/project/GetAllProjects");
         filteredProjects = projects;
+        if (selectedProjectIdString is not null)
+        {
+            await ProjectClicked(Guid.Parse(selectedProjectIdString));
+            if (selectedTaskIdString is not null)
+            {
+                await TaskClicked(Guid.Parse(selectedTaskIdString));
+            }
+        }
+        selectedTab = temp;
     }
+
+    
 
     private async Task LoadTasks(Guid projectId)
     {
@@ -115,16 +243,21 @@
         tasks = await client.GetFromJsonAsync<List<ProjectTask>>($"/api/ProjectTask/GetProjectTasksByProjectId?projectId={projectId}");
         FilterTasks(taskFilter);
     }
-    
+
 
     private async Task ProjectClicked(Guid projectId)
     {
-        selectedProjectIdString = projectId.ToString(); 
-        selectedProjectName = projects.FirstOrDefault(p => p.Id == projectId)?.Name; 
-        await LoadTasks(projectId); 
+        selectedProjectIdString = projectId.ToString();
+        selectedProjectName = projects.FirstOrDefault(p => p.Id == projectId)?.Name;
+        await LoadTasks(projectId);
+        selectedTab = "tasks";
+        tasksVisibility = true;
+       
+        comments.Clear();
+        filteredComments.Clear();
     }
 
-  
+
     private void FilterProjects(string searchText)
     {
         filteredProjects = projects
@@ -150,16 +283,17 @@
             }
             else
             {
-                // Ошибка при удалении проекта
+
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 ShowErrorMessage($"Failed to delete project: {errorMessage}");
             }
         }
         catch (Exception ex)
         {
-            // Ошибка при выполнении запроса
+
             ShowErrorMessage($"An error occurred: {ex.Message}");
         }
+        await RefreshData();
     }
 
     private async Task DeleteTask(Guid taskId)
@@ -173,24 +307,128 @@
             }
             else
             {
-                // Ошибка при удалении задачи
+
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 ShowErrorMessage($"Failed to delete task: {errorMessage}");
             }
         }
         catch (Exception ex)
         {
-            // Ошибка при выполнении запроса
+
             ShowErrorMessage($"An error occurred: {ex.Message}");
         }
+        await RefreshData();
     }
 
     private string ErrorMessage { get; set; }
     private bool ShowErrorModal { get; set; }
+    private bool tasksVisibility = false;
+    private bool commentsVisibility = false;
 
     private void ShowErrorMessage(string message)
     {
         ErrorMessage = message;
         ShowErrorModal = true;
     }
+    private void HideErrorMessage()
+    {
+        ShowErrorModal = false;
+    }
+    private List<Comment> comments = new List<Comment>();
+    private List<Comment> filteredComments = new List<Comment>();
+    private List<Attachment> attachments = new List<Attachment>();
+    private List<Attachment> filteredAttachments = new List<Attachment>();
+    private string selectedTaskIdString;
+    private string selectedTaskName = string.Empty;
+    private string commentFilter = string.Empty;
+    private string attachmentFilter = string.Empty;
+
+    private async Task TaskClicked(Guid taskId)
+    {
+        selectedTaskIdString = taskId.ToString();
+        selectedTaskName = tasks.FirstOrDefault(t => t.Id == taskId)?.Name;
+        await LoadComments(taskId);
+        await LoadAttachments(taskId);
+        selectedTab = "comments";
+        commentsVisibility = true;
+      
+
+    }
+
+    private async Task Refresh()
+    {
+        StateHasChanged();
+    }
+
+    private async Task LoadComments(Guid projectTaskId)
+    {
+        comments = await client.GetFromJsonAsync<List<Comment>>($"/api/comment/GetCommentsByProjectTaskId?projectTaskId={projectTaskId}");
+        FilterComments(commentFilter);
+    }
+
+    private async Task LoadAttachments(Guid attachmentId)
+    {
+        attachments = await client.GetFromJsonAsync<List<Attachment>>($"/api/attachment/GetAttachmentsByProjectTaskIdForDelete?attachmentId={attachmentId}");
+        FilterAttachments(attachmentFilter);
+    }
+
+    private void FilterComments(string searchText)
+    {
+        filteredComments = comments
+            .Where(c => c.Text.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private void FilterAttachments(string searchText)
+    {
+        filteredAttachments = attachments
+            .Where(a => a.FileName.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private async Task DeleteComment(Guid commentId)
+    {
+        try
+        {
+            var response = await client.DeleteAsync($"/api/comment/DeleteComment?commentId={commentId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadComments(Guid.Parse(selectedTaskIdString));
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                ShowErrorMessage($"Failed to delete comment: {errorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorMessage($"An error occurred: {ex.Message}");
+        }
+        await RefreshData();
+    }
+
+    private async Task DeleteAttachment(Guid attachmentId)
+    {
+        try
+        {
+            var response = await client.DeleteAsync($"api/attachment/DeleteAttachment?attachmentId={attachmentId}");
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadAttachments(Guid.Parse(selectedTaskIdString));
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                ShowErrorMessage($"Failed to delete attachment: {errorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorMessage($"An error occurred: {ex.Message}");
+        }
+        await RefreshData();
+    }
+    
 }

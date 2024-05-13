@@ -176,30 +176,7 @@ namespace JIRA.Server.Controllers
             return Ok(projects);
         }
 
-        //[HttpGet]
-        //public IActionResult GetFilePreview(Guid attachmentId)
-        //{
-        //    var filePreview = dataManager.AttachmentRepository.GetFilePreview(attachmentId);
-        //    if (filePreview == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return File(filePreview, "application/octet-stream"); // Отправляет массив байтов как файл клиенту
-        //}
-        //[HttpPut]
-        //public IActionResult UpdateTaskAssignees(Guid projectId, List<ProjectTaskUsersModel> taskUsers)
-        //{
-        //    try
-        //    {
-        //        dataManager.TaskAssigneeRepository.UpdateTaskAssignees(projectId, taskUsers);
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Ошибка при обновлении назначенных пользователей по задачам: {ex.Message}");
-        //    }
-        //}
+     
         [HttpDelete]
         public IActionResult DeleteTaskAssignees(Guid taskId)
         {

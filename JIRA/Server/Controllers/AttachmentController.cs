@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using JIRA.Shared.Entity;
 using JIRA.Shared;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Threading.Tasks;
 
 namespace JIRA.Server.Controllers
 {
@@ -57,7 +58,18 @@ namespace JIRA.Server.Controllers
             var attachments = dataManager.AttachmentRepository.GetAttachmentsByProjectTaskId(projectTaskId);
             return Ok(new ProjectTaskAttachments { Attachments = attachments });
         }
-       
-       
+        [HttpGet]
+        public IActionResult GetAttachmentsByProjectTaskIdForDelete(Guid attachmentId)
+        {
+            var attachments = dataManager.AttachmentRepository.GetAttachmentsByProjectTaskId(attachmentId);
+            return Ok(attachments);
+        }
+        [HttpDelete]
+        public IActionResult DeleteAttachment(Guid attachmentId)
+        {
+            dataManager.AttachmentRepository.DeleteAttachment(attachmentId);
+            return Ok();
+        }
+
     }
 }

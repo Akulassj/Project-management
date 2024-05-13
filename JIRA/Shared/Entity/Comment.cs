@@ -6,7 +6,7 @@
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid ProjectTaskId { get; set; }
-        public Guid UserId { get; set; } // Изменено на тип Guid
+        public Guid UserId { get; set; } 
         public User? User { get; set; }
        
 

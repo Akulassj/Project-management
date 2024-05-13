@@ -10,5 +10,6 @@ namespace JIRA.Server.Domain.Repositories.Abstract
         public List<Attachment> GetAttachmentsByProjectTaskId(Guid projectTaskId);
         Task SaveAttachmentAsync(Attachment attachment);
         Attachment GetAttachmentByFileName(Guid projectTaskId, string fileName);
+        public void DeleteAttachment(Guid attachmentId);
     }
 }

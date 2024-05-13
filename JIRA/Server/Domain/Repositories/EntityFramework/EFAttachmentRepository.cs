@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using JIRA.Shared.Domain;
 using System;
 using JIRA.Shared;
+using System.Threading.Tasks;
 
 namespace JIRA.Server.Domain.Repositories.EntityFramework
 {
@@ -33,5 +34,11 @@ namespace JIRA.Server.Domain.Repositories.EntityFramework
             return context.Attachments.FirstOrDefault(a => a.ProjectTaskId == projectTaskId && a.FileName == fileName);
         }
 
+        public void DeleteAttachment(Guid attachmentId)
+        {
+            var attachment = context.Attachments.FirstOrDefault(c => c.Id == attachmentId);
+            context.Attachments.Remove(attachment);
+            context.SaveChanges();
+        }
     }
 }
