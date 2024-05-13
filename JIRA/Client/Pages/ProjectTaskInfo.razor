@@ -70,13 +70,32 @@
         <div class="row">
             @foreach (var attachment in projectTaskAttachments.Attachments)
             {
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
+                    <div class="border border-dark border-1 p-0 rounded shadow">
+                        <div class="icon-container bg-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                            class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                        </div>
+                        <div class="file-name">
+                            <button class="btn btn-link attachment-button" @onclick="() => ShowAttachmentDetails(attachment)">@attachment.FileName</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        
+
+        @*  <div class="row">
+            @foreach (var attachment in projectTaskAttachments.Attachments)
+            {
+                <div class="col-md-4 border border-dark">
                     <div class="attachment-item">
                         <button class="btn btn-link attachment-button" @onclick="() => ShowAttachmentDetails(attachment)">@attachment.FileName</button>
                     </div>
                 </div>
             }
-        </div>
+        </div> *@
 
         <Blazorise.Modal @ref="attachmentModalRef" Scrollable="true" Class="fullscreen-modal">
             <Blazorise.ModalContent>
@@ -92,13 +111,13 @@
                     {
                         <a class="btn btn-primary" href="@($"api/attachment/GetFilesForTask?projectTaskId={currentAttachment.ProjectTaskId}&fileName={currentAttachment.FileName}")" download="@currentAttachment.FileName">
                             <div class="attachment-item">
-                              
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-cloud-download">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M10 16v4m-4-3l5 3 5-3m-5 3v-10" />
-                                    </svg>
-                                    Download
-                                
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-cloud-download">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10 16v4m-4-3l5 3 5-3m-5 3v-10" />
+                                </svg>
+                                Download
+
                             </div>
                         </a>
                     }
@@ -262,7 +281,7 @@
                 byte[] fileData;
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    await file.OpenReadStream(maxAllowedSize:8192*1024).CopyToAsync(ms);
+                    await file.OpenReadStream(maxAllowedSize: 8192 * 1024).CopyToAsync(ms);
                     fileData = ms.ToArray();
                 }
 
@@ -277,7 +296,7 @@
 
                         UploadedAt = DateTime.UtcNow,
                         ProjectTaskId = Guid.Parse(ProjectTaskId),
-                        FileData = fileData 
+                        FileData = fileData
                     };
 
                 var saveResponse = await client.PostAsJsonAsync("/api/attachment/AddAttachment", attachment);
@@ -288,8 +307,8 @@
             {
                 errors.Add($"File: {file.Name} Error: {ex.Message}");
             }
-            
-           
+
+
         }
         uploadedFiles.Clear();
         await modalRef.Hide();
@@ -391,4 +410,15 @@
         margin-bottom: 10px;
     }
 
+    .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        width: 100%;
+    }
+
+    .file-name {
+        text-align: center;
+    }
 </style>
