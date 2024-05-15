@@ -4,6 +4,7 @@ using ProjectManagement.Server.Domain;
 using ProjectManagement.Shared.Entity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectManagement.Server.Controllers
 {
@@ -35,6 +36,19 @@ namespace ProjectManagement.Server.Controllers
         public IActionResult GetNotifications(string userName)
         {
             return Ok(dataManager.NotificationRepository.GetNotifications(userName));
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateNotification(Notification notification)
+        {
+           dataManager.NotificationRepository.UpdateNotification(notification);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteReaded(string userName)
+        {
+            dataManager.NotificationRepository.DeleteReaded(userName);
+            return Ok();
         }
     }
 }

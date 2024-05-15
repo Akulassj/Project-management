@@ -7,5 +7,7 @@ namespace ProjectManagement.Client.Services
         Task<List<Notification>> GetNotifications(string userName);
         Task AddNotification(Notification notification);
         Task AddNotifications(List<Notification> notifications);
+        Task UpdateNotification(Notification notification);
+        Task DeleteReaded(string userName);
     }
 }

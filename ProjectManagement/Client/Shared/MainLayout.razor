@@ -23,28 +23,38 @@
             <AuthorizeView>
                 <Authorized>
                     <Blazorise.Dropdown Display="Display.InlineBlock">
-                        <Blazorise.DropdownToggle Color="Color.Primary">Notifications</Blazorise.DropdownToggle>
+                        <Blazorise.DropdownToggle Color="Color.Primary">
+                            Notifications (@unreadNotificationsCount)
+                        </Blazorise.DropdownToggle>
                         <Blazorise.DropdownMenu MaxMenuHeight="300px">
                             @if (notifications != null && notifications.Any())
                             {
-                                @foreach (var notification in notifications)
+                                @foreach (var notification in notifications.OrderByDescending(n => n.CreatedAt))
                                 {
-                                    <Blazorise.DropdownItem>@notification.Message</Blazorise.DropdownItem>
-                                    <DropdownDivider />
+                                    @if (notification.IsReaded)
+                                    {
+                                          <Blazorise.DropdownItem >
+                                            @notification.Message
+                                        </Blazorise.DropdownItem>
+                                        <DropdownDivider />
+                                    }
+                                    else
+                                    {
+                                        <Blazorise.DropdownItem TextColor="Blazorise.TextColor.Primary" @onclick="@(() => MarkAsRead(notification))">
+                                            @notification.Message
+                                        </Blazorise.DropdownItem>
+                                        <DropdownDivider />
+                                    }
                                 }
                             }
                             else
                             {
                                 <span class="dropdown-item disabled">No notifications</span>
                             }
-                           
-
+                            <button class="ms-4 me-4 mt-1 btn btn-danger" @onclick="() => DeleteReaded()">Удалить прочитанные уведомления</button>
                         </Blazorise.DropdownMenu>
+
                     </Blazorise.Dropdown>
-
-                   
-
-
                     <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
                 </Authorized>
                 <NotAuthorized>
@@ -71,11 +81,41 @@
     }
 
     private List<Notification> notifications;
+    private int unreadNotificationsCount;
 
     protected override async Task OnInitializedAsync()
     {
+        await Refresh();
+    }
+
+    protected async Task Refresh()
+    {
         string name = (await authStateProvider.GetAuthenticationStateAsync()).User.Identity.Name;
         if (name is not null)
+        {
             notifications = await notificationService.GetNotifications(name);
+            unreadNotificationsCount = notifications.Count(n => !n.IsReaded);
+        }
+    }
+
+    private async Task MarkAsRead(Notification notification)
+    {
+        notification.IsReaded = true;      
+
+        // Optionally, send an update to the server about the read status
+        await notificationService.UpdateNotification(notification);
+
+        await Refresh();
+
+    }
+
+    private async Task DeleteReaded()
+    {
+        string name = (await authStateProvider.GetAuthenticationStateAsync()).User.Identity.Name;
+
+        await notificationService.DeleteReaded(name);
+
+        await Refresh();
+
     }
 }

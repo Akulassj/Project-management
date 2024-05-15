@@ -26,5 +26,13 @@ namespace ProjectManagement.Client.Services
         {
             await _httpClient.PostAsJsonAsync("api/notification/AddNotifications", notifications);
         }
+        public async Task UpdateNotification(Notification notification)
+        {
+            await _httpClient.PutAsJsonAsync("api/notification/UpdateNotification", notification);
+        }
+        public async Task DeleteReaded(string userName) 
+        {
+            await _httpClient.DeleteAsync($"api/notification/DeleteReaded?userName={userName}");
+        }
     }
 }

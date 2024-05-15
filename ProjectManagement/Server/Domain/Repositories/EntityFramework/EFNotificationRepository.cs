@@ -1,4 +1,5 @@
-﻿using ProjectManagement.Server.Domain.Repositories.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectManagement.Server.Domain.Repositories.Abstract;
 using ProjectManagement.Shared.Domain;
 using ProjectManagement.Shared.Entity;
 
@@ -25,6 +26,18 @@ namespace ProjectManagement.Server.Domain.Repositories.EntityFramework
         public void AddNotifications(List<Notification> notifications)
         {
             context.Notifications.AddRange(notifications);
+            context.SaveChanges();
+        }
+
+        public void UpdateNotification(Notification notification)
+        {
+            context.Entry(notification).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void DeleteReaded(string userName)
+        {
+            context.Notifications.RemoveRange(context.Notifications.Where(not => not.RecieverName == userName && not.IsReaded));
             context.SaveChanges();
         }
     }

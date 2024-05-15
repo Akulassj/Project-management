@@ -12,6 +12,8 @@ namespace ProjectManagement.Server.Domain.Repositories.Abstract
        
 
         public  List<Notification> GetNotifications(string userName);
-       
+
+        public void UpdateNotification(Notification notification);
+        public void DeleteReaded(string userName);
     }
 }
