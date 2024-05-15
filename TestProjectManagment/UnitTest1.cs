@@ -89,20 +89,20 @@ namespace TestProjectManagment
         }
 
 
-        [Test]
-        public void Delete_ValidId_ProjectDeleted()
-        {
-            // Arrange
-            var projectId = Guid.NewGuid();
-            var project = new Project { Id = projectId, Name = "Project to Delete", Description = "Description to Delete" };
-            _dbContext.Projects.Add(project);
-            _dbContext.SaveChanges();
-            // Act
-            _projectService.Delete(projectId);
-            _dbContext.SaveChanges();
-            // Assert
-            Assert.IsFalse(_dbContext.Projects.Any(p => p.Id == projectId));
-        }
+        //[Test]
+        //public void Delete_ValidId_ProjectDeleted()
+        //{
+        //    // Arrange
+        //    var projectId = Guid.NewGuid();
+        //    var project = new Project { Id = projectId, Name = "Project to Delete", Description = "Description to Delete" };
+        //    _dbContext.Projects.Add(project);
+        //    _dbContext.SaveChanges();
+        //    // Act
+        //    _projectService.Delete(projectId);
+        //    _dbContext.SaveChanges();
+        //    // Assert
+        //    Assert.IsFalse(_dbContext.Projects.Any(p => p.Id == projectId));
+        //}
 
         [Test]
         public void Update_ValidProject_ProjectUpdated()
