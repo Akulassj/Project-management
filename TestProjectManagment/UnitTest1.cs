@@ -1,6 +1,6 @@
-using JIRA.Server.Domain.Repositories.EntityFramework;
-using JIRA.Shared.Domain;
-using JIRA.Shared.Entity;
+using ProjectManagement.Server.Domain.Repositories.EntityFramework;
+using ProjectManagement.Shared.Domain;
+using ProjectManagement.Shared.Entity;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;

@@ -1,0 +1,432 @@
+﻿@page "/projectTaskInfo/{ProjectTaskId}"
+@using ProjectManagement.Client.Services
+@using ProjectManagement.Shared
+@using System.Security.Claims
+@using Microsoft.Extensions.FileProviders
+@using System.IO
+@using System.IO.Compression
+@using System.Text
+@using System.Net
+@using System.Linq;
+@inject IConfiguration config
+@inject HttpClient client
+@inject CustomStateProvider stateProvider
+
+@if (projectTaskComments is not null)
+{
+    <div>
+        <h4>ProjectTask name: @projectTaskComments.ProjectTask.Name</h4>
+        <h5>Description: @projectTaskComments.ProjectTask.Description</h5>
+    </div>
+
+    <h3>Comments</h3>
+
+    <Timeline Type="TimelineType.Default">
+        @foreach (var comment in projectTaskComments.Comments)
+        {
+            <TimelineItem Time=@comment.CreatedAt.ToString("f") Title="@comment.User.UserName" IconColor="TablerColor.Green" IconText="@comment.User.UserName[0..1]">
+                <p class="text-secondary">@comment.Text</p>
+            </TimelineItem>
+
+        }
+    </Timeline>
+    <div class="mb-3">
+        <input type="text" @bind="NewCommentText" placeholder="Enter your comment" />
+        <div class="btn btn-primary text-center" @onclick="AddComment">Добавить комментарий</div>
+    </div>
+    <div class="mb-3">
+        <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@ShowModal">Добавить вложения</Blazorise.Button>
+    </div>
+
+    <Blazorise.Modal @ref="modalRef">
+        <Blazorise.ModalContent Centered>
+
+         <Blazorise.ModalHeader>Upload File (max file size - 8 Mb)</Blazorise.ModalHeader>
+         <Blazorise.ModalBody>
+             <InputFile OnChange="HandleFileSelect" Multiple />
+         </Blazorise.ModalBody>
+         <Blazorise.ModalFooter>
+             <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+             <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@LoadFiles">Add files</Blazorise.Button>
+         </Blazorise.ModalFooter>
+     </Blazorise.ModalContent>
+ </Blazorise.Modal>
+
+    @if (errors.Count > 0)
+    {
+        <h2>Errors</h2>
+        <ul class="text-danger">
+            @foreach (var error in errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    }
+
+
+    @if (projectTaskAttachments.Attachments != null && projectTaskAttachments.Attachments.Any())
+    {
+        <div class="attachment-header">
+            <h5>Список вложений</h5>
+        </div>
+
+        <div class="row">
+            @foreach (var attachment in projectTaskAttachments.Attachments)
+            {
+                <div class="col-md-2 mb-3">
+                    <div class="border border-dark border-1 p-0 rounded shadow">
+                        <div class="icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-file">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="file-name">
+                            <button class="btn btn-link attachment-button" @onclick="() => ShowAttachmentDetails(attachment)">@(attachment.FileName.Length < 25 ? attachment.FileName : attachment.FileName[0..10] + ".." + attachment.FileName[^10..])</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+
+        @*  <div class="row">
+            @foreach (var attachment in projectTaskAttachments.Attachments)
+            {
+                <div class="col-md-4 border border-dark">
+                    <div class="attachment-item">
+                        <button class="btn btn-link attachment-button" @onclick="() => ShowAttachmentDetails(attachment)">@attachment.FileName</button>
+                    </div>
+                </div>
+            }
+        </div> *@
+
+        <Blazorise.Modal @ref="attachmentModalRef" Scrollable="true" Class="fullscreen-modal">
+            <Blazorise.ModalContent>
+                @if (currentAttachment != null)
+                {
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="close" @onclick="CloseAttachmentModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    @if (currentAttachment != null)
+                    {
+                        <a class="btn btn-primary" href="@($"api/attachment/GetFilesForTask?projectTaskId={currentAttachment.ProjectTaskId}&fileName={currentAttachment.FileName}")" download="@currentAttachment.FileName">
+                            <div class="attachment-item">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-cloud-download">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10 16v4m-4-3l5 3 5-3m-5 3v-10" />
+                                </svg>
+                                Download
+
+                            </div>
+                        </a>
+                    }
+
+                    @if (IsImages(currentAttachment.FileExtension))
+                    {
+                        <div class="text-center">
+                            <img src="@($"api/attachment/GetFilesForTask?projectTaskId={currentAttachment.ProjectTaskId}&fileName={currentAttachment.FileName}")"
+                                 alt="Attachment"
+                                 class="img-fluid mx-auto d-block"
+                                 style="max-width: 80%; max-height: 80vh;" />
+                        </div>
+                    }
+                    else if (IsTxt(currentAttachment.FileExtension))
+                    {
+                        <pre>@GetTxtContent(currentAttachment)</pre>
+                    }
+                    else if (IsJson(currentAttachment.FileExtension))
+                    {
+                        <pre>@GetJsonContent(currentAttachment)</pre>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            Preview not available for this file type.
+                        </div>
+                    }
+                }
+            </Blazorise.ModalContent>
+        </Blazorise.Modal>
+    }
+
+
+}
+
+@code {
+
+    [Parameter]
+    public string ProjectTaskId { get; set; }
+
+    private ProjectTaskComments projectTaskComments;
+    private ProjectTaskAttachments projectTaskAttachments = new ProjectTaskAttachments();
+
+    private string NewCommentText = "";
+
+    protected override async void OnInitialized()
+    {
+        await Refresh();
+        await LoadAttachments(Guid.Parse(ProjectTaskId));
+    }
+
+    private async Task Refresh()
+    {
+        if (!string.IsNullOrEmpty(ProjectTaskId))
+        {
+
+            projectTaskComments = await client.GetFromJsonAsync<ProjectTaskComments>($"/api/project/GetProjectTaskCommentsById?projectTaskId={ProjectTaskId}");
+            projectTaskComments.Comments.Sort();
+            await LoadAttachments(Guid.Parse(ProjectTaskId));
+            StateHasChanged();
+
+        }
+
+
+    }
+    private Blazorise.Modal editModalRef;
+    private async Task AddComment()
+    {
+        if (!string.IsNullOrEmpty(NewCommentText))
+        {
+            var user = await stateProvider.GetAuthenticationStateAsync();
+            var comment = new ProjectManagement.Shared.Entity.Comment
+                {
+                    Text = NewCommentText,
+                    ProjectTaskId = Guid.Parse(ProjectTaskId),
+                    UserId = Guid.Parse(user.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                };
+
+            var response = await client.PostAsJsonAsync("/api/comment/Add", comment);
+            if (response.IsSuccessStatusCode)
+            {
+                await Refresh();
+                NewCommentText = "";
+            }
+
+
+        }
+    }
+    private async Task LoadAttachments(Guid projectTaskId)
+    {
+        projectTaskAttachments = await client.GetFromJsonAsync<ProjectTaskAttachments>($"/api/attachment/GetAttachmentsByProjectTaskId?projectTaskId={projectTaskId}");
+    }
+    private bool IsImage(string fileExtension)
+    {
+        return fileExtension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".gif", StringComparison.OrdinalIgnoreCase) ||
+               fileExtension.Equals(".docx", StringComparison.OrdinalIgnoreCase)
+               ||
+               fileExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase);
+    }
+    private bool IsUploadModalOpen = false;
+    private List<IBrowserFile> uploadedFiles = new List<IBrowserFile>();
+
+    private void OpenUploadModal()
+
+    {
+
+        IsUploadModalOpen = true;
+    }
+    private Blazorise.Modal modalRef;
+
+    private Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private Task HideModal()
+    {
+
+        return modalRef.Hide();
+    }
+
+    private async Task ShowEditModal()
+    {
+        try
+        {
+            await editModalRef.Show();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при открытии модального окна: {ex.Message}");
+        }
+    }
+    private void CloseUploadModal()
+    {
+        IsUploadModalOpen = false;
+    }
+
+    private void HandleFileSelect(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            uploadedFiles.Add(file);
+        }
+    }
+
+    private List<string> errors = new();
+
+
+    private async Task LoadFiles()
+    {
+        errors.Clear();
+
+        foreach (var file in uploadedFiles)
+        {
+            try
+            {
+
+                byte[] fileData;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    await file.OpenReadStream(maxAllowedSize: 8192 * 1024).CopyToAsync(ms);
+                    fileData = ms.ToArray();
+                }
+
+
+                var attachment = new Attachment
+                    {
+                        Id = Guid.NewGuid(),
+
+
+                        FileName = file.Name,
+                        FileExtension = System.IO.Path.GetExtension(file.Name),
+
+                        UploadedAt = DateTime.UtcNow,
+                        ProjectTaskId = Guid.Parse(ProjectTaskId),
+                        FileData = fileData
+                    };
+
+                var saveResponse = await client.PostAsJsonAsync("/api/attachment/AddAttachment", attachment);
+
+            }
+
+            catch (Exception ex)
+            {
+                errors.Add($"File: {file.Name} Error: {ex.Message}");
+            }
+
+
+        }
+        uploadedFiles.Clear();
+        await modalRef.Hide();
+        await Refresh();
+    }
+
+    private Attachment currentAttachment;
+    private Blazorise.Modal attachmentModalRef;
+
+    private async Task ShowAttachmentDetails(Attachment attachment)
+    {
+        currentAttachment = attachment;
+        await attachmentModalRef.Show();
+    }
+
+    private void CloseAttachmentModal()
+    {
+        currentAttachment = null;
+        attachmentModalRef.Hide();
+    }
+
+    private bool IsImages(string fileExtension)
+    {
+        string[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+        return imageExtensions.Contains(fileExtension.ToLower());
+    }
+
+    private bool IsTxt(string fileExtension)
+    {
+        return fileExtension.ToLower() == ".txt";
+    }
+
+    private bool IsPdf(string fileExtension)
+    {
+        return fileExtension.ToLower() == ".pdf";
+    }
+    private string GetTxtContent(Attachment attachment)
+    {
+
+        return Encoding.UTF8.GetString(attachment.FileData);
+    }
+
+    private bool IsJson(string fileExtension)
+    {
+        return fileExtension.ToLower() == ".json";
+    }
+
+    private string GetJsonContent(Attachment attachment)
+    {
+        return Encoding.UTF8.GetString(attachment.FileData);
+    }
+
+}
+
+<style>
+
+    .fullscreen-modal .modal-dialog {
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0;
+    }
+
+    .attachment-list {
+        margin-bottom: 20px;
+    }
+
+    .attachment-item {
+        margin-bottom: 10px;
+    }
+
+    .attachment-button {
+        color: #007bff; /* Цвет ссылки */
+        text-decoration: underline; /* Подчеркивание ссылки */
+        transition: color 0.15s ease-in-out; /* Плавное изменение цвета при наведении */
+    }
+
+        .attachment-button:hover {
+            color: #0056b3; /* Цвет ссылки при наведении */
+        }
+
+    .close {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #dc3545; /* Красный цвет */
+        opacity: 1; /* Полная видимость */
+        transition: opacity 0.15s ease-in-out; /* Плавное изменение прозрачности */
+    }
+
+        .close:hover {
+            color: #bd2130; /* Красный цвет при наведении */
+        }
+
+    .attachment-header {
+        margin-bottom: 10px;
+    }
+
+    .attachment-item {
+        margin-bottom: 10px;
+    }
+
+    .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        width: 100%;
+        background-color: lightgray;
+        opacity: 90%;
+    }
+
+    .file-name {
+        text-align: center;
+    }
+</style>

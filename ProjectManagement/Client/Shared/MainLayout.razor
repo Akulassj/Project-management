@@ -1,0 +1,81 @@
+﻿@using Blazorise
+@using ProjectManagement.Client.Services;
+@using Microsoft.AspNetCore.Components.Authorization;
+@inherits LayoutComponentBase
+@inject NavigationManager navigationManager
+@inject CustomStateProvider authStateProvider
+@inject ProjectManagement.Client.Services.INotificationService notificationService
+
+<div class="page">
+    <div class="sidebar">
+        <AuthorizeView>
+            <Authorized>
+                <NavMenu userName=@(authStateProvider.GetAuthenticationStateAsync().Result.User.Identity.Name) />
+            </Authorized>
+            <NotAuthorized>
+                <NavMenu />
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    <Blazorise.Dropdown Display="Display.InlineBlock">
+                        <Blazorise.DropdownToggle Color="Color.Primary">Notifications</Blazorise.DropdownToggle>
+                        <Blazorise.DropdownMenu MaxMenuHeight="300px">
+                            @if (notifications != null && notifications.Any())
+                            {
+                                @foreach (var notification in notifications)
+                                {
+                                    <Blazorise.DropdownItem>@notification.Message</Blazorise.DropdownItem>
+                                    <DropdownDivider />
+                                }
+                            }
+                            else
+                            {
+                                <span class="dropdown-item disabled">No notifications</span>
+                            }
+                           
+
+                        </Blazorise.DropdownMenu>
+                    </Blazorise.Dropdown>
+
+                   
+
+
+                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
+                </Authorized>
+                <NotAuthorized>
+                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LoginClick">Login</button>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+@functions {
+
+    async Task LogoutClick()
+    {
+        await authStateProvider.Logout();
+        navigationManager.NavigateTo("/");
+    }
+    async Task LoginClick()
+    {
+        navigationManager.NavigateTo("/login");
+    }
+
+    private List<Notification> notifications;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string name = (await authStateProvider.GetAuthenticationStateAsync()).User.Identity.Name;
+        if (name is not null)
+            notifications = await notificationService.GetNotifications(name);
+    }
+}
