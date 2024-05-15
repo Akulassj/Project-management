@@ -1,0 +1,240 @@
+﻿@page "/projects/{userName}"
+@using TabBlazor.Services
+@using Blazorise
+@inject HttpClient client
+@inject NavigationManager navigate
+
+<h3>MyProjectList</h3>
+
+<Blazorise.Button Color="Color.Success" Clicked="@ShowModal">Create project</Blazorise.Button>
+<Blazorise.Modal @ref="modalRef">
+    <Blazorise.ModalContent Centered>
+        <Blazorise.ModalHeader>
+            <ModalTitle>Create project</ModalTitle>
+            <CloseButton />
+        </Blazorise.ModalHeader>
+        <Blazorise.ModalBody>
+            <Blazorise.Field>
+                <FieldLabel>Name</FieldLabel>
+                <TextEdit Placeholder="Enter project name..." @bind-Text="newProject.Name" />
+            </Blazorise.Field>
+            <Blazorise.Field>
+                <FieldLabel>Description</FieldLabel>
+                <TextEdit Placeholder="Enter project description..." @bind-Text="newProject.Description" />
+            </Blazorise.Field>
+
+            <Blazorise.Field>
+                <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
+                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="GetUsersSearch" />
+            </Blazorise.Field>
+
+            @if (users is not null && users.Any())
+            {
+                <div class="search-results">
+                    @foreach (var user in users)
+                    {
+                        <div class="search-result" @onclick="() => AddUser(user)">
+                            @user.UserName
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (SelectedUsers is not null && SelectedUsers.Any())
+            {
+                <div>
+                    <h4>Selected Users:</h4>
+                    @foreach (var user in SelectedUsers)
+                    {
+                        <div>
+                            <p>@user.UserName</p>
+                            <Blazorise.Button Color="Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
+                        </div>
+                    }
+                </div>
+            }
+
+        </Blazorise.ModalBody>
+        <ModalFooter>
+            <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+            @if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @errorMessage
+                </div>
+            }
+            <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject">Save Changes</Blazorise.Button>
+        </ModalFooter>
+    </Blazorise.ModalContent>
+</Blazorise.Modal>
+
+
+    @foreach (var project in projectsDeleted)
+    {
+        <div class="d-flex mb-3">
+            <TabBlazor.Card class="flex-grow-1">
+                <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Project.Id)">
+                    <TabBlazor.CardTitle>
+                        <h3>@project.Project.Name</h3>
+                    </TabBlazor.CardTitle>
+                    @project.Project.Description
+                </TabBlazor.CardBody>
+            </TabBlazor.Card>
+            <div class="ml-3 d-flex align-items-center">
+                @if (userName == project.CreatorName)
+                {
+                    <Blazorise.Button Color="Color.Danger" Size="Size.Small" Clicked="() => DeleteProject(project.Project.Id)">Delete</Blazorise.Button>
+                }
+            </div>
+        </div>
+    }
+    
+
+@code {
+    private List<ProjectDeleteViewModel> projectsDeleted = new List<ProjectDeleteViewModel>();
+    private Project newProject = new Project();
+
+    private string searchText = string.Empty;
+
+    private List<User> users { get; set; } = new List<User>();
+
+    [Parameter]
+    public List<User> SelectedUsers { get; set; } = new List<User>();
+
+    [Parameter]
+    public string userName { get; set; }
+
+    private List<Project> projects = new List<Project>();
+
+    List<User> selectedUsers { get; set; } = new List<User>();
+    private string errorMessage = string.Empty;
+
+    protected override async void OnInitialized()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        var projectsWithCreators = await client.GetFromJsonAsync<List<ProjectInfoViewModel>>($"/api/project/GetUserProjectsWithCreators?userName={userName}");
+        projectsDeleted = projectsWithCreators.Select(p => new ProjectDeleteViewModel
+            {
+                Project = p.Project,
+                CreatorName = p.Creatorname
+            }).ToList();
+
+        projects = await client.GetFromJsonAsync<List<Project>>($"/api/project/GetUserProjects?userName={userName}");
+        selectedUsers.Clear();
+        searchText = string.Empty;
+        users.Clear();
+        StateHasChanged();
+    }
+
+    private void ProjectClick(Guid id)
+    {
+        navigate.NavigateTo($"/projectInfo/{id}");
+    }
+
+    private Modal modalRef;
+
+    private Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private async Task GetUsersSearch(string value)
+    {
+        searchText = value;
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            var response = await client.GetFromJsonAsync<List<User>>($"api/project/SearchUsers?username={searchText}");
+            if (response != null && response.Any())
+            {
+                // Исключаем текущего пользователя из результатов поиска
+                var currentUser = await client.GetFromJsonAsync<User>("api/account/CurrentUserInfo");
+                var currentUserId = currentUser.Id;
+                users = response.Where(u => u.Id != currentUserId).ToList();
+            }
+        }
+        else
+        {
+            users.Clear();
+        }
+    }
+
+
+    private void AddUser(User user)
+    {
+        if (!SelectedUsers.Contains(user))
+        {
+            SelectedUsers.Add(user);
+        }
+    }
+
+    private void RemoveUser(User user)
+    {
+        SelectedUsers.Remove(user);
+    }
+
+    private Task HideModal()
+    {
+        return modalRef.Hide();
+    }
+
+    private async Task CreateProject()
+    {
+        if (string.IsNullOrWhiteSpace(newProject.Name))
+        {
+            errorMessage = "Необходимо указать название проекта.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(newProject.Description))
+        {
+            errorMessage = "Необходимо указать описание проекта.";
+            return;
+        }
+
+        // Проверка выбора хотя бы одного участника
+        if (!SelectedUsers.Any())
+        {
+            errorMessage = "Необходимо выбрать хотя бы одного участника проекта.";
+            return;
+        }
+        var asigneeList = new List<ProjectAsignee>();
+        foreach (var user in SelectedUsers)
+        {
+            asigneeList.Add(new ProjectAsignee() { UserId = user.Id, ProjectId = newProject.Id });
+        }
+
+        var pj = new ProjectsAsigneeViewModel()
+            {
+                Project = newProject,
+                ProjectAsignees = asigneeList,
+                UserName = userName
+            };
+
+        await client.PostAsJsonAsync("api/Project/AddProject", pj);
+
+        newProject = new Project();
+        SelectedUsers.Clear();
+        await HideModal();
+        Refresh();
+        errorMessage = string.Empty;
+    }
+
+    private async Task DeleteProject(Guid projectId)
+    {
+
+       
+
+        await client.DeleteAsync($"api/project/DeleteProject?projectId={projectId}");
+        await Refresh();
+    }
+
+}
+<style>
+    .card-body:hover {
+        background-color: darkcyan !important;
+    }
+</style>
