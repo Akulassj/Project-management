@@ -28,7 +28,7 @@
                     <div class="col-md-6">
                         <h3>Информация о заданиях</h3>
                         <p>Количество заданий: @CurrentProject.ProjectTaskUsers.Count()</p>
-                        @*  <div class="btn btn-primary text-center" @onclick="GetProjectTasks">Получить список Задач</div> *@
+
 
                         @if (CurrentProject.ProjectTaskUsers.Any())
                         {
@@ -77,7 +77,7 @@
                                      <ApexPointSeries TItem="ProjectTask"
                                                       Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
                                                       Name="ProjectTask Status"
-                                                      SeriesType="SeriesType.Pie"
+                                                      SeriesType="SeriesType.Donut"
                                                       XValue="@(e => e.Status)"
                                                       YAggregate="@(e => e.Count())"
                                                       OrderByDescending="@(e=>e.Y)"
@@ -164,7 +164,7 @@
                                                 </div>
                                             }
                                             <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@SaveParticipantsChanges">Сохранить изменения</Blazorise.Button>
-                                          
+
                                         </ModalFooter>
                                     </Blazorise.ModalContent>
                                 </Blazorise.Modal>
@@ -217,16 +217,16 @@
                         }
                         @foreach (var user in selectedUsers)
                         {
-                         @if (selectedUsers.Any())
-                         {
-                            <div>
-                                <h4>Selected User:</h4>
+                            @if (selectedUsers.Any())
+                            {
                                 <div>
-                                    <p>@selectedUsers.FirstOrDefault()?.UserName</p>
-                                    <button class="btn btn-danger btn-sm float-right" @onclick="() => ClearSelectedUser(user)">Удалить</button>
+                                    <h4>Selected User:</h4>
+                                    <div>
+                                        <p>@selectedUsers.FirstOrDefault()?.UserName</p>
+                                        <button class="btn btn-danger btn-sm float-right" @onclick="() => ClearSelectedUser(user)">Удалить</button>
+                                    </div>
                                 </div>
-                            </div>
-                         }
+                            }
                         }
 
                     </Blazorise.ModalBody>
@@ -246,53 +246,169 @@
 
         <div class="container">
             <h3>Список задач</h3>
+            
             @if (CurrentProject.ProjectTaskUsers.Any())
             {
-                <div class="table-responsive-sm">
-                    <table class="table table-bordered border-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col">Название</th>
-                                <th scope="col">Описание</th>
-                                <th scope="col">Статус</th>
-                                <th scope="col">Ответственные</th>
-                                <th scope="col">Дата создания</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var model in CurrentProject.ProjectTaskUsers)
+
+                <div class="d-flex">
+                    <div class="col-md-4 col-sm-12 me-3">
+                        <h3 class="text-danger">Uncompleted</h3>
+                        @foreach (var model in CurrentProject.ProjectTaskUsers)
+                        {
+                            @if (model.ProjectTask.Status == "Uncompleted")
                             {
 
-                                <tr>
-                                    @if (CurrentProject.Creatorname == userName)
-                                    {
-                                        <td @onclick="() => OpenEditTaskModal(model)">@model.ProjectTask.Name</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@model.ProjectTask.Name</td>
-                                    }
-                                    <td>@model.ProjectTask.Description</td>
-                                    <td>
-                                        <select class="form-select" @onchange="@(e => ChangeProjectTaskStatus(model.ProjectTask, e.Value.ToString()))">
-                                            <option value="Completed" selected="@((model.ProjectTask.Status == "Completed"))">Выполнено</option>
-                                            <option value="Uncompleted" selected="@((model.ProjectTask.Status == "Uncompleted"))">Невыполнено</option>
-                                        </select>
-                                    </td>
-                                    <td>
-
-                                        <ul>
-
-                                            <li><span style=@(model.InActive ? "color:gray" : "color:black")>@model.AssignedUser.UserName - @model.AssignedUser.Position</span></li>
-                                        </ul>
-
-                                    </td>
-                                    <td>@model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</td>
-                                </tr>
+                                <div class="card card-sm mb-3">
+                                    <div class="card-status-top bg-danger"></div>
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <h3 class="card-title fw-bold">@model.ProjectTask.Name</h3>
+                                        @if (CurrentProject.Creatorname == userName)
+                                            {
+                                                <svg @onclick="() => OpenEditTaskModal(model)" fill="#000000" height="2.5ex" width="2.5ex" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                viewBox="0 0 348.882 348.882" xml:space="preserve" class="ms-2 edit-uncompleted">
+                                                    <g>
+                                                        <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+		c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+		c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+		C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+		L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+		c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z" />
+                                                        <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+		c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+		s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+		c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z" />
+                                                    </g>
+                                                </svg>
+                                            }
+                                        </div>
+                                        <div class="text-secondary">@model.ProjectTask.Description</div>
+                                        <div class="mt-4">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="avatar-list avatar-list-stacked">
+                                                        <span class="avatar avatar-xs rounded">@model.AssignedUser.UserName[0..1]</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="#" class="link-warning">
+                                                        <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M4 11h16"></path><path d="M11 15h1"></path><path d="M12 15v3"></path></svg>
+                                                        <span class=""> @model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
+                        }
+                    </div>
+                    <div class="col-md-4 col-sm-12 me-3">
+                        <h3 class="text-warning">InProgress</h3>
+                        @foreach (var model in CurrentProject.ProjectTaskUsers)
+                        {
+                            @if (model.ProjectTask.Status == "InProgress")
+                            {
+                                <div class="card card-sm mb-3">
+                                    <div class="card-status-top bg-warning"></div>
+                                    <div class="card-body">
+                                    <div class="d-flex">
+                                        <h3 class="card-title fw-bold">@model.ProjectTask.Name</h3>
+                                        @if (CurrentProject.Creatorname == userName)
+                                            {
+                                                <svg @onclick="() => OpenEditTaskModal(model)" fill="#000000" height="2.5ex" width="2.5ex" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                viewBox="0 0 348.882 348.882" xml:space="preserve" class="ms-2 edit-inprogress">
+                                                    <g>
+                                                        <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+		c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+		c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+		C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+		L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+		c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z" />
+                                                        <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+		c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+		s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+		c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z" />
+                                                    </g>
+                                                </svg>
+                                            }
+                                        </div>
+                                        <div class="text-secondary">@model.ProjectTask.Description</div>
+                                        <div class="mt-4">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="avatar-list avatar-list-stacked">
+                                                        <span class="avatar avatar-xs rounded">@model.AssignedUser.UserName[0..1]</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="#" class="link-warning">
+                                                        <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M4 11h16"></path><path d="M11 15h1"></path><path d="M12 15v3"></path></svg>
+                                                        <span class=""> @model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="text-success">Completed</h3>
+                        @foreach (var model in CurrentProject.ProjectTaskUsers)
+                        {
+                            @if (model.ProjectTask.Status == "Completed")
+                            {
 
-                        </tbody>
-                    </table>
+                                <div class="card card-sm mb-3">
+                                    <div class="card-status-top bg-success"></div>
+                                    <div class="card-body">
+                                    <div class="d-flex">
+                                        <h3 class="card-title fw-bold">@model.ProjectTask.Name</h3>
+                                        @if (CurrentProject.Creatorname == userName)
+                                            {
+                                                <svg @onclick="() => OpenEditTaskModal(model)" fill="#000000" height="2.5ex" width="2.5ex" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                viewBox="0 0 348.882 348.882" xml:space="preserve" class="ms-2 edit-completed">
+                                                    <g>
+                                                        <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+		c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+		c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+		C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+		L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+		c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z" />
+                                                        <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+		c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+		s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+		c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z" />
+                                                    </g>
+                                                </svg>
+                                            }
+                                        </div>
+                                        <div class="text-secondary">@model.ProjectTask.Description</div>
+                                        <div class="mt-4">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="avatar-list avatar-list-stacked">
+                                                        <span class="avatar avatar-xs rounded">@model.AssignedUser.UserName[0..1]</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="#" class="link-warning">
+                                                        <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M4 11h16"></path><path d="M11 15h1"></path><path d="M12 15v3"></path></svg>
+                                                        <span class=""> @model.ProjectTask.CreatedAt.ToString("yyyy-MM-dd")</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
             }
 
@@ -314,7 +430,7 @@
             <Blazorise.ModalBody>
                 @if (selectedTask is not null)
                 {
-                  
+
                     <div class="form-group">
                         <label for="taskName">Name</label>
                         <input type="text" class="form-control" id="taskName" @bind="selectedTask.ProjectTask.Name" />
@@ -327,6 +443,7 @@
                         <label for="taskStatus">Status</label>
                         <select class="form-control" id="taskStatus" @bind="selectedTask.ProjectTask.Status">
                             <option value="Completed">Сompleted</option>
+                            <option value="InProgress">InProgress</option>
                             <option value="Uncompleted">Uncompleted</option>
                         </select>
                     </div>
@@ -334,9 +451,9 @@
                         <label for="taskDueDate">CreatedAt</label>
                         <input type="date" class="form-control" id="CreatedAt" @bind="selectedTask.ProjectTask.CreatedAt" />
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
 
-                        <Blazorise.Button Color="Blazorise.Color.Danger" Size="Blazorise.Size.Small" Clicked="() => DeleteProjectTask(selectedTask.ProjectTask.Id)">Delete task</Blazorise.Button>
+                        <Blazorise.Button Class="mb-2 mt-2" Color="Blazorise.Color.Danger" Size="Blazorise.Size.Small" Clicked="() => DeleteProjectTask(selectedTask.ProjectTask.Id)">Delete task</Blazorise.Button>
                     </div>
                     <h5>Назначенные пользователи</h5>
                     <li class="list-group-item">
@@ -447,6 +564,8 @@
         {
             case "Completed":
                 return "#00783c";
+            case "InProgress":
+                return "#1a65d5";
             case "Uncompleted":
                 return "#e3001b";
             default:
@@ -599,7 +718,7 @@
     }
 
     private void ClearSelectedUser(User user)
-    {  
+    {
         selectedUsers.Remove(user);
         selectedUsers.Clear();
     }
@@ -811,3 +930,17 @@
         navigate.NavigateTo($"/projectTaskInfo/{id}");
     }
 }
+<style>
+    .edit-uncompleted:hover {
+        fill: red;
+        cursor: pointer;
+    }
+    .edit-inprogress:hover {
+        fill: yellowgreen;
+        cursor:pointer
+    }
+    .edit-completed:hover {
+        fill:limegreen;
+        cursor:pointer;
+    }
+</style>

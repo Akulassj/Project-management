@@ -8,6 +8,7 @@ namespace ProjectManagement.Shared.Domain
     public enum ProjectTaskStatus
     {
         Completed,
+        InProgress,
         Uncompleted,
     }
 
