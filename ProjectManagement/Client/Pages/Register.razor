@@ -25,9 +25,9 @@
     <InputText id="inputRole" class="form-control" placeholder="Role" autofocus @bind-Value="@registerRequest.Role" />
     <ValidationMessage For="@(() => registerRequest.Role)" />
 
-    @* <label for="inputTelegramChatId" class="sr-only">Telegram ChatId</label>
+    <label for="inputTelegramChatId" class="sr-only">Telegram ChatId</label>
     <InputText id="inputTelegramChatId" class="form-control" placeholder="TelegramChatId" autofocus @bind-Value="@registerRequest.TelegramChatId" />
-    <ValidationMessage For="@(() => registerRequest.TelegramChatId)" /> *@
+    <ValidationMessage For="@(() => registerRequest.TelegramChatId)" />
 
     <label for="inputPassword" class="sr-only">Password</label>
     <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerRequest.Password" />

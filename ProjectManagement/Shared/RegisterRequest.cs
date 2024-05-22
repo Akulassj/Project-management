@@ -22,7 +22,7 @@ namespace ProjectManagement.Shared
         public string LastName { get; set; }
         [Required]
         public string Role { get; set; }
-        
-        //public string TelegramChatId { get; set; }
+
+        public string TelegramChatId { get; set; }
     }
 }

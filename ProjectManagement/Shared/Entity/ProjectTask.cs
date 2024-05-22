@@ -11,11 +11,12 @@ namespace ProjectManagement.Shared.Entity
         public DateTime CreatedAt { get; set; }
         public DateTime? CompletedAt { get; set; }
         public Guid ProjectId { get; set; }
-
+        public Project? Project { get; set; }
 
         public ProjectTask()
         {
             CreatedAt = DateTime.UtcNow;
+            CompletedAt = DateTime.UtcNow.AddDays(7);
             Id = Guid.NewGuid();
         }
 

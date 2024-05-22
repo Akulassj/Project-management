@@ -196,5 +196,58 @@ namespace ProjectManagement.Server.Controllers
             dataManager.ProjectTaskRepository.DeleteTask(taskId);
             return Ok();
         }
+        [HttpGet]
+        public IActionResult GetTasksByTelegramChatId(string telegramChatId)
+        {
+            try
+            {
+                var tasks = dataManager.ProjectTaskRepository.GetProjectTasksByTelegramChatId(telegramChatId);
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetTasksByTelegramChatIdWithProjects(string telegramChatId)
+        {
+            try
+            {
+                var tasks = dataManager.ProjectTaskRepository.GetProjectTasksByTelegramChatIdWithProjects(telegramChatId);
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetTasksCompletedToday()
+        //{
+        //    try
+        //    {
+        //        var tasks = await dataManager.ProjectTaskRepository.GetTasksCompletedToday();
+        //        return Ok(tasks);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Failed to retrieve tasks completed today: {ex.Message}");
+        //    }
+        //}
+        [HttpGet]
+        public IActionResult GetTodayTasksByTelegramChatId(string telegramChatId)
+        {
+            try
+            {
+                var tasks = dataManager.ProjectTaskRepository.GetTodayProjectTasksByTelegramChatId(telegramChatId);
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

@@ -51,7 +51,7 @@ namespace Authorization.Server.Controllers
                     UserName = parameters.Login,
                     FirstName = parameters.FirstName,
                     LastName = parameters.LastName,
-                    //TelegramChatId = parameters.TelegramChatId,
+                    TelegramChatId = parameters.TelegramChatId,
                 };
                 var result = await _userManager.CreateAsync(user, parameters.Password);
                 if (!result.Succeeded)

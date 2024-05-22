@@ -66,9 +66,15 @@ namespace ProjectManagement.Server.Domain.Repositories.EntityFramework
             var task = context.ProjectTasks.Where(j => j.Id == projectTask.Id).FirstOrDefault();
             if (task != null)
             {
+                if (projectTask.CompletedAt.HasValue &&
+                    projectTask.CompletedAt.Value < projectTask.CreatedAt)
+                {
+                    throw new ArgumentException("Дата завершения не может быть раньше даты создания.");
+                }
                 task.Description = projectTask.Description;
                 task.Name = projectTask.Name;
                 task.Status = projectTask.Status;
+                task.CompletedAt = projectTask.CompletedAt?.ToUniversalTime();
 
                 context.ProjectTasks.Entry(task).State = EntityState.Modified;
                 context.SaveChanges();
@@ -94,12 +100,74 @@ namespace ProjectManagement.Server.Domain.Repositories.EntityFramework
             if (task != null)
             {
                 context.ProjectTasks.Remove(task);
-               
+
             }
             var attachments = context.Attachments.Where(a => a.ProjectTaskId == taskId).ToList();
             context.Attachments.RemoveRange(attachments);
             context.SaveChanges();
         }
+        public List<ProjectTask> GetProjectTasksByTelegramChatId(string telegramChatId)
+        {
+            var user = context.Users.FirstOrDefault(u => u.TelegramChatId == telegramChatId);
+            if (user == null)
+            {
+                throw new Exception($"User with TelegramChatId {telegramChatId} not found.");
+            }
+
+            return context.TaskAssignees
+                .Where(ta => ta.UserId == user.Id && !ta.InActive)
+                .Select(ta => ta.ProjectTaskId)
+                .Distinct()
+                .SelectMany(projectTaskId => context.ProjectTasks.Where(pt => pt.Id == projectTaskId))
+                .Distinct()
+                .ToList();
+        }
+        public List<ProjectTask> GetProjectTasksByTelegramChatIdWithProjects(string telegramChatId)
+        {
+            var user = context.Users.FirstOrDefault(u => u.TelegramChatId == telegramChatId);
+            if (user == null)
+            {
+                throw new Exception($"User with TelegramChatId {telegramChatId} not found.");
+            }
+
+            return context.TaskAssignees
+                .Where(ta => ta.UserId == user.Id && !ta.InActive)
+                .Select(ta => ta.ProjectTaskId)
+                .Distinct()
+                .SelectMany(projectTaskId => context.ProjectTasks.Include(pt => pt.Project).Where(pt => pt.Id == projectTaskId))
+                .Distinct()
+                .ToList();
+        }
+        //public async Task<List<ProjectTask>> GetTasksCompletedToday()
+        //{
+        //    var today = DateTime.Today;
+        //    var tasks = await context.ProjectTasks
+        //        .Where(t => t.CompletedAt.HasValue && t.CompletedAt.Value.Date == today)
+        //        .ToListAsync();
+
+        //    return tasks;
+        //}
+        public List<ProjectTask> GetTodayProjectTasksByTelegramChatId(string telegramChatId)
+        {
+            var user = context.Users.FirstOrDefault(u => u.TelegramChatId == telegramChatId);
+            if (user == null)
+            {
+                throw new Exception($"User with TelegramChatId {telegramChatId} not found.");
+            }
+                
+            var today = DateTime.UtcNow.Date;
+
+            return context.TaskAssignees
+                .Where(ta => ta.UserId == user.Id && !ta.InActive)
+                .Select(ta => ta.ProjectTaskId)
+                .Distinct()
+                .SelectMany(projectTaskId => context.ProjectTasks
+                    .Where(pt => pt.Id == projectTaskId && pt.CompletedAt.HasValue && pt.CompletedAt.Value.Date == today)
+                    .Include(pt => pt.Project))
+                .ToList();
+        }
+
+
 
     }
 }

@@ -20,6 +20,8 @@ namespace ProjectManagement.Server.Domain.Repositories.Abstract
         public void Update(ProjectTask projectTask);
         public List<ProjectTask> GetUncompletedTasksForUserAndProject(Guid userId, Guid projectId);
         public void DeleteTask(Guid taskId);
-        
+        public List<ProjectTask> GetProjectTasksByTelegramChatId(string telegramChatId);
+        public List<ProjectTask> GetProjectTasksByTelegramChatIdWithProjects(string telegramChatId);
+        public List<ProjectTask> GetTodayProjectTasksByTelegramChatId(string telegramChatId);
     }
 }
