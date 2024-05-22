@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +64,10 @@ public class Program
             {
                 await SendHelpMessage(chatId, cancellationToken);
             }
+            else if (text.StartsWith("/notifications"))
+            {
+                await HandleNotificationsCommand(chatId, cancellationToken);
+            }
             else
             {
                 await botClient.SendTextMessageAsync(chatId, "Неизвестная команда. Пожалуйста используйте /menu чтобы увидеть доступные команды.", cancellationToken: cancellationToken);
@@ -78,9 +83,13 @@ public class Program
             {
                 await HandleTasksCommand(chatId, cancellationToken);
             }
-            else if (data.StartsWith("/todaytasks"))
+            if (data.StartsWith("/todaytasks"))
             {
                 await HandleTodayTasksCommand(chatId, cancellationToken);
+            }
+            if (data.StartsWith("/notifications"))
+            {
+                await HandleNotificationsCommand(chatId, cancellationToken);
             }
         }
     }
@@ -91,31 +100,17 @@ public class Program
                              "Вы можете управлят мной с помощью следующих команд:\n" +
                              "/start - Стартовое сообщение\n" +
                              "/tasks - Получить ваши задачи\n" +
-                             "/todaytasks - Получить задачи на сегодня\n" +
+                             "/todaytasks - Задачи на сегодня\n" +
                              "/menu - Увидеть доступные действия\n" +
-                             "/help - Помощь";
+                             "/help - Помощь\n" +
+                             "/notifications - Получить ваши уведомления";
 
         await botClient.SendTextMessageAsync(chatId, welcomeMessage, cancellationToken: cancellationToken);
         await SendMenu(chatId, cancellationToken);
     }
 
 
-    //private static async Task HandleTasksCommand(long chatId, CancellationToken cancellationToken)
-    //{
-    //    var telegramChatId = chatId.ToString();
-    //    var tasks = await GetTasksByTelegramChatId(telegramChatId);
 
-    //    if (tasks != null && tasks.Any())
-    //    {
-    //        var responseMessage = string.Join("\n\n", tasks.Select(t => $"Название задачи: {t.Name}\nОписание: {t.Description}\nСтатус Задачи:{t.Status}"));
-
-    //        await botClient.SendTextMessageAsync(chatId, responseMessage, cancellationToken: cancellationToken);
-    //    }
-    //    else
-    //    {
-    //        await botClient.SendTextMessageAsync(chatId, "Нет задач для вашего аккаунта.", cancellationToken: cancellationToken);
-    //    }
-    //}
     private static async Task HandleTasksCommand(long chatId, CancellationToken cancellationToken)
     {
         var telegramChatId = chatId.ToString();
@@ -128,9 +123,23 @@ public class Program
 
             if (tasks != null && tasks.Any())
             {
-                var responseMessage = string.Join("\n\n", tasks.Select(t => $"Проект: {t.Project.Name}\nНазвание задачи: {t.Name}\nОписание: {t.Description}\nСтатус Задачи: {t.Status}"));
+                var responseMessage = string.Join("\n\n", tasks.Select(t =>
+                {
+                    var statusEmoji = t.Status switch
+                    {
+                        "Completed" => "\uD83D\uDFE2", // 🟢
+                        "InProgress" => "\uD83D\uDFE1", // 🟡
+                        "Uncompleted" => "\uD83D\uDD34", // 🔴
+                        _ => "\u26AA" // ⚪
+                    };
 
-                await botClient.SendTextMessageAsync(chatId, responseMessage, cancellationToken: cancellationToken);
+                    return $"*Проект:* `{t.Project.Name}`\n" +
+                           $"*Название задачи:* `{t.Name}`\n" +
+                           $"*Описание:* `{t.Description}`\n" +
+                           $"*Статус Задачи:* {statusEmoji} `{t.Status}`";
+                }));
+
+                await botClient.SendTextMessageAsync(chatId, responseMessage, parseMode: ParseMode.Markdown, cancellationToken: cancellationToken);
             }
             else
             {
@@ -142,6 +151,9 @@ public class Program
             await botClient.SendTextMessageAsync(chatId, "Ошибка при получении задач.", cancellationToken: cancellationToken);
         }
     }
+
+
+
 
 
     private static async Task HandleTodayTasksCommand(long chatId, CancellationToken cancellationToken)
@@ -156,9 +168,24 @@ public class Program
 
             if (tasks != null && tasks.Any())
             {
-                var responseMessage = string.Join("\n\n", tasks.Select(t => $"Проект: {t.Project.Name}\nНазвание задачи: {t.Name}\nОписание: {t.Description}\nСтатус Задачи: {t.Status}\nДата Завершения: {t.CompletedAt?.ToString("yyyy-MM-dd")}"));
+                var responseMessage = string.Join("\n\n", tasks.Select(t =>
+                {
+                    var statusEmoji = t.Status switch
+                    {
+                        "Completed" => "\uD83D\uDFE2", // 🟢
+                        "InProgress" => "\uD83D\uDFE1", // 🟡
+                        "Uncompleted" => "\uD83D\uDD34", // 🔴
+                        _ => "\u26AA" // ⚪
+                    };
 
-                await botClient.SendTextMessageAsync(chatId, responseMessage, cancellationToken: cancellationToken);
+                    return $"*Проект:* `{t.Project.Name}`\n" +
+                           $"*Название задачи:* `{t.Name}`\n" +
+                           $"*Описание:* `{t.Description}`\n" +
+                           $"*Статус Задачи:* {statusEmoji} `{t.Status}`\n" +
+                           $"*Дата Завершения:* `{t.CompletedAt?.ToString("yyyy-MM-dd")}`";
+                }));
+
+                await botClient.SendTextMessageAsync(chatId, responseMessage, parseMode: ParseMode.Markdown, cancellationToken: cancellationToken);
             }
             else
             {
@@ -170,27 +197,68 @@ public class Program
             await botClient.SendTextMessageAsync(chatId, "Ошибка при получении задач.", cancellationToken: cancellationToken);
         }
     }
+
+
+    private static async Task HandleNotificationsCommand(long chatId, CancellationToken cancellationToken)
+    {
+        var telegramChatId = chatId.ToString();
+        var response = await httpClient.GetAsync($"https://localhost:7220/api/Notification/GetUndeliveredNotifications?telegramChatId={telegramChatId}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var notifications = JsonSerializer.Deserialize<List<Notification>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (notifications != null && notifications.Any())
+            {
+                var responseMessage = string.Join("\n\n", notifications.Select(n =>
+                $"*📩 Сообщение:* `{n.Message}`\n" +
+
+                $"*📅 Создано:* `{n.CreatedAt}`"));
+
+                await botClient.SendTextMessageAsync(chatId, responseMessage, parseMode: ParseMode.Markdown, cancellationToken: cancellationToken);
+
+                // Отметить уведомления как доставленные
+                var jsonNotifications = JsonSerializer.Serialize(notifications);
+                var content = new StringContent(jsonNotifications, Encoding.UTF8, "application/json");
+                await httpClient.PutAsync("https://localhost:7220/api/Notification/MarkNotificationsAsDelivered", content);
+            }
+            else
+            {
+                await botClient.SendTextMessageAsync(chatId, "Нет новых уведомлений.", cancellationToken: cancellationToken);
+            }
+        }
+        else
+        {
+            await botClient.SendTextMessageAsync(chatId, "Ошибка при получении уведомлений.", cancellationToken: cancellationToken);
+        }
+    }
+
     private static async Task SendMenu(long chatId, CancellationToken cancellationToken)
     {
         var inlineKeyboard = new InlineKeyboardMarkup(new[]
         {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("View Tasks", "/tasks"),
-                InlineKeyboardButton.WithCallbackData("Today's Tasks", "/todaytasks")
-            },
-        });
+        new[]
+        {
+            InlineKeyboardButton.WithCallbackData("📋 Посмотреть задачи", "/tasks"),
+            InlineKeyboardButton.WithCallbackData("🗓️ Сегодняшние задачи", "/todaytasks"),
+            InlineKeyboardButton.WithCallbackData("🔔 Уведомления", "/notifications")
+        },
+    });
 
         await botClient.SendTextMessageAsync(chatId, "Выберите действие:", replyMarkup: inlineKeyboard, cancellationToken: cancellationToken);
     }
+
 
     private static async Task SendHelpMessage(long chatId, CancellationToken cancellationToken)
     {
         var helpMessage = "Доступные команды:\n" +
                           "/start - Стартовое сообщение\n" +
                           "/tasks - Получить ваши задачи\n" +
+                          "/todaytasks - Получить ваши задачи\n" +
                           "/menu - Увидеть доступные действия\n" +
-                          "/help - Помощь";
+                          "/help - Помощь"+
+                          "/notifications - Получить ваши уведомления";
 
         await botClient.SendTextMessageAsync(chatId, helpMessage, cancellationToken: cancellationToken);
     }

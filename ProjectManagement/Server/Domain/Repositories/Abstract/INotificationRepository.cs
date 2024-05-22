@@ -15,5 +15,7 @@ namespace ProjectManagement.Server.Domain.Repositories.Abstract
 
         public void UpdateNotification(Notification notification);
         public void DeleteReaded(string userName);
+        public void MarkNotificationsAsDelivered(List<Notification> notifications);
+        public List<Notification> GetUndeliveredNotifications(string telegramChatId);
     }
 }

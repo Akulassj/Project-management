@@ -50,5 +50,17 @@ namespace ProjectManagement.Server.Controllers
             dataManager.NotificationRepository.DeleteReaded(userName);
             return Ok();
         }
+        [HttpGet]
+        public IActionResult GetUndeliveredNotifications(string telegramChatId)
+        {
+            return Ok(dataManager.NotificationRepository.GetUndeliveredNotifications(telegramChatId));
+        }
+
+        [HttpPut]
+        public IActionResult MarkNotificationsAsDelivered( List<Notification> notifications)
+        {
+            dataManager.NotificationRepository.MarkNotificationsAsDelivered(notifications);
+            return Ok();
+        }
     }
 }

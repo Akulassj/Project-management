@@ -13,10 +13,14 @@ namespace ProjectManagement.Shared.Entity
         public DateTime CreatedAt { get; set; }
         public string RecieverName { get; set; }
         public bool IsReaded { get; set; }
+        public bool IsDelivered { get; set; }
+        public User? User { get; set; }
         public Notification()
         {
             CreatedAt = DateTime.UtcNow;
             Id = Guid.NewGuid();
+            IsDelivered =false; 
+            IsReaded =false;
         }
     }
 }

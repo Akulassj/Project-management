@@ -905,7 +905,9 @@
                 Console.WriteLine($"Ошибка при отправке запроса на сервер: {ex.Message}");
             }
             errorMessageEditingTasks = string.Empty;
-
+            selectedUsers.Clear();
+            await Refresh();
+            searchText = string.Empty;
         }
     }
 
