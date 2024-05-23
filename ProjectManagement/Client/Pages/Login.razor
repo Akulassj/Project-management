@@ -6,7 +6,7 @@
 @inject CustomStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
-    Login
+    Вход
 </h1>
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginRequest">
@@ -25,12 +25,12 @@
         <label class="form-check-label" for="inputRememberMe">Remember Me</label>
     </div> *@
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button class="btn btn-dark ml-md-auto" type="submit">Войти</button>
 
     <label class="text-danger">@error</label>
 
     <NavLink href="register">
-        <h6 class="font-weight-normal text-center">Create account</h6>
+        <h6 class="font-weight-normal text-center">Создать аккаунт</h6>
     </NavLink>
 </EditForm>
 

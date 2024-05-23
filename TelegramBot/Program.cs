@@ -24,7 +24,7 @@ public class Program
     {
         using var cts = new CancellationTokenSource();
 
-        // Start receiving updates
+        
         botClient.StartReceiving(
             HandleUpdateAsync,
             HandleErrorAsync,
@@ -127,10 +127,10 @@ public class Program
                 {
                     var statusEmoji = t.Status switch
                     {
-                        "Completed" => "\uD83D\uDFE2", // 🟢
-                        "InProgress" => "\uD83D\uDFE1", // 🟡
-                        "Uncompleted" => "\uD83D\uDD34", // 🔴
-                        _ => "\u26AA" // ⚪
+                        "Completed" => "\uD83D\uDFE2", 
+                        "InProgress" => "\uD83D\uDFE1", 
+                        "Uncompleted" => "\uD83D\uDD34", 
+                        _ => "\u26AA" 
                     };
 
                     return $"*Проект:* `{t.Project.Name}`\n" +
@@ -172,10 +172,10 @@ public class Program
                 {
                     var statusEmoji = t.Status switch
                     {
-                        "Completed" => "\uD83D\uDFE2", // 🟢
-                        "InProgress" => "\uD83D\uDFE1", // 🟡
-                        "Uncompleted" => "\uD83D\uDD34", // 🔴
-                        _ => "\u26AA" // ⚪
+                        "Completed" => "\uD83D\uDFE2", 
+                        "InProgress" => "\uD83D\uDFE1", 
+                        "Uncompleted" => "\uD83D\uDD34", 
+                        _ => "\u26AA" 
                     };
 
                     return $"*Проект:* `{t.Project.Name}`\n" +

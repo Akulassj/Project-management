@@ -140,7 +140,7 @@
                                             <hr />
                                             <div class="form-group">
                                                 <label>Добавить новых участников:</label>
-                                                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="SearchByUsernameForProject" />
+                                                <Blazorise.TextEdit Placeholder="Поиск по никнейму..." Text=@searchText TextChanged="SearchByUsernameForProject" />
                                                 @if (users != null)
                                                 {
                                                     <ul class="list-group">
@@ -182,26 +182,26 @@
 
         @if (CurrentProject.Creatorname == userName)
         {
-            <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Create task</Blazorise.Button>
+            <Blazorise.Button Color="Blazorise.Color.Success" Clicked="@ShowModal">Создать задачу</Blazorise.Button>
             <Blazorise.Modal @ref="modalRef" Closing="OnModalClosing">
                 <Blazorise.ModalContent Centered>
                  <Blazorise.ModalHeader>
-                     <ModalTitle>Create Task</ModalTitle>
+                     <ModalTitle>Создать задачу</ModalTitle>
                      <CloseButton />
                  </Blazorise.ModalHeader>
                  <Blazorise.ModalBody>
                      <Blazorise.Field>
-                         <FieldLabel>Name</FieldLabel>
-                         <TextEdit Placeholder="Enter task name..." @bind-Text="newProjectTask.Name" />
+                         <FieldLabel>Название</FieldLabel>
+                         <TextEdit Placeholder="Введите название задачи..." @bind-Text="newProjectTask.Name" />
                      </Blazorise.Field>
                      <Blazorise.Field>
-                         <FieldLabel>Description</FieldLabel>
-                         <TextEdit Placeholder="Enter task description..." @bind-Text="newProjectTask.Description" />
+                         <FieldLabel>Описание</FieldLabel>
+                         <TextEdit Placeholder="Введите описание задачи..." @bind-Text="newProjectTask.Description" />
                      </Blazorise.Field>
 
                      <Blazorise.Field>
-                         <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                         <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged=GetUsersSearch />
+                         <Blazorise.FieldLabel>Поиск</Blazorise.FieldLabel>
+                         <Blazorise.TextEdit Placeholder="Поиск по никнейму..." Text=@searchText TextChanged=GetUsersSearch />
                      </Blazorise.Field>
 
                      @if (users != null)
@@ -231,14 +231,14 @@
 
                     </Blazorise.ModalBody>
                     <ModalFooter>
-                        <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+                        <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Закрыть</Blazorise.Button>
                         @if (!string.IsNullOrWhiteSpace(errorMessage))
                         {
                             <div class="alert alert-danger" role="alert">
                                 @errorMessage
                             </div>
                         }
-                        <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Save Changes</Blazorise.Button>
+                        <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@CreateProjectTask">Сохранить изменения</Blazorise.Button>
                     </ModalFooter>
                 </Blazorise.ModalContent>
             </Blazorise.Modal>
@@ -427,32 +427,32 @@
                 {
 
                     <div class="form-group">
-                        <label for="taskName">Name</label>
+                        <label for="taskName">Название</label>
                         <input type="text" class="form-control" id="taskName" @bind="selectedTask.ProjectTask.Name" />
                     </div>
                     <div class="form-group">
-                        <label for="taskDescription">Description</label>
+                        <label for="taskDescription">Описание</label>
                         <textarea class="form-control" id="taskDescription" @bind="selectedTask.ProjectTask.Description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="taskStatus">Status</label>
+                        <label for="taskStatus">Статус</label>
                         <select class="form-control" id="taskStatus" @bind="selectedTask.ProjectTask.Status">
-                            <option value="Completed">Сompleted</option>
-                            <option value="InProgress">InProgress</option>
-                            <option value="Uncompleted">Uncompleted</option>
+                            <option value="Completed">Выполнена</option>
+                            <option value="InProgress">В разработке</option>
+                            <option value="Uncompleted">Не выполнена</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="taskDueDate">CreatedAt</label>
-                        <input type="date" class="form-control" id="CreatedAt" @bind="selectedTask.ProjectTask.CreatedAt" />
+                        <label for="taskDueDate">Дата создания</label>
+                        <input type="date" class="form-control" id="Дата создания" @bind="selectedTask.ProjectTask.CreatedAt" />
                     </div>
                     <div class="form-group">
-                        <label for="taskCompletedAt">CompletedAt</label>
-                        <input type="date" class="form-control" id="CompletedAt" @bind="selectedTask.ProjectTask.CompletedAt" />
+                        <label for="taskCompletedAt">Дата Завершения</label>
+                        <input type="date" class="form-control" id="Дата завершения" @bind="selectedTask.ProjectTask.CompletedAt" />
                     </div>
                     <div class="form-group">
 
-                        <Blazorise.Button Class="mb-2 mt-2" Color="Blazorise.Color.Danger" Size="Blazorise.Size.Small" Clicked="() => DeleteProjectTask(selectedTask.ProjectTask.Id)">Delete task</Blazorise.Button>
+                        <Blazorise.Button Class="mb-2 mt-2" Color="Blazorise.Color.Danger" Size="Blazorise.Size.Small" Clicked="() => DeleteProjectTask(selectedTask.ProjectTask.Id)">Удалить</Blazorise.Button>
                     </div>
                     <h5>Назначенные пользователи</h5>
                     <li class="list-group-item">
@@ -476,14 +476,14 @@
                 }
             </Blazorise.ModalBody>
             <Blazorise.ModalFooter>
-                <Blazorise.Button Color="Blazorise.Color.Primary" @onclick="SaveTaskChanges">Save Changes</Blazorise.Button>
+                <Blazorise.Button Color="Blazorise.Color.Primary" @onclick="SaveTaskChanges">Сохранить изменения</Blazorise.Button>
                 @if (!string.IsNullOrWhiteSpace(errorMessageEditingTasks))
                 {
                     <div class="alert alert-danger" role="alert">
                         @errorMessageEditingTasks
                     </div>
                 }
-                <Blazorise.Button Color="Blazorise.Color.Secondary" @onclick="HideEditTaskModal">Close</Blazorise.Button>
+                <Blazorise.Button Color="Blazorise.Color.Secondary" @onclick="HideEditTaskModal">Закрыть</Blazorise.Button>
             </Blazorise.ModalFooter>
         </Blazorise.ModalContent>
     </Blazorise.Modal>

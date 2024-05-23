@@ -15,11 +15,11 @@
 @if (projectTaskComments is not null)
 {
     <div>
-        <h4>ProjectTask name: @projectTaskComments.ProjectTask.Name</h4>
-        <h5>Description: @projectTaskComments.ProjectTask.Description</h5>
+        <h4>Название задачи: @projectTaskComments.ProjectTask.Name</h4>
+        <h5>Описание: @projectTaskComments.ProjectTask.Description</h5>
     </div>
 
-    <h3>Comments</h3>
+    <h3>Комментарии</h3>
 
     <Timeline Type="TimelineType.Default">
         @foreach (var comment in projectTaskComments.Comments)
@@ -31,7 +31,7 @@
         }
     </Timeline>
     <div class="mb-3">
-        <input type="text" @bind="NewCommentText" placeholder="Enter your comment" />
+        <input type="text" @bind="NewCommentText" placeholder="Введите комментарий" />
         <div class="btn btn-primary text-center" @onclick="AddComment">Добавить комментарий</div>
     </div>
     <div class="mb-3">
@@ -41,7 +41,7 @@
     <Blazorise.Modal @ref="modalRef">
         <Blazorise.ModalContent Centered>
 
-         <Blazorise.ModalHeader>Upload File (max file size - 8 Mb)</Blazorise.ModalHeader>
+         <Blazorise.ModalHeader>Загрузить файлы (Максимальный размер - 8 Mb)</Blazorise.ModalHeader>
          <Blazorise.ModalBody>
              <InputFile OnChange="HandleFileSelect" Multiple />
          </Blazorise.ModalBody>

@@ -26,8 +26,8 @@
         <TabPanel Name="projects">
             <!-- Фильтр для проектов -->
             <Blazorise.Field>
-                <FieldLabel>Search Projects</FieldLabel>
-                <Blazorise.TextEdit Placeholder="Search projects.." @bind-Value="@projectFilter" TextChanged="FilterProjects" />
+                <FieldLabel>Поиск проектов</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Найти проект.." @bind-Value="@projectFilter" TextChanged="FilterProjects" />
             </Blazorise.Field>
 
             <!-- Вывод списка проектов -->
@@ -69,8 +69,8 @@
 
             <!-- Фильтр для задач -->
             <Blazorise.Field>
-                <FieldLabel>Search Tasks</FieldLabel>
-                <Blazorise.TextEdit Placeholder="Search tasks.." @bind-Value="@taskFilter" TextChanged="FilterTasks" />
+                <FieldLabel>Поиск задач</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Найти задачу.." @bind-Value="@taskFilter" TextChanged="FilterTasks" />
             </Blazorise.Field>
 
             <!-- Вывод списка задач -->
@@ -82,7 +82,7 @@
                         <p>@task.Description</p>
                     </div>
                     <div class="ml-3 d-flex align-items-center">
-                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteTask(task.Id))">Delete</Blazorise.Button>
+                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteTask(task.Id))">Удалить</Blazorise.Button>
                     </div>
                 </div>
             }
@@ -109,38 +109,38 @@
 
             <!-- Фильтр для комментариев -->
             <Blazorise.Field>
-                <FieldLabel>Search Comments</FieldLabel>
-                <Blazorise.TextEdit Placeholder="Search comments.." @bind-Value="@commentFilter" TextChanged="FilterComments" />
+                <FieldLabel>Поиск комментариев</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Найти комментарий.." @bind-Value="@commentFilter" TextChanged="FilterComments" />
             </Blazorise.Field>
 
             <!-- Вывод списка комментариев -->
             @foreach (var comment in filteredComments)
             {
-                <div class="d-flex mb-3">
+                <div class="d-flex mt-2">
                     <div class="flex-grow-1">
                         <p>@comment.Text</p>
                     </div>
                     <div class="ml-3 d-flex align-items-center">
-                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteComment(comment.Id))">Delete</Blazorise.Button>
+                        <Blazorise.Button Color="Color.Danger" class="btn-sm"  Clicked="@(() => DeleteComment(comment.Id))">Удалить</Blazorise.Button>
                     </div>
                 </div>
             }
 
             <!-- Фильтр для вложений -->
             <Blazorise.Field>
-                <FieldLabel>Search Attachments</FieldLabel>
-                <Blazorise.TextEdit Placeholder="Search attachments.." @bind-Value="@attachmentFilter" TextChanged="FilterAttachments" />
+                <FieldLabel>Поиск вложений</FieldLabel>
+                <Blazorise.TextEdit Placeholder="Найти вложение.." @bind-Value="@attachmentFilter" TextChanged="FilterAttachments" />
             </Blazorise.Field>
 
             <!-- Вывод списка вложений -->
             @foreach (var attachment in filteredAttachments)
             {
-                <div class="d-flex mb-3">
+                <div class="d-flex mt-2">
                     <div class="flex-grow-1">
-                        <p>@attachment.FileName</p>
+                        <p class="mb-0">@attachment.FileName</p>
                     </div>
                     <div class="ml-3 d-flex align-items-center">
-                        <Blazorise.Button Color="Color.Danger" Clicked="@(() => DeleteAttachment(attachment.Id))">Delete</Blazorise.Button>
+                        <Blazorise.Button Color="Color.Danger" class="btn-sm" Clicked="@(() => DeleteAttachment(attachment.Id))">Удалить</Blazorise.Button>
                     </div>
                 </div>
             }
@@ -168,8 +168,7 @@
     private string taskFilter = string.Empty;
     private string selectedProjectName = string.Empty;
 
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync()    {
         await RefreshData();
     }
 

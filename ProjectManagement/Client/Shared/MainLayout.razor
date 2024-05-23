@@ -22,9 +22,9 @@
         <div class="top-row px-4">
             <AuthorizeView>
                 <Authorized>
-                    <Blazorise.Dropdown Display="Display.InlineBlock">
+                    <Blazorise.Dropdown Display="Display.InlineBlock" Class="me-2">
                         <Blazorise.DropdownToggle Color="Color.Primary">
-                            Notifications (@unreadNotificationsCount)
+                            Уведомления (@unreadNotificationsCount)
                             @if (notifications != null && notifications.Any())
                             {
                                 <svg width="3.8ex" height="3.8ex" viewBox="0 0 24 24" fill="#ffdc54" xmlns="http://www.w3.org/2000/svg" style="margin-top: -0.6ex;">
@@ -85,10 +85,10 @@
                         </Blazorise.DropdownMenu>
 
                     </Blazorise.Dropdown>
-                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
+                    <button type="button" class="btn btn-dark ml-md-auto" @onclick="@LogoutClick">Выйти</button>
                 </Authorized>
                 <NotAuthorized>
-                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LoginClick">Login</button>
+                    <button type="button" class="btn btn-dark ml-md-auto" @onclick="@LoginClick">Войти</button>
                 </NotAuthorized>
             </AuthorizeView>
         </div>

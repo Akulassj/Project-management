@@ -6,26 +6,26 @@
 
 <h3>MyProjectList</h3>
 
-<Blazorise.Button Color="Color.Success" Clicked="@ShowModal">Create project</Blazorise.Button>
+<Blazorise.Button Color="Color.Success" Clicked="@ShowModal" Class="mb-3">Создать проект</Blazorise.Button>
 <Blazorise.Modal @ref="modalRef">
     <Blazorise.ModalContent Centered>
         <Blazorise.ModalHeader>
-            <ModalTitle>Create project</ModalTitle>
+            <ModalTitle>Создать проект</ModalTitle>
             <CloseButton />
         </Blazorise.ModalHeader>
         <Blazorise.ModalBody>
             <Blazorise.Field>
-                <FieldLabel>Name</FieldLabel>
-                <TextEdit Placeholder="Enter project name..." @bind-Text="newProject.Name" />
+                <FieldLabel>Название</FieldLabel>
+                <TextEdit Placeholder="Введите название проекта..." @bind-Text="newProject.Name" />
             </Blazorise.Field>
             <Blazorise.Field>
-                <FieldLabel>Description</FieldLabel>
-                <TextEdit Placeholder="Enter project description..." @bind-Text="newProject.Description" />
+                <FieldLabel>Описание</FieldLabel>
+                <TextEdit Placeholder="Введите описание проекта..." @bind-Text="newProject.Description" />
             </Blazorise.Field>
 
             <Blazorise.Field>
-                <Blazorise.FieldLabel>Search</Blazorise.FieldLabel>
-                <Blazorise.TextEdit Placeholder="Search by name or surname..." Text=@searchText TextChanged="GetUsersSearch" />
+                <Blazorise.FieldLabel>Поиск</Blazorise.FieldLabel>
+                <Blazorise.TextEdit Placeholder="Поиск по никнейму..." Text=@searchText TextChanged="GetUsersSearch" />
             </Blazorise.Field>
 
             @if (users is not null && users.Any())
@@ -48,7 +48,7 @@
                     {
                         <div>
                             <p>@user.UserName</p>
-                            <Blazorise.Button Color="Color.Danger" Clicked="() => RemoveUser(user)">Remove</Blazorise.Button>
+                            <Blazorise.Button Color="Color.Danger" Clicked="() => RemoveUser(user)">Убрать</Blazorise.Button>
                         </div>
                     }
                 </div>
@@ -56,14 +56,14 @@
 
         </Blazorise.ModalBody>
         <ModalFooter>
-            <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Button>
+            <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Закрыть</Blazorise.Button>
             @if (!string.IsNullOrWhiteSpace(errorMessage))
             {
                 <div class="alert alert-danger" role="alert">
                     @errorMessage
                 </div>
             }
-            <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject">Save Changes</Blazorise.Button>
+            <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject">Сохранить изменения</Blazorise.Button>
         </ModalFooter>
     </Blazorise.ModalContent>
 </Blazorise.Modal>
@@ -71,7 +71,7 @@
 
     @foreach (var project in projectsDeleted)
     {
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-2">
             <TabBlazor.Card class="flex-grow-1">
                 <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Project.Id)">
                     <TabBlazor.CardTitle>
@@ -79,13 +79,15 @@
                     </TabBlazor.CardTitle>
                     @project.Project.Description
                 </TabBlazor.CardBody>
+               @*  <TabBlazor.CardFooter>
+                <div class="ml-3 d-flex align-items-center">
+                    @if (userName == project.CreatorName)
+                    {
+                        <Blazorise.Button Color="Color.Danger" Size="Size.Small" Clicked="() => DeleteProject(project.Project.Id)">Delete</Blazorise.Button>
+                    }
+                </div>
+                </TabBlazor.CardFooter> *@
             </TabBlazor.Card>
-            <div class="ml-3 d-flex align-items-center">
-                @if (userName == project.CreatorName)
-                {
-                    <Blazorise.Button Color="Color.Danger" Size="Size.Small" Clicked="() => DeleteProject(project.Project.Id)">Delete</Blazorise.Button>
-                }
-            </div>
         </div>
     }
     

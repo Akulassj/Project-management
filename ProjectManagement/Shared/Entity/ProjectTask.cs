@@ -16,7 +16,7 @@ namespace ProjectManagement.Shared.Entity
         public ProjectTask()
         {
             CreatedAt = DateTime.UtcNow;
-            CompletedAt = DateTime.UtcNow.AddDays(7);
+            CompletedAt = DateTime.UtcNow.AddHours(1);
             Id = Guid.NewGuid();
         }
 
