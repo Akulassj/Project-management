@@ -13,28 +13,28 @@
     <InputText id="inputLogin" class="form-control mb-2" placeholder="Login" autofocus @bind-Value="@registerRequest.Login" />
     <ValidationMessage For="@(() => registerRequest.Login)" />
 
-    <label for="inputFirstName" class="sr-only">FirstName</label>
-    <InputText id="inputFirstName" class="form-control mb-2" placeholder="FirstName" autofocus @bind-Value="@registerRequest.FirstName" />
+    <label for="inputFirstName" class="sr-only">Имя</label>
+    <InputText id="inputFirstName" class="form-control mb-2" placeholder="Имя" autofocus @bind-Value="@registerRequest.FirstName" />
     <ValidationMessage For="@(() => registerRequest.FirstName)" />
 
-    <label for="inputLastName" class="sr-only">LastName</label>
-    <InputText id="inputLastName" class="form-control mb-2" placeholder="LastName" autofocus @bind-Value="@registerRequest.LastName" />
+    <label for="inputLastName" class="sr-only">Фамилия</label>
+    <InputText id="inputLastName" class="form-control mb-2" placeholder="Фамилия" autofocus @bind-Value="@registerRequest.LastName" />
     <ValidationMessage For="@(() => registerRequest.LastName)" />
 
-    <label for="inputRole" class="sr-only">Role</label>
-    <InputText id="inputRole" class="form-control mb-2" placeholder="Role" autofocus @bind-Value="@registerRequest.Role" />
+    <label for="inputRole" class="sr-only">Роль</label>
+    <InputText id="inputRole" class="form-control mb-2" placeholder="Роль" autofocus @bind-Value="@registerRequest.Role" />
     <ValidationMessage For="@(() => registerRequest.Role)" />
 
-    <label for="inputTelegramChatId" class="sr-only">Telegram ChatId</label>
-    <InputText id="inputTelegramChatId" class="form-control mb-2" placeholder="TelegramChatId" autofocus @bind-Value="@registerRequest.TelegramChatId" />
+    <label for="inputTelegramChatId" class="sr-only">ТелеграмId</label>
+    <InputText id="inputTelegramChatId" class="form-control mb-2" placeholder="ТелеграмId" autofocus @bind-Value="@registerRequest.TelegramChatId" />
     <ValidationMessage For="@(() => registerRequest.TelegramChatId)" />
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control mb-2" placeholder="Password" @bind-Value="@registerRequest.Password" />
+    <label for="inputPassword" class="sr-only">Пароль</label>
+    <InputText type="password" id="inputPassword" class="form-control mb-2" placeholder="Пароль" @bind-Value="@registerRequest.Password" />
     <ValidationMessage For="@(() => registerRequest.Password)" />
 
-    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control mb-2" placeholder="Password Confirmation" @bind-Value="@registerRequest.PasswordConfirm" />
+    <label for="inputPasswordConfirm" class="sr-only">Подтверждение пароля</label>
+    <InputText type="password" id="inputPasswordConfirm" class="form-control mb-2" placeholder="Подтверждение пароля" @bind-Value="@registerRequest.PasswordConfirm" />
     <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
     
     <button class="btn btn-lg btn-primary btn-block" type="submit">Создать аккаунт</button>

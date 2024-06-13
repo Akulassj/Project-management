@@ -72,7 +72,7 @@
                                 <div class="col-md-8">
 
                                     <ApexChart @ref=chart TItem="ProjectTask"
-                                               Title="ProjectTask Status Distribution" Debug>
+                                                Debug>
 
                                      <ApexPointSeries TItem="ProjectTask"
                                                       Items="CurrentProject.ProjectTaskUsers.Select(pt => pt.ProjectTask)"
@@ -252,7 +252,7 @@
 
                 <div class="d-flex">
                     <div class="col-md-4 col-sm-12 me-3">
-                        <h3 class="text-danger">Uncompleted</h3>
+                        <h3 class="text-danger">Не выполненные</h3>
                         @foreach (var model in CurrentProject.ProjectTaskUsers)
                         {
                             @if (model.ProjectTask.Status == "Uncompleted")
@@ -303,7 +303,7 @@
                         }
                     </div>
                     <div class="col-md-4 col-sm-12 me-3">
-                        <h3 class="text-warning">InProgress</h3>
+                        <h3 class="text-warning">В разработке</h3>
                         @foreach (var model in CurrentProject.ProjectTaskUsers)
                         {
                             @if (model.ProjectTask.Status == "InProgress")
@@ -353,7 +353,7 @@
                         }
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        <h3 class="text-success">Completed</h3>
+                        <h3 class="text-success">Выполненные</h3>
                         @foreach (var model in CurrentProject.ProjectTaskUsers)
                         {
                             @if (model.ProjectTask.Status == "Completed")
@@ -419,7 +419,7 @@
     <Blazorise.Modal @ref="editTaskModalRef">
         <Blazorise.ModalContent>
             <Blazorise.ModalHeader>
-                <Blazorise.ModalTitle>Edit Task</Blazorise.ModalTitle>
+                <Blazorise.ModalTitle>Редактировать задачу</Blazorise.ModalTitle>
                 <Blazorise.CloseButton @onclick="HideEditTaskModal" />
             </Blazorise.ModalHeader>
             <Blazorise.ModalBody>

@@ -4,7 +4,7 @@
 @inject HttpClient client
 @inject NavigationManager navigate
 
-<h3>MyProjectList</h3>
+<h3>Мои проекты</h3>
 
 <Blazorise.Button Color="Color.Success" Clicked="@ShowModal" Class="mb-3">Создать проект</Blazorise.Button>
 <Blazorise.Modal @ref="modalRef">
@@ -43,7 +43,7 @@
             @if (SelectedUsers is not null && SelectedUsers.Any())
             {
                 <div>
-                    <h4>Selected Users:</h4>
+                    <h4>Выбранные пользователи:</h4>
                     @foreach (var user in SelectedUsers)
                     {
                         <div>
