@@ -219,16 +219,18 @@
                         {
                             @if (selectedUsers.Any())
                             {
-                                <div>
-                                    <h4>Selected User:</h4>
-                                    <div>
+                                <div class="selected-users mt-3">
+                                    <h5>Выбранные пользователи:</h5>
+                                    <div class="selected-user d-flex align-items-center">
                                         <p>@selectedUsers.FirstOrDefault()?.UserName</p>
                                         <button class="btn btn-danger btn-sm float-right" @onclick="() => ClearSelectedUser(user)">Удалить</button>
                                     </div>
                                 </div>
                             }
                         }
+                      
 
+                       
                     </Blazorise.ModalBody>
                     <ModalFooter>
                         <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="@HideModal">Закрыть</Blazorise.Button>
@@ -943,4 +945,35 @@
         fill: limegreen;
         cursor: pointer;
     }
+
+    .search-results {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        max-height: 150px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+
+    .search-result {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .search-result:hover {
+            background-color: #e2e6ea;
+        }
+
+    .selected-users {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+
+    .selected-user {
+        margin-bottom: 5px;
+    }
+
+        .selected-user p {
+            margin-bottom: 0;
+        }
 </style>

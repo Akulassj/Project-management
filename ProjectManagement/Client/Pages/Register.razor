@@ -4,45 +4,73 @@
 @layout AuthLayout
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
-<h1 class="h2 font-weight-normal login-title">
-    Регистрация
-</h1>
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
-    <DataAnnotationsValidator />
-    <label for="inputLogin" class="sr-only">Login</label>
-    <InputText id="inputLogin" class="form-control mb-2" placeholder="Login" autofocus @bind-Value="@registerRequest.Login" />
-    <ValidationMessage For="@(() => registerRequest.Login)" />
 
-    <label for="inputFirstName" class="sr-only">Имя</label>
-    <InputText id="inputFirstName" class="form-control mb-2" placeholder="Имя" autofocus @bind-Value="@registerRequest.FirstName" />
-    <ValidationMessage For="@(() => registerRequest.FirstName)" />
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 pb-0 text-center">
 
-    <label for="inputLastName" class="sr-only">Фамилия</label>
-    <InputText id="inputLastName" class="form-control mb-2" placeholder="Фамилия" autofocus @bind-Value="@registerRequest.LastName" />
-    <ValidationMessage For="@(() => registerRequest.LastName)" />
+                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <h2 class="fw-bold mb-2 text-uppercase">Регистрация</h2>
+                            <p class="text-white-50 mb-5">Пожалуйста, заполните форму!</p>
 
-    <label for="inputRole" class="sr-only">Роль</label>
-    <InputText id="inputRole" class="form-control mb-2" placeholder="Роль" autofocus @bind-Value="@registerRequest.Role" />
-    <ValidationMessage For="@(() => registerRequest.Role)" />
+                            <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
+                                <DataAnnotationsValidator />
 
-    <label for="inputTelegramChatId" class="sr-only">ТелеграмId</label>
-    <InputText id="inputTelegramChatId" class="form-control mb-2" placeholder="ТелеграмId" autofocus @bind-Value="@registerRequest.TelegramChatId" />
-    <ValidationMessage For="@(() => registerRequest.TelegramChatId)" />
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText id="inputLogin" class="form-control form-control-lg" placeholder="Login" @bind-Value="@registerRequest.Login" />
+                                    <ValidationMessage For="@(() => registerRequest.Login)" />
+                                </div>
 
-    <label for="inputPassword" class="sr-only">Пароль</label>
-    <InputText type="password" id="inputPassword" class="form-control mb-2" placeholder="Пароль" @bind-Value="@registerRequest.Password" />
-    <ValidationMessage For="@(() => registerRequest.Password)" />
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText id="inputFirstName" class="form-control form-control-lg" placeholder="Имя" @bind-Value="@registerRequest.FirstName" />
+                                    <ValidationMessage For="@(() => registerRequest.FirstName)" />
+                                </div>
 
-    <label for="inputPasswordConfirm" class="sr-only">Подтверждение пароля</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control mb-2" placeholder="Подтверждение пароля" @bind-Value="@registerRequest.PasswordConfirm" />
-    <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
-    
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Создать аккаунт</button>
-    <label class="text-danger">@error</label>
-    <NavLink href="login">
-        <h6 class="font-weight-normal text-center">Уже есть аккаунт?</h6>
-    </NavLink>
-</EditForm>
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText id="inputLastName" class="form-control form-control-lg" placeholder="Фамилия" @bind-Value="@registerRequest.LastName" />
+                                    <ValidationMessage For="@(() => registerRequest.LastName)" />
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText id="inputRole" class="form-control form-control-lg" placeholder="Роль" @bind-Value="@registerRequest.Role" />
+                                    <ValidationMessage For="@(() => registerRequest.Role)" />
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText id="inputTelegramChatId" class="form-control form-control-lg" placeholder="ТелеграмId" @bind-Value="@registerRequest.TelegramChatId" />
+                                    <ValidationMessage For="@(() => registerRequest.TelegramChatId)" />
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Пароль" @bind-Value="@registerRequest.Password" />
+                                    <ValidationMessage For="@(() => registerRequest.Password)" />
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <InputText type="password" id="inputPasswordConfirm" class="form-control form-control-lg" placeholder="Подтверждение пароля" @bind-Value="@registerRequest.PasswordConfirm" />
+                                    <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
+                                </div>
+
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 mb-2" type="submit">Создать аккаунт</button>
+
+                                <label class="text-danger">@error</label>
+                            </EditForm>
+
+                            <div>
+                                <p class="mb-0">Уже есть аккаунт? <NavLink href="login" class="text-white-50 fw-bold">Войти</NavLink></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @functions {
     RegisterRequest registerRequest { get; set; } = new RegisterRequest();
     string error { get; set; }

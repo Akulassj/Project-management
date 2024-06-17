@@ -11,7 +11,7 @@
 
     @foreach (var projectTask in projectTasks)
     {
-    <TabBlazor.Card Size="CardSize.Default" class="mb-2">
+    <TabBlazor.Card Size="CardSize.Default" class="mb-2" style="cursor:pointer !important">
     <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectTaskClick(projectTask.Id)">
             <TabBlazor.CardTitle>
                 <h3> @projectTask.Name</h3>

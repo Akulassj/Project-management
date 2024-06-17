@@ -6,16 +6,9 @@
 
 @inject HttpClient client
 
-<ul>
-    
-    @foreach (var user in users)
-    {   
-       @*  <li>
-            Логин @user.UserName
-            Пароль @user.FirstName
-        </li> *@
-    }
-</ul>
+<div class="justify-content-center">
+    <h3>Добро пожаловать!</h3>
+</div>
 @code {
     List<User> users = new List<User>();
 

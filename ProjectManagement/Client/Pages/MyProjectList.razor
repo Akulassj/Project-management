@@ -11,21 +11,20 @@
     <Blazorise.ModalContent Centered>
         <Blazorise.ModalHeader>
             <ModalTitle>Создать проект</ModalTitle>
-            <CloseButton />
         </Blazorise.ModalHeader>
         <Blazorise.ModalBody>
             <Blazorise.Field>
                 <FieldLabel>Название</FieldLabel>
-                <TextEdit Placeholder="Введите название проекта..." @bind-Text="newProject.Name" />
+                <TextEdit Placeholder="Введите название проекта..." @bind-Text="newProject.Name" Class="mb-3" />
             </Blazorise.Field>
             <Blazorise.Field>
                 <FieldLabel>Описание</FieldLabel>
-                <TextEdit Placeholder="Введите описание проекта..." @bind-Text="newProject.Description" />
+                <TextEdit Placeholder="Введите описание проекта..." @bind-Text="newProject.Description" Class="mb-3" />
             </Blazorise.Field>
 
             <Blazorise.Field>
                 <Blazorise.FieldLabel>Поиск</Blazorise.FieldLabel>
-                <Blazorise.TextEdit Placeholder="Поиск по никнейму..." Text=@searchText TextChanged="GetUsersSearch" />
+                <Blazorise.TextEdit Placeholder="Поиск по никнейму..." Text=@searchText TextChanged="GetUsersSearch" Class="mb-3" />
             </Blazorise.Field>
 
             @if (users is not null && users.Any())
@@ -42,13 +41,13 @@
 
             @if (SelectedUsers is not null && SelectedUsers.Any())
             {
-                <div>
-                    <h4>Выбранные пользователи:</h4>
+                <div class="selected-users mt-3">
+                    <h5>Выбранные пользователи:</h5>
                     @foreach (var user in SelectedUsers)
                     {
-                        <div>
-                            <p>@user.UserName</p>
-                            <Blazorise.Button Color="Color.Danger" Clicked="() => RemoveUser(user)">Убрать</Blazorise.Button>
+                        <div class="selected-user d-flex align-items-center">
+                            <p class="mb-0">@user.UserName</p>
+                            <Blazorise.Button Color="Color.Danger" Clicked="() => RemoveUser(user)" Class="ml-2">Убрать</Blazorise.Button>
                         </div>
                     }
                 </div>
@@ -59,11 +58,11 @@
             <Blazorise.Button Color="Color.Secondary" Clicked="@HideModal">Закрыть</Blazorise.Button>
             @if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger mt-3" role="alert">
                     @errorMessage
                 </div>
             }
-            <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject">Сохранить изменения</Blazorise.Button>
+            <Blazorise.Button Color="Color.Primary" Clicked="@CreateProject" Class="ml-2">Сохранить изменения</Blazorise.Button>
         </ModalFooter>
     </Blazorise.ModalContent>
 </Blazorise.Modal>
@@ -72,7 +71,7 @@
     @foreach (var project in projectsDeleted)
     {
         <div class="d-flex mb-2">
-            <TabBlazor.Card class="flex-grow-1">
+            <TabBlazor.Card class="flex-grow-1" style="cursor:pointer !important">
                 <TabBlazor.CardBody class="my-card-body" @onclick="() => ProjectClick(project.Project.Id)">
                     <TabBlazor.CardTitle>
                         <h3>@project.Project.Name</h3>
@@ -239,4 +238,35 @@
     .card-body:hover {
         background-color: darkcyan !important;
     }
+
+    .search-results {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        max-height: 150px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+
+    .search-result {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .search-result:hover {
+            background-color: #e2e6ea;
+        }
+
+    .selected-users {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+
+    .selected-user {
+        margin-bottom: 5px;
+    }
+
+        .selected-user p {
+            margin-bottom: 0;
+        }
 </style>

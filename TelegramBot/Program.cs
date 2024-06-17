@@ -238,12 +238,9 @@ public class Program
     {
         var inlineKeyboard = new InlineKeyboardMarkup(new[]
         {
-        new[]
-        {
-            InlineKeyboardButton.WithCallbackData("📋 Посмотреть задачи", "/tasks"),
-            InlineKeyboardButton.WithCallbackData("🗓️ Сегодняшние задачи", "/todaytasks"),
-            InlineKeyboardButton.WithCallbackData("🔔 Уведомления", "/notifications")
-        },
+        new[] { InlineKeyboardButton.WithCallbackData("📋 Посмотреть задачи", "/tasks") },
+        new[] { InlineKeyboardButton.WithCallbackData("🗓️ Сегодняшние задачи", "/todaytasks") },
+        new[] { InlineKeyboardButton.WithCallbackData("🔔 Уведомления", "/notifications") }
     });
 
         await botClient.SendTextMessageAsync(chatId, "Выберите действие:", replyMarkup: inlineKeyboard, cancellationToken: cancellationToken);
