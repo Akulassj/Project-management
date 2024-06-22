@@ -9,6 +9,7 @@ using System.Data;
 using ProjectManagement.Shared.Entity;
 using ProjectManagement.Server.Domain.Repositories.Abstract;
 using ProjectManagement.Server.Domain.Repositories.EntityFramework;
+using Blazorise;
 
 namespace Authorization.Server.Controllers
 {
@@ -51,6 +52,7 @@ namespace Authorization.Server.Controllers
                     UserName = parameters.Login,
                     FirstName = parameters.FirstName,
                     LastName = parameters.LastName,
+                    Position = parameters.Role,
                     TelegramChatId = parameters.TelegramChatId,
                 };
                 var result = await _userManager.CreateAsync(user, parameters.Password);
